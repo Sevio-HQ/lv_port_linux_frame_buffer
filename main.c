@@ -6,6 +6,8 @@
 #include <pthread.h>
 #include <time.h>
 #include <sys/time.h>
+#include "ui.h"
+#include "ui_update.h"
 
 #define DISP_BUF_SIZE (128 * 1024)
 
@@ -51,7 +53,9 @@ int main(void)
 
 
     /*Create a Demo*/
-    lv_demo_widgets();
+    //lv_demo_widgets();
+    ui_init ();
+    ui_updater_init();
 
     /*Handle LitlevGL tasks (tickless mode)*/
     while(1) {
