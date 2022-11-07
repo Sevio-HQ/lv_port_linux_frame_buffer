@@ -2,7 +2,7 @@ cmake_minimum_required(VERSION 3.1)
 
 project(lvgl_fb)
 
-include_directories(. ./ui ./squareline)
+include_directories(. ${PROJECT_SOURCE_DIR}/squareline/ ${PROJECT_SOURCE_DIR}/ui/)
 add_subdirectory(lvgl)
 add_subdirectory(lv_drivers)
 
