@@ -25,7 +25,7 @@ UI_GEN_SRC = $(LVGL_DIR)/squareline/ui.c \
     $(LVGL_DIR)/squareline/ui_helpers.c 
 UI_SRC = $(LVGL_DIR)/ui/ui_update.c
 CSRCS +=$(LVGL_DIR)/mouse_cursor_icon.c $(UI_GEN_SRC) $(UI_SRC)
-CFLAGS += $(INCLUDE_FLAGS)
+MYCFLAGS = $(INCLUDE_FLAGS)
 OBJEXT ?= .o
 
 AOBJS = $(ASRCS:.S=$(OBJEXT))
@@ -41,7 +41,7 @@ OBJS = $(AOBJS) $(COBJS)
 all: default
 
 %.o: %.c
-	@$(CC)  $(CFLAGS) -c $< -o $@
+	@$(CC)  $(CFLAGS) $(MYCFLAGS) -c $< -o $@
 	@echo "CC $<"
     
 default: $(AOBJS) $(COBJS) $(MAINOBJ)
