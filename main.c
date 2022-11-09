@@ -8,8 +8,58 @@
 #include <sys/time.h>
 #include "ui.h"
 #include "ui_update.h"
+#if USE_EVDEV != 0 
+#include "linux/input.h"
+#endif
 
 #define DISP_BUF_SIZE (128 * 1024)
+
+extern int evdev_fd;
+extern int evdev_button;
+extern int evdev_key_val;
+
+/**
+ * Get the current position and state of the evdev
+ * @param data store the evdev data here
+ */
+void kbdev_read(lv_indev_drv_t * drv, lv_indev_data_t * data)
+{
+    #if USE_EVDEV != 0 
+    struct input_event in;
+
+    while(read(evdev_fd, &in, sizeof(struct input_event)) > 0) {
+        printf("%s: in.type:%d drv.type:%d code:%d", __FILE__, in.type, drv->type, in.code)
+        if(in.type == EV_KEY) {
+            if(drv->type == LV_INDEV_TYPE_KEYPAD) {
+                switch(in.code) {
+                    case BTN_2:
+                    case KEY_LEFT:
+                        data->key = LV_KEY_LEFT;
+                        break;
+                    case BTN_0:
+                    case KEY_RIGHT:
+                        data->key = LV_KEY_RIGHT;
+                        break;
+                    case BTN_1:
+                    case KEY_DOWN:
+                        data->key = LV_KEY_DOWN;
+                        break;
+                    default:
+                        data->key = 0;
+                        break;
+                }
+                if (data->key != 0) {
+                    /* Only record button state when actual output is produced to prevent widgets from refreshing */
+                    data->state = (in.value) ? LV_INDEV_STATE_PR : LV_INDEV_STATE_REL;
+                }
+                evdev_key_val = data->key;
+                evdev_button = data->state;
+                return;
+            }
+        }
+    }
+    #endif
+}
 
 int main(void)
 {
@@ -34,24 +84,16 @@ int main(void)
     disp_drv.hor_res    = 128;
     disp_drv.ver_res    = 128;
     lv_disp_drv_register(&disp_drv);
-#if 0
+
     evdev_init();
     static lv_indev_drv_t indev_drv_1;
     lv_indev_drv_init(&indev_drv_1); /*Basic initialization*/
-    indev_drv_1.type = LV_INDEV_TYPE_POINTER;
+    indev_drv_1.type = LV_INDEV_TYPE_KEYPAD;
 
     /*This function will be called periodically (by the library) to get the mouse position and state*/
-    indev_drv_1.read_cb = evdev_read;
-    lv_indev_t *mouse_indev = lv_indev_drv_register(&indev_drv_1);
+    indev_drv_1.read_cb = kbdev_read;
+    lv_indev_t *kbd_indev = lv_indev_drv_register(&indev_drv_1);
 
-
-    /*Set a cursor for the mouse*/
-    LV_IMG_DECLARE(mouse_cursor_icon)
-    lv_obj_t * cursor_obj = lv_img_create(lv_scr_act()); /*Create an image object for the cursor */
-    lv_img_set_src(cursor_obj, &mouse_cursor_icon);           /*Set the image source*/
-    lv_indev_set_cursor(mouse_indev, cursor_obj);             /*Connect the image  object to the driver*/
-
-#endif
     /*Create a Demo*/
     //lv_demo_widgets();
     ui_init ();
