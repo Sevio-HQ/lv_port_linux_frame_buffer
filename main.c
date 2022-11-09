@@ -28,7 +28,7 @@ void kbdev_read(lv_indev_drv_t * drv, lv_indev_data_t * data)
     struct input_event in;
 
     while(read(evdev_fd, &in, sizeof(struct input_event)) > 0) {
-        printf("%s: in.type:%d drv.type:%d code:%d", __FILE__, in.type, drv->type, in.code)
+        LV_LOG_INFO("%s: in.type:%d drv.type:%d code:%d", __FILE__, in.type, drv->type, in.code)
         if(in.type == EV_KEY) {
             if(drv->type == LV_INDEV_TYPE_KEYPAD) {
                 switch(in.code) {
