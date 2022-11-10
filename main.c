@@ -1,3 +1,11 @@
+/**
+ * @file main
+ *
+ */
+
+/*********************
+ *      INCLUDES
+ *********************/
 #include "lvgl/lvgl.h"
 #include "lvgl/demos/lv_demos.h"
 #include "lv_drivers/display/fbdev.h"
@@ -12,11 +20,68 @@
 #include "linux/input.h"
 #endif
 
+/*********************
+ *      DEFINES
+ *********************/
 #define DISP_BUF_SIZE (128 * 1024)
+
+/**********************
+ *      TYPEDEFS
+ **********************/
+
+/**********************
+ *  STATIC PROTOTYPES
+ **********************/
+static void hal_init(void);
+
+/**********************
+ *  STATIC VARIABLES
+ **********************/
+
+/**********************
+ *      MACROS
+ **********************/
+
+/**********************
+ *   GLOBAL FUNCTIONS
+ **********************/
+
+/*********************
+ *      DEFINES
+ *********************/
+
+/**********************
+ *      TYPEDEFS
+ **********************/
+
+/**********************
+ *      VARIABLES
+ **********************/
 
 extern int evdev_fd;
 extern int evdev_button;
 extern int evdev_key_val;
+
+/**********************
+ *  STATIC PROTOTYPES
+ **********************/
+
+void updateUiMenu(uint32_t key)
+{
+    switch(key)
+    {
+        case LV_KEY_LEFT:
+            uiMenu_left();
+        break;
+        case LV_KEY_RIGHT:
+            uiMenu_right();
+        break;
+        case LV_KEY_DOWN:
+            uiMenu_down();
+        break;
+    }
+    uiMenu_load();
+}
 
 /**
  * Get the current position and state of the evdev
@@ -28,7 +93,7 @@ void kbdev_read(lv_indev_drv_t * drv, lv_indev_data_t * data)
     struct input_event in;
 
     while(read(evdev_fd, &in, sizeof(struct input_event)) > 0) {
-        LV_LOG_INFO("%s: in.type:%d drv.type:%d code:%d", __FILE__, in.type, drv->type, in.code)
+        LV_LOG_INFO("%s: in.type:%d drv.type:%d code:%d", __FILE__, in.type, drv->type, in.code);
         if(in.type == EV_KEY) {
             if(drv->type == LV_INDEV_TYPE_KEYPAD) {
                 switch(in.code) {
@@ -51,6 +116,10 @@ void kbdev_read(lv_indev_drv_t * drv, lv_indev_data_t * data)
                 if (data->key != 0) {
                     /* Only record button state when actual output is produced to prevent widgets from refreshing */
                     data->state = (in.value) ? LV_INDEV_STATE_PR : LV_INDEV_STATE_REL;
+                    if (data->state == LV_INDEV_STATE_REL)
+                    {
+                        updateUiMenu(data->key);
+                    }
                 }
                 evdev_key_val = data->key;
                 evdev_button = data->state;
@@ -61,12 +130,39 @@ void kbdev_read(lv_indev_drv_t * drv, lv_indev_data_t * data)
     #endif
 }
 
-int main(void)
+int main(int argc, char **argv)
 {
+    (void)argc; /*Unused*/
+    (void)argv; /*Unused*/
+
     /*LittlevGL init*/
     lv_init();
 
-    /*Linux frame buffer device init*/
+
+    /*Initialize the HAL (display, input devices, tick) for LVGL*/
+    hal_init();
+
+    /*Create a Demo*/
+    //lv_demo_widgets();
+    ui_init ();
+    uiMenu_init();
+    ui_updater_init();
+
+    uiMenu_load();
+
+    /*Handle LitlevGL tasks (tickless mode)*/
+    while(1) {
+        lv_timer_handler();
+        usleep(5000);
+    }
+
+    return 0;
+}
+
+
+void hal_init()
+{
+        /*Linux frame buffer device init*/
     fbdev_init();
 
     /*A small buffer for LittlevGL to draw the screen's content*/
@@ -93,19 +189,6 @@ int main(void)
     /*This function will be called periodically (by the library) to get the mouse position and state*/
     indev_drv_1.read_cb = kbdev_read;
     lv_indev_t *kbd_indev = lv_indev_drv_register(&indev_drv_1);
-
-    /*Create a Demo*/
-    //lv_demo_widgets();
-    ui_init ();
-    ui_updater_init();
-
-    /*Handle LitlevGL tasks (tickless mode)*/
-    while(1) {
-        lv_timer_handler();
-        usleep(5000);
-    }
-
-    return 0;
 }
 
 /*Set in lv_conf.h as `LV_TICK_CUSTOM_SYS_TIME_EXPR`*/
