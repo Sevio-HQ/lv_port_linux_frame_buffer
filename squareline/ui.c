@@ -13,7 +13,6 @@ lv_obj_t *ui_Screen1_Label1;
 lv_obj_t *ui_boardStatusLabel;
 lv_obj_t *ui_uptimeLabel;
 lv_obj_t *ui_dateTimeLabel;
-lv_obj_t *ui_Home_Button1;
 lv_obj_t *ui_VPNSTATUS;
 lv_obj_t *ui_Screen1_Panel1;
 lv_obj_t *ui_Screen1_Label3;
@@ -115,15 +114,6 @@ lv_obj_set_x( ui_dateTimeLabel, 0 );
 lv_obj_set_y( ui_dateTimeLabel, 107 );
 lv_obj_set_align( ui_dateTimeLabel, LV_ALIGN_TOP_MID );
 lv_label_set_text(ui_dateTimeLabel,"18:54 22/01/2019");
-
-ui_Home_Button1 = lv_btn_create(ui_Home);
-lv_obj_set_width( ui_Home_Button1, 21);
-lv_obj_set_height( ui_Home_Button1, 20);
-lv_obj_set_x( ui_Home_Button1, 50 );
-lv_obj_set_y( ui_Home_Button1, 50 );
-lv_obj_set_align( ui_Home_Button1, LV_ALIGN_CENTER );
-lv_obj_add_flag( ui_Home_Button1, LV_OBJ_FLAG_SCROLL_ON_FOCUS );   /// Flags
-lv_obj_clear_flag( ui_Home_Button1, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
 
 }
 void ui_VPNSTATUS_screen_init(void)

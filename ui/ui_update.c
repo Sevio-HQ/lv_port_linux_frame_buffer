@@ -13,7 +13,6 @@ typedef enum eUiMenuIndex {
 
 
 typedef struct sUiMenu {  
-    tUiMenuIndex current;  
     tUiMenuIndex left;
     tUiMenuIndex rigth;
     tUiMenuIndex down;
@@ -33,22 +32,35 @@ void uiMenu_init()
     uiMenuMap[UI_LANCONFIG] = ui_LANIPCONFIG;
     uiMenuMap[UI_WLANCONFIG] = ui_WLANIPCONFIG;
 
-    uiMenu[UI_SPLASH].current = UI_SPLASH;
     uiMenu[UI_SPLASH].left = UI_NONE;
     uiMenu[UI_SPLASH].down = UI_HOME;
     uiMenu[UI_SPLASH].rigth = UI_HOME;
 
-    uiMenu[UI_HOME].current = UI_HOME;
     uiMenu[UI_HOME].left = UI_SPLASH;
     uiMenu[UI_HOME].down = UI_VPNSTATUS;
     uiMenu[UI_HOME].rigth = UI_VPNSTATUS;
 
+    uiMenu[UI_VPNSTATUS].left = UI_HOME;
+    uiMenu[UI_VPNSTATUS].down = UI_WANCONFIG;
+    uiMenu[UI_VPNSTATUS].rigth = UI_WANCONFIG;
+
+    uiMenu[UI_WANCONFIG].left = UI_VPNSTATUS;
+    uiMenu[UI_WANCONFIG].down = UI_LANCONFIG;
+    uiMenu[UI_WANCONFIG].rigth = UI_LANCONFIG;
+
+    uiMenu[UI_LANCONFIG].left = UI_WANCONFIG;
+    uiMenu[UI_LANCONFIG].down = UI_WLANCONFIG;
+    uiMenu[UI_LANCONFIG].rigth = UI_WLANCONFIG;
+
+    uiMenu[UI_WLANCONFIG].left = UI_LANCONFIG;
+    uiMenu[UI_WLANCONFIG].down = UI_NONE;
+    uiMenu[UI_WLANCONFIG].rigth = UI_NONE;
 }
 
 lv_obj_t * uiMenu_getCurrent()
 {
-    if (uiMenu[menuIndex].current < MAX_UI_MENU)
-        return uiMenuMap[uiMenu[menuIndex].current];
+    if (menuIndex < MAX_UI_MENU)
+        return uiMenuMap[menuIndex];
     return NULL;
 }
 

@@ -18,7 +18,6 @@ extern lv_obj_t *ui_Screen1_Label1;
 extern lv_obj_t *ui_boardStatusLabel;
 extern lv_obj_t *ui_uptimeLabel;
 extern lv_obj_t *ui_dateTimeLabel;
-extern lv_obj_t *ui_Home_Button1;
 extern lv_obj_t *ui_VPNSTATUS;
 extern lv_obj_t *ui_Screen1_Panel1;
 extern lv_obj_t *ui_Screen1_Label3;
