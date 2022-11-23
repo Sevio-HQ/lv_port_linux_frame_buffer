@@ -5,7 +5,19 @@ CC ?= gcc
 LVGL_DIR_NAME ?= lvgl
 LVGL_DIR ?= ${shell pwd}
 INCLUDE_FLAGS = -I$(LVGL_DIR)/ui/ -I$(LVGL_DIR)/squareline/
-CFLAGS ?= -O3 -g0 -I$(LVGL_DIR)/ -Wall -Wshadow -Wundef -Wmissing-prototypes -Wall -Wextra -Wno-unused-function -Wno-error=strict-prototypes -Wpointer-arith -fno-strict-aliasing -Wno-error=cpp -Wuninitialized -Wno-unused-parameter -Wno-missing-field-initializers -Wtype-limits -Wsizeof-pointer-memaccess -Wno-format-nonliteral -Wno-cast-qual -Wunreachable-code -Wno-switch-default -Wreturn-type -Wmultichar -Wformat-security -Wno-ignored-qualifiers -Wno-error=pedantic -Wno-sign-compare -Wno-error=missing-prototypes -Wdouble-promotion -Wdeprecated -Wempty-body -Wtype-limits -Wshift-negative-value -Wno-unused-value -Wno-unused-parameter -Wno-missing-field-initializers -Wuninitialized -Wall -Wextra -Wno-unused-parameter -Wno-missing-field-initializers -Wtype-limits -Wsizeof-pointer-memaccess -Wno-format-nonliteral -Wpointer-arith -Wno-cast-qual -Wmissing-prototypes -Wunreachable-code -Wno-switch-default -Wreturn-type -Wmultichar -Wformat-security -Wno-ignored-qualifiers -Wno-sign-compare
+DEFINE_FLAGS = -DLIBUBUS
+LIB_FLAGS += -lubox -lubus
+CFLAGS += -O1 -g3 -I$(LVGL_DIR)/ -Wall -Wshadow -Wundef -Wmissing-prototypes -Wall -Wextra \
+-Wno-unused-function -Wno-error=strict-prototypes -Wpointer-arith -fno-strict-aliasing \
+-Wno-error=cpp -Wuninitialized -Wno-unused-parameter -Wno-missing-field-initializers \
+-Wtype-limits -Wsizeof-pointer-memaccess -Wno-format-nonliteral -Wno-cast-qual \
+-Wunreachable-code -Wno-switch-default -Wreturn-type -Wmultichar -Wformat-security \
+-Wno-ignored-qualifiers -Wno-error=pedantic -Wno-sign-compare -Wno-error=missing-prototypes \
+-Wdouble-promotion -Wdeprecated -Wempty-body -Wtype-limits -Wshift-negative-value -Wno-unused-value \
+-Wno-unused-parameter -Wno-missing-field-initializers -Wuninitialized -Wall -Wextra -Wno-unused-parameter \
+-Wno-missing-field-initializers -Wtype-limits -Wsizeof-pointer-memaccess -Wno-format-nonliteral \
+-Wpointer-arith -Wno-cast-qual -Wmissing-prototypes -Wunreachable-code -Wno-switch-default \
+-Wreturn-type -Wmultichar -Wformat-security -Wno-ignored-qualifiers -Wno-sign-compare
 LDFLAGS ?= -lm
 BIN = ui_sevio
 
@@ -37,15 +49,18 @@ OBJS = $(AOBJS) $(COBJS)
 
 ## MAINOBJ -> OBJFILES
 
-all: default
+all: cenv default
+	
 
 %.o: %.c
-	@$(CC)  $(CFLAGS) $(INCLUDE_FLAGS) -c $< -o $@
+	@$(CC)  $(CFLAGS) $(INCLUDE_FLAGS) $(DEFINE_FLAGS) -c $< -o $@
 	@echo "CC $<"
     
 default: $(AOBJS) $(COBJS) $(MAINOBJ)
-	$(CC) -o $(BIN) $(MAINOBJ) $(AOBJS) $(COBJS) $(LDFLAGS)
+	$(CC) -o $(BIN) $(MAINOBJ) $(AOBJS) $(COBJS) $(LDFLAGS) $(LIB_FLAGS) 
 
 clean: 
 	rm -f $(BIN) $(AOBJS) $(COBJS) $(MAINOBJ)
 
+cenv:
+	@echo $(CFLAGS)
