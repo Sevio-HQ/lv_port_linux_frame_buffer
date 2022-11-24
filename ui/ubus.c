@@ -4,6 +4,7 @@
 #include <unistd.h>
 #include "lvgl/lvgl.h"
 #include "libubox/blob.h"
+#include "ubus.h"
 
 #define MAX_IFNAME_LEN	   256
 #define UBUS_TIMEOUT	   3000 /* 3 sec */
@@ -30,6 +31,21 @@ static const struct blobmsg_policy ifstat_policy[] = {
 	[IFSTAT_ROUTE] = {.name = "route", .type = BLOBMSG_TYPE_ARRAY},
 	[IFSTAT_IPV4] = {.name = "ipv4-address", .type = BLOBMSG_TYPE_ARRAY},
 };
+
+enum {
+	ROUTE_TARGET,
+	ROUTE_MASK,
+	ROUTE_NEXTHOP,
+	ROUTE_SOURCE
+};
+
+static const struct blobmsg_policy route_policy[] = {
+	[ROUTE_TARGET] 	= {.name = "target", .type = BLOBMSG_TYPE_STRING},
+	[ROUTE_MASK] 	= {.name = "mask", .type = BLOBMSG_TYPE_INT32},
+	[ROUTE_NEXTHOP] = {.name = "nexthop", .type = BLOBMSG_TYPE_STRING},
+	[ROUTE_SOURCE]  = {.name = "source", .type = BLOBMSG_TYPE_STRING},
+};
+
 
 enum {
 	IPV4_ADDR,
@@ -96,11 +112,13 @@ static bool ubus_interface_status(const char* name)
  * 	     1 up but no default route
  * 	     2 default route exists
  */
-int ubus_interface_get_status(const char* name, char* device, size_t device_len)
+int ubus_interface_get_status(const char* name, ubus_gui_update_handler_t cb)
 {
 	int ret;
+	char device[MAX_IFNAME_LEN]="";
 	const char* dev = "";
 	const char* route = "";
+	const char* defGw = "";
 	const char* ipv4 = "";
     unsigned long mask = 0;
 	bool ifup = false;
@@ -137,7 +155,7 @@ int ubus_interface_get_status(const char* name, char* device, size_t device_len)
 		ret = -1;
 		goto exit; // error
 	}
-	if (strlen(dev) >= device_len) {
+	if (strlen(dev) >= MAX_IFNAME_LEN) {
 		LV_LOG_ERROR("ubus_interface_get_status: device_len too short");
 		ret = -1;
 		goto exit; // error
@@ -145,30 +163,41 @@ int ubus_interface_get_status(const char* name, char* device, size_t device_len)
 	strcpy(device, dev);
 
 	// routes
-	// if (!tb[IFSTAT_ROUTE]) {
-	// 	ret = 1;
-	// 	goto exit; // up, no route
-	// }
-	
-    // {
-	// 	int len = blobmsg_data_len(tb[IFSTAT_ROUTE]);
-	// 	struct blob_attr* arr = blobmsg_data(tb[IFSTAT_ROUTE]);
-	// 	struct blob_attr* attr;
-	// 	__blob_for_each_attr(attr, arr, len)
-	// 	{
-	// 		struct blob_attr* tb2[ARRAY_SIZE(route_policy)];
-	// 		blobmsg_parse(route_policy, ARRAY_SIZE(route_policy), tb2,
-	// 					blobmsg_data(attr), blobmsg_data_len(attr));
-	// 		if (tb2[ROUTE_TARGET]) {
-	// 			route = blobmsg_get_string(tb2[ROUTE_TARGET]);
-	// 			if (route != NULL && strcmp(route, "0.0.0.0") == 0) {
-	// 				ret = 2;
-	// 				goto exit; // default route found
-	// 			}
-	// 		}
-	// 	}
-	// }
+	//  "route": [
+    //             {
+    //                     "target": "0.0.0.0",
+    //                     "mask": 0,
+    //                     "nexthop": "192.168.178.1",
+    //                     "source": "192.168.178.74/32"
+    //             }
+    //     ],
+	if (tb[IFSTAT_ROUTE]) {
+		int len = blobmsg_data_len(tb[IFSTAT_ROUTE]);
+		struct blob_attr* arr = blobmsg_data(tb[IFSTAT_ROUTE]);
+		struct blob_attr* attr;
+		__blob_for_each_attr(attr, arr, len)
+		{
+			struct blob_attr* tb2[ARRAY_SIZE(route_policy)];
+			blobmsg_parse(route_policy, ARRAY_SIZE(route_policy), tb2,
+						blobmsg_data(attr), blobmsg_data_len(attr));
+			if (tb2[ROUTE_TARGET]) {
+				route = blobmsg_get_string(tb2[ROUTE_TARGET]);
+				if (route != NULL && strcmp(route, "0.0.0.0") == 0) {
+					if (tb2[ROUTE_NEXTHOP]) {
+						defGw = blobmsg_get_string(tb2[ROUTE_NEXTHOP]);
+					}
+				}
+			}
 
+		}
+	}
+
+    // "ipv4-address": [
+    //         {
+    //                 "address": "192.168.178.74",
+    //                 "mask": 24
+    //         }
+    // ],
 	if (tb[IFSTAT_IPV4])
 	{	
 		int len = blobmsg_data_len(tb[IFSTAT_IPV4]);
@@ -184,12 +213,15 @@ int ubus_interface_get_status(const char* name, char* device, size_t device_len)
             if (tb2[IPV4_MASK]) {
 				mask = blobmsg_get_u32(tb2[IPV4_MASK]);
 			}
-
 		}
 	}
 
-	LV_LOG_INFO("stat:%s dev:%s ipv4:%s mask:%d", ifup ? "UP" : "DOWN", device, ipv4, mask);
 exit:
+	LV_LOG_INFO("stat:%s dev:%s ipv4:%s mask:%lu gw:%s", ifup ? "UP" : "DOWN", device, ipv4, mask, defGw);
+	if (cb != NULL)
+	{		
+		cb(ifup, ipv4, mask, defGw);
+	}
 	free(last_result_msg);
 	last_result_msg = NULL;
 	return ret;
@@ -197,23 +229,31 @@ exit:
 
 
 
-void updateInterfaceStatus()
+int updateInterfaceStatus(const char* iface, ubus_gui_update_handler_t cb )
 {
     #ifdef LIBUBUS
-    char device[MAX_IFNAME_LEN];
+
 	const char *ubus_socket = NULL;
 
-	uloop_init();
+	int ret = uloop_init();
+	if (ret < 0) {
+		LV_LOG_ERROR("Could not initialize uloop");
+		return EXIT_FAILURE;
+	}
+
 	ctx = ubus_connect(ubus_socket);
 	if (!ctx) {
-		fprintf(stderr, "Failed to connect to ubus\n");
-		return;
+		LV_LOG_ERROR("Failed to connect to ubus\n");
+		return EXIT_FAILURE;
 	}
+
 	ubus_add_uloop(ctx);
 
-    ubus_interface_get_status("lan", device, MAX_IFNAME_LEN);
-	ubus_interface_get_status("wlan", device, MAX_IFNAME_LEN);
-    ubus_interface_get_status("wan", device, MAX_IFNAME_LEN);
+    ubus_interface_get_status(iface, cb);
+    // ubus_interface_get_status("lan", device, MAX_IFNAME_LEN);
+	// ubus_interface_get_status("wlan", device, MAX_IFNAME_LEN);
+    // ubus_interface_get_status("wan", device, MAX_IFNAME_LEN);
+    // ubus_interface_get_status("ovpn0", device, MAX_IFNAME_LEN);
 
 	ubus_free(ctx);
 	uloop_done();

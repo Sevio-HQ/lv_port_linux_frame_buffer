@@ -15,6 +15,7 @@
 #define ADC_CH_VOLTAGE  4
 #define ADC_CH_CURRENT  5
 #define MAX_FLOAT_STR_SIZE 5
+#define PERIODIC_TIMER_UPDATE 5
 
 uint8_t _temp[MAX_FLOAT_STR_SIZE]="0.0";
 uint8_t  voltage[MAX_FLOAT_STR_SIZE]="0.0";
@@ -249,14 +250,53 @@ int readTempValues()
     return 0;
 }
 
+void updateWanConfig(bool _ifup, const char* _ip, unsigned int _mask, const char* _gw)
+{
+    //lv_label_set_text(ui_WANIPCONFIG_Label2,"IP:  192.168.134.27/24");
+    //lv_label_set_text(ui_WANIPCONFIG_Label3,"GW:  192.168.1.254");
+    lv_label_set_text_fmt(ui_WANIPCONFIG_Label2, "IP:  %s/%d", _ip, _mask);
+    lv_label_set_text_fmt(ui_WANIPCONFIG_Label3, "GW:  %s", _gw);
+}
+
+void updateLanConfig(bool _ifup, const char* _ip, unsigned int _mask, const char* _gw)
+{
+    //lv_label_set_text(ui_WANIPCONFIG_Label10,"IP:  192.168.134.27/24");
+    lv_label_set_text_fmt(ui_WANIPCONFIG_Label10, "IP:  %s/%d", _ip, _mask);
+}
+
+void updateWlanConfig(bool _ifup, const char* _ip, unsigned int _mask, const char* _gw)
+{
+    //lv_label_set_text(ui_WANIPCONFIG_Label6,"IP:  192.168.134.27/24");
+    //lv_label_set_text(ui_WANIPCONFIG_Label7,"GW:  192.168.1.254");
+    lv_label_set_text_fmt(ui_WANIPCONFIG_Label6, "IP:  %s/%d", _ip, _mask);
+    lv_label_set_text_fmt(ui_WANIPCONFIG_Label7, "GW:  %s", _gw);
+}
+
 static int count = 0;
 
 static void timer_sec_cb(lv_timer_t * timer)
 {
-    if (++count < 5)
+    if ((++count > PERIODIC_TIMER_UPDATE)||(_ui_updater_init))
     {
-        updateInterfaceStatus();
-    }else{
+        if ((menuIndex == UI_WANCONFIG)||(_ui_updater_init))
+        {
+            updateInterfaceStatus("wan", updateWanConfig);
+        }
+
+        if ((menuIndex == UI_LANCONFIG)||(_ui_updater_init))
+        {
+            updateInterfaceStatus("lan", updateLanConfig);
+        }
+
+        if ((menuIndex == UI_VPNSTATUS)||(_ui_updater_init))
+        {
+            updateInterfaceStatus("ovpn0", NULL);
+        }
+
+        if ((menuIndex == UI_WLANCONFIG)||(_ui_updater_init))
+        {
+            updateInterfaceStatus("wlan", updateWlanConfig);
+        }
         count = 0;
     }
 
@@ -266,7 +306,6 @@ static void timer_min_cb(lv_timer_t * timer)
 {
     if ((menuIndex == UI_HOME)||(_ui_updater_init))
     {
-        _ui_updater_init = false;
         printLocalTime();
         get_uptime();
 
@@ -283,5 +322,7 @@ void ui_updater_init()
     lv_timer_t * secTimer = lv_timer_create(timer_sec_cb, TIMER_1SEC, lv_scr_act());
     timer_min_cb(minTimer);
     timer_sec_cb(secTimer);
+    // restart init flag
+    if (_ui_updater_init) _ui_updater_init = false;
 }
 
