@@ -1,7 +1,7 @@
 // SquareLine LVGL GENERATED FILE
 // EDITOR VERSION: SquareLine Studio 1.1.1
 // LVGL VERSION: 8.3.3
-// PROJECT: sevio_ui_01
+// PROJECT: sevio_ui_02
 
 #include "ui_helpers.h"
 

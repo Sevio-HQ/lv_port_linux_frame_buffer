@@ -7,7 +7,7 @@
  *      INCLUDES
  *********************/
 #include "lvgl/lvgl.h"
-#include "lvgl/demos/lv_demos.h"
+//#include "lvgl/demos/lv_demos.h"
 #include "lv_drivers/display/fbdev.h"
 #include "lv_drivers/indev/evdev.h"
 #include <unistd.h>
@@ -145,6 +145,7 @@ int main(int argc, char **argv)
     /*Create a Demo*/
     //lv_demo_widgets();
     ui_init ();
+    ui2_init ();
     uiMenu_init();
     ui_updater_init();
 

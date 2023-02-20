@@ -9,6 +9,7 @@
 #include "ui.h"
 #include "time.h"
 #include "ubus.h"
+#include "ui_update.h"
 
 #define TIMER_1MIN  60000
 #define TIMER_1SEC  60*10

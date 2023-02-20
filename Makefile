@@ -28,13 +28,19 @@ MAINSRC = ./main.c
 include $(LVGL_DIR)/lvgl/lvgl.mk
 include $(LVGL_DIR)/lv_drivers/lv_drivers.mk
 
-UI_GEN_SRC = $(LVGL_DIR)/squareline/ui.c \
+UI_GEN_SRC = \
+    $(LVGL_DIR)/squareline/ui.c \
     $(LVGL_DIR)/squareline/ui_img_wifi_img2_png.c \
     $(LVGL_DIR)/squareline/ui_img_wifi_img_png.c \
     $(LVGL_DIR)/squareline/ui_img_eth_img_png.c \
     $(LVGL_DIR)/squareline/ui_img_frecce_d_r_png.c \
     $(LVGL_DIR)/squareline/ui_img_logo_png.c \
-    $(LVGL_DIR)/squareline/ui_helpers.c 
+    $(LVGL_DIR)/squareline/ui_helpers.c \
+    $(LVGL_DIR)/squareline/ui2.c \
+    $(LVGL_DIR)/squareline/ui_img_gps_png.c \
+    $(LVGL_DIR)/squareline/ui_img_mediumsignal_png.c \
+    $(LVGL_DIR)/squareline/ui_img_sim_png.c \
+    $(LVGL_DIR)/squareline/ui2_helpers.c 
 UI_SRC = $(LVGL_DIR)/ui/ui_update.c  $(LVGL_DIR)/ui/ubus.c
 CSRCS +=$(LVGL_DIR)/mouse_cursor_icon.c $(UI_GEN_SRC) $(UI_SRC)
 OBJEXT ?= .o

@@ -57,6 +57,21 @@ static const struct blobmsg_policy ipv4_policy[] = {
 	[IPV4_MASK] = {.name = "mask", .type = BLOBMSG_TYPE_INT32},
 };
 
+enum {
+	IWINFO_SSID,
+	IWINFO_BSSID,
+	IWINFO_MODE,
+	IWINFO_CH,
+};
+
+static const struct blobmsg_policy ifstat_policy[] = {
+	[IWINFO_SSID] = {.name = "ssid", .type = BLOBMSG_TYPE_STRING},
+	[IWINFO_BSSID] = {.name = "bssid", .type = BLOBMSG_TYPE_STRING},
+	[IWINFO_MODE] = {.name = "mode", .type = BLOBMSG_TYPE_STRING},
+	[IWINFO_CH] = {.name = "channel", .type = BLOBMSG_TYPE_INT32},
+};
+
+
 /*** generic result callback: just copies msg to last_result_msg ***/
 
 static struct blob_attr* last_result_msg;
@@ -228,6 +243,34 @@ exit:
 }
 
 
+/*** network interface status ***/
+
+static bool ubus_iwinfo_info(const char* name)
+{
+	uint32_t id;
+	int ret;
+	char idstr[32]="iwinfo";
+
+	// ret = snprintf(idstr, sizeof(idstr), "network.interface.%s", name);
+	// if (ret <= 0 || (unsigned int)ret >= sizeof(idstr)) { // error or truncated
+	// 	return false;
+	// }
+
+	ret = ubus_lookup_id(ctx, idstr, &id);
+	if (ret) {
+		return false;
+	}
+
+	ret = ubus_invoke(ctx, id, "info", NULL, ubus_result_cb, NULL,
+					  UBUS_TIMEOUT);
+	if (ret < 0) {
+		return false;
+	}
+
+	// client needs to free(last_result_msg);
+	return true;
+}
+
 
 int updateInterfaceStatus(const char* iface, ubus_gui_update_handler_t cb )
 {
@@ -259,4 +302,15 @@ int updateInterfaceStatus(const char* iface, ubus_gui_update_handler_t cb )
 	uloop_done();
     #endif
 }
+
+#else
+
+#include "ubus.h"
+// Stub functions
+
+int updateInterfaceStatus(const char* iface, ubus_gui_update_handler_t cb )
+{
+	return 0;
+}
+
 #endif
