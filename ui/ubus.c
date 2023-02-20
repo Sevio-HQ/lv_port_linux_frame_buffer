@@ -64,7 +64,7 @@ enum {
 	IWINFO_CH,
 };
 
-static const struct blobmsg_policy ifstat_policy[] = {
+static const struct blobmsg_policy iwinfo_policy[] = {
 	[IWINFO_SSID] = {.name = "ssid", .type = BLOBMSG_TYPE_STRING},
 	[IWINFO_BSSID] = {.name = "bssid", .type = BLOBMSG_TYPE_STRING},
 	[IWINFO_MODE] = {.name = "mode", .type = BLOBMSG_TYPE_STRING},
