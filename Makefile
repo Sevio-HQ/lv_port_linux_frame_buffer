@@ -4,7 +4,7 @@
 CC ?= gcc
 LVGL_DIR_NAME ?= lvgl
 LVGL_DIR ?= ${shell pwd}
-INCLUDE_FLAGS = -I$(LVGL_DIR)/ui/ -I$(LVGL_DIR)/squareline/
+INCLUDE_FLAGS = -I$(LVGL_DIR)/ui/ -I$(LVGL_DIR)/squareline/ -I$(LVGL_DIR)/squareline2/
 DEFINE_FLAGS = -DLIBUBUS
 LIB_FLAGS += -lubox -lubus
 CFLAGS += -O1 -g3 -I$(LVGL_DIR)/ -Wall -Wshadow -Wundef -Wmissing-prototypes -Wall -Wextra \
@@ -35,12 +35,14 @@ UI_GEN_SRC = \
     $(LVGL_DIR)/squareline/ui_img_eth_img_png.c \
     $(LVGL_DIR)/squareline/ui_img_frecce_d_r_png.c \
     $(LVGL_DIR)/squareline/ui_img_logo_png.c \
+    $(LVGL_DIR)/squareline/ui_img_vpn_png.c \
     $(LVGL_DIR)/squareline/ui_helpers.c \
-    $(LVGL_DIR)/squareline/ui2.c \
-    $(LVGL_DIR)/squareline/ui_img_gps_png.c \
-    $(LVGL_DIR)/squareline/ui_img_mediumsignal_png.c \
-    $(LVGL_DIR)/squareline/ui_img_sim_png.c \
-    $(LVGL_DIR)/squareline/ui2_helpers.c 
+    $(LVGL_DIR)/squareline/ui_comp.c \
+    $(LVGL_DIR)/squareline2/ui2.c \
+    $(LVGL_DIR)/squareline2/ui2_img_gps_png.c \
+    $(LVGL_DIR)/squareline2/ui2_img_mediumsignal_png.c \
+    $(LVGL_DIR)/squareline2/ui2_img_sim_png.c 
+    
 UI_SRC = $(LVGL_DIR)/ui/ui_update.c  $(LVGL_DIR)/ui/ubus.c
 CSRCS +=$(LVGL_DIR)/mouse_cursor_icon.c $(UI_GEN_SRC) $(UI_SRC)
 OBJEXT ?= .o

@@ -54,7 +54,7 @@ LV_IMG_DECLARE( ui_img_gps_png);   // assets/gps.png
 
 
 
-void ui_init(void);
+void ui2_init(void);
 
 #ifdef __cplusplus
 } /*extern "C"*/
