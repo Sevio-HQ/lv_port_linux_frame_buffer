@@ -6,7 +6,7 @@ LVGL_DIR_NAME ?= lvgl
 LVGL_DIR ?= ${shell pwd}
 INCLUDE_FLAGS = -I$(LVGL_DIR)/ui/ -I$(LVGL_DIR)/squareline/ -I$(LVGL_DIR)/squareline2/
 DEFINE_FLAGS = -DLIBUBUS
-LIB_FLAGS += -lubox -lubus
+LIB_FLAGS += -lubox -lubus -lgps
 CFLAGS += -O1 -g3 -I$(LVGL_DIR)/ -Wall -Wshadow -Wundef -Wmissing-prototypes -Wall -Wextra \
 -Wno-unused-function -Wno-error=strict-prototypes -Wpointer-arith -fno-strict-aliasing \
 -Wno-error=cpp -Wuninitialized -Wno-unused-parameter -Wno-missing-field-initializers \
@@ -43,7 +43,7 @@ UI_GEN_SRC = \
     $(LVGL_DIR)/squareline2/ui2_img_mediumsignal_png.c \
     $(LVGL_DIR)/squareline2/ui2_img_sim_png.c 
     
-UI_SRC = $(LVGL_DIR)/ui/ui_update.c  $(LVGL_DIR)/ui/ubus.c
+UI_SRC = $(LVGL_DIR)/ui/ui_update.c  $(LVGL_DIR)/ui/ubus.c $(LVGL_DIR)/ui/ui_gps.c $(LVGL_DIR)/ui/gpsdclient.c
 CSRCS +=$(LVGL_DIR)/mouse_cursor_icon.c $(UI_GEN_SRC) $(UI_SRC)
 OBJEXT ?= .o
 

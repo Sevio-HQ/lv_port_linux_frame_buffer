@@ -17,7 +17,10 @@
 #include "ui.h"
 #include "ui_update.h"
 #if USE_EVDEV != 0 
+#ifdef EMULINUX
+#else
 #include "linux/input.h"
+#endif
 #endif
 
 /*********************

@@ -7,6 +7,7 @@
 #include <sys/ioctl.h>
 #include <math.h>
 #include "ui.h"
+#include "ui2.h"
 #include "time.h"
 #include "ubus.h"
 #include "ui_update.h"
@@ -31,6 +32,8 @@ typedef enum eUiMenuIndex {
     UI_WANCONFIG, 
     UI_LANCONFIG, 
     UI_WLANCONFIG, 
+    UI_GPSCONFIG,
+    UI_GSMCONFIG,
     MAX_UI_MENU
 } tUiMenuIndex;
 
@@ -53,7 +56,8 @@ void uiMenu_init()
     uiMenuMap[UI_VPNSTATUS] = ui_VPNSTATUS;
     uiMenuMap[UI_WANCONFIG] = ui_WANIPCONFIG;
     uiMenuMap[UI_LANCONFIG] = ui_LANIPCONFIG;
-    uiMenuMap[UI_WLANCONFIG] = ui_WLANIPCONFIG;
+    uiMenuMap[UI_GPSCONFIG] = ui_GPS_Screen;
+    uiMenuMap[UI_GSMCONFIG] = ui_MOBILE;
 
     uiMenu[UI_SPLASH].left = UI_NONE;
     uiMenu[UI_SPLASH].down = UI_HOME;
@@ -76,8 +80,16 @@ void uiMenu_init()
     uiMenu[UI_LANCONFIG].rigth = UI_WLANCONFIG;
 
     uiMenu[UI_WLANCONFIG].left = UI_LANCONFIG;
-    uiMenu[UI_WLANCONFIG].down = UI_NONE;
-    uiMenu[UI_WLANCONFIG].rigth = UI_NONE;
+    uiMenu[UI_WLANCONFIG].down = UI_GPSCONFIG;
+    uiMenu[UI_WLANCONFIG].rigth = UI_GPSCONFIG;
+
+    uiMenu[UI_GPSCONFIG].left = UI_WLANCONFIG;
+    uiMenu[UI_GPSCONFIG].down = UI_GPSCONFIG;
+    uiMenu[UI_GPSCONFIG].rigth = UI_GPSCONFIG;
+
+    uiMenu[UI_GSMCONFIG].left = UI_GPSCONFIG;
+    uiMenu[UI_GSMCONFIG].down = UI_NONE;
+    uiMenu[UI_GSMCONFIG].rigth = UI_NONE;
 }
 
 lv_obj_t * uiMenu_getCurrent()
