@@ -15,6 +15,7 @@
 #include <time.h>
 #include <sys/time.h>
 #include "ui.h"
+#include "ui2.h"
 #include "ui_update.h"
 #if USE_EVDEV != 0 
 #ifdef EMULINUX

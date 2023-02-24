@@ -49,6 +49,9 @@ tUiMenu uiMenu[MAX_UI_MENU] = { };
 lv_obj_t *  uiMenuMap[MAX_UI_MENU] = { };
 tUiMenuIndex menuIndex = UI_SPLASH;
 
+void getGpsData();
+void gpsDataInit();
+
 void uiMenu_init()
 {
     uiMenuMap[UI_SPLASH] = ui_Splash;
@@ -56,6 +59,7 @@ void uiMenu_init()
     uiMenuMap[UI_VPNSTATUS] = ui_VPNSTATUS;
     uiMenuMap[UI_WANCONFIG] = ui_WANIPCONFIG;
     uiMenuMap[UI_LANCONFIG] = ui_LANIPCONFIG;
+    uiMenuMap[UI_WLANCONFIG] = ui_WLANIPCONFIG;
     uiMenuMap[UI_GPSCONFIG] = ui_GPS_Screen;
     uiMenuMap[UI_GSMCONFIG] = ui_MOBILE;
 
@@ -84,8 +88,8 @@ void uiMenu_init()
     uiMenu[UI_WLANCONFIG].rigth = UI_GPSCONFIG;
 
     uiMenu[UI_GPSCONFIG].left = UI_WLANCONFIG;
-    uiMenu[UI_GPSCONFIG].down = UI_GPSCONFIG;
-    uiMenu[UI_GPSCONFIG].rigth = UI_GPSCONFIG;
+    uiMenu[UI_GPSCONFIG].down = UI_GSMCONFIG;
+    uiMenu[UI_GPSCONFIG].rigth = UI_GSMCONFIG;
 
     uiMenu[UI_GSMCONFIG].left = UI_GPSCONFIG;
     uiMenu[UI_GSMCONFIG].down = UI_NONE;
@@ -326,6 +330,12 @@ static void timer_min_cb(lv_timer_t * timer)
         readTempValues();
         lv_label_set_text_fmt(ui_boardStatusLabel, "%sV / %sA / %s°C", voltage, current, _temp);
         lv_obj_invalidate(timer->user_data);
+    }
+    
+    if ((menuIndex == UI_GPSCONFIG)||(_ui_updater_init))
+    {
+        if (_ui_updater_init) gpsDataInit();
+        getGpsData();
     }
 }
     

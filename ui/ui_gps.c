@@ -37,12 +37,12 @@ static void update_lcd(struct gps_data_t *gpsdata)
                 "widget_set gpsd one 1 1 {Lat: %s %c}\n", s,
                 (gpsdata->fix.latitude < 0) ? 'S' : 'N');
 
-        LV_LOG_INFO(tmpbuf);
+        LV_LOG_INFO("%s",tmpbuf);
         s = deg_to_str(deg_type, gpsdata->fix.longitude);
         snprintf(tmpbuf, sizeof(tmpbuf) - 1,
                 "{Lon: %s %c }\n", 
                 s,(gpsdata->fix.longitude < 0) ? 'W' : 'E');
-        LV_LOG_INFO(tmpbuf);
+        LV_LOG_INFO("%s",tmpbuf);
   }
     if (gpsdata->fix.mode == MODE_3D) {
         snprintf(tmpbuf, sizeof(tmpbuf) - 1,
@@ -51,7 +51,7 @@ static void update_lcd(struct gps_data_t *gpsdata)
     }
 }
 
-void getGpsData()
+void gpsDataInit()
 {
     gpsd_source_spec(NULL, &source);
     LV_LOG_INFO("GPSD server running %s:%s", source.server, source.port);
@@ -67,15 +67,26 @@ void getGpsData()
     if (source.device != NULL)
         flags |= WATCH_DEVICE;
     (void)gps_stream(&gpsdata, flags, source.device);
+}
 
-    for (;;) { /* heart of the client */
+void getGpsData()
+{
+     LV_LOG_INFO("GPSD get data...");
+    //for (;;) { /* heart of the client */
         if (!gps_waiting(&gpsdata, 50000000)) {
             LV_LOG_ERROR("lcdgps: error while waiting\n");
             return;
         } else {
-            (void)gps_read(&gpsdata, NULL, 0);
-            update_lcd(&gpsdata);
+            LV_LOG_INFO("GPSD read data...");  
+
+            int status = gps_read(&gpsdata, NULL, 0);
+            if (status == 0)
+            {
+                update_lcd(&gpsdata);
+            }else{
+                LV_LOG_ERROR("GPS read failed %d", status);
+            }
         }
 
-    }
+    //}
 }
