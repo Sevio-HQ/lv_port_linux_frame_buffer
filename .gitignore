@@ -56,3 +56,12 @@ squareline/backup/**
 squareline2/CMakefiles/**
 squareline2/lv_drivers/**
 squareline2/lvgl/**
+squareline2/Makefile
+CMakeCache.txt
+cmake*
+*.spj
+*.sll
+*.code-workspace
+*.diff
+*.ecomp
+*.log

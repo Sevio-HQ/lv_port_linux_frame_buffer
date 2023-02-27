@@ -334,7 +334,7 @@ static void timer_min_cb(lv_timer_t * timer)
     
     if ((menuIndex == UI_GPSCONFIG)||(_ui_updater_init))
     {
-        if (_ui_updater_init) gpsDataInit();
+        gpsDataInit();
         getGpsData();
     }
 }
