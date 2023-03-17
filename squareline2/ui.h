@@ -26,7 +26,11 @@ extern lv_obj_t *ui_MOBILE_APN_label;
 extern lv_obj_t *ui_MOBILE_operator_Value;
 extern lv_obj_t *ui_MOBILE_APN__Value;
 extern lv_obj_t *ui_MOBILE_Image1;
-extern lv_obj_t *ui_MOBILE_Image2;
+extern lv_obj_t *ui_MOBILE_Signal1;
+extern lv_obj_t *ui_MOBILE_Signal2;
+extern lv_obj_t *ui_MOBILE_Signal3;
+extern lv_obj_t *ui_MOBILE_Signal4;
+extern lv_obj_t *ui_MOBILE_Signal5;
 extern lv_obj_t *ui_GPS_Screen;
 extern lv_obj_t *ui_GPS_label;
 extern lv_obj_t *ui_GPS_Panel3;
@@ -48,13 +52,17 @@ extern lv_obj_t *ui_GPS_altitude_label1;
 
 LV_IMG_DECLARE( ui_img_frecce_d_r_png);   // assets/frecce_d_r.png
 LV_IMG_DECLARE( ui_img_sim_png);   // assets/sim.png
-LV_IMG_DECLARE( ui_img_mediumsignal_png);   // assets/MediumSignal.png
+LV_IMG_DECLARE( ui_img_1_png);   // assets/1.png
+LV_IMG_DECLARE( ui_img_2_png);   // assets/2.png
+LV_IMG_DECLARE( ui_img_3_png);   // assets/3.png
+LV_IMG_DECLARE( ui_img_4_png);   // assets/4.png
+LV_IMG_DECLARE( ui_img_5_png);   // assets/5.png
 LV_IMG_DECLARE( ui_img_gps_png);   // assets/gps.png
 
 
 
 
-void ui2_init(void);
+void ui_init(void);
 
 #ifdef __cplusplus
 } /*extern "C"*/

@@ -39,11 +39,16 @@ UI_GEN_SRC = \
     $(LVGL_DIR)/squareline/ui_helpers.c \
     $(LVGL_DIR)/squareline/ui_comp.c \
     $(LVGL_DIR)/squareline2/ui2.c \
-    $(LVGL_DIR)/squareline2/ui2_img_gps_png.c \
-    $(LVGL_DIR)/squareline2/ui2_img_mediumsignal_png.c \
-    $(LVGL_DIR)/squareline2/ui2_img_sim_png.c 
+    $(LVGL_DIR)/squareline2/ui_img_gps_png.c \
+    $(LVGL_DIR)/squareline2/ui_img_mediumsignal_png.c \
+    $(LVGL_DIR)/squareline2/ui_img_sim_png.c \
+    $(LVGL_DIR)/squareline2/ui_img_1_png.c \
+    $(LVGL_DIR)/squareline2/ui_img_2_png.c \
+    $(LVGL_DIR)/squareline2/ui_img_3_png.c \
+    $(LVGL_DIR)/squareline2/ui_img_4_png.c \
+    $(LVGL_DIR)/squareline2/ui_img_5_png.c 
     
-UI_SRC = $(LVGL_DIR)/ui/ui_update.c  $(LVGL_DIR)/ui/ubus.c $(LVGL_DIR)/ui/ui_gps.c $(LVGL_DIR)/ui/gpsdclient.c
+UI_SRC = $(LVGL_DIR)/ui/ui_update.c  $(LVGL_DIR)/ui/ubus.c $(LVGL_DIR)/ui/ui_gps.c $(LVGL_DIR)/ui/ui_gsm.c $(LVGL_DIR)/ui/gpsdclient.c
 CSRCS +=$(LVGL_DIR)/mouse_cursor_icon.c $(UI_GEN_SRC) $(UI_SRC)
 OBJEXT ?= .o
 

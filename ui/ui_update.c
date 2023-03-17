@@ -24,6 +24,10 @@ uint8_t  voltage[MAX_FLOAT_STR_SIZE]="0.0";
 uint8_t  current[MAX_FLOAT_STR_SIZE]="0.0";
 static bool _ui_updater_init = true;
 
+void refreshGPS();
+void ui_gsm_update();
+void ui_gsm_init();
+
 typedef enum eUiMenuIndex {
     UI_NONE, 
     UI_SPLASH, 
@@ -37,11 +41,13 @@ typedef enum eUiMenuIndex {
     MAX_UI_MENU
 } tUiMenuIndex;
 
+typedef void (*RefreshUI)();
 
 typedef struct sUiMenu {  
     tUiMenuIndex left;
     tUiMenuIndex rigth;
     tUiMenuIndex down;
+    RefreshUI refresh;
 } tUiMenu;
 
 
@@ -90,10 +96,12 @@ void uiMenu_init()
     uiMenu[UI_GPSCONFIG].left = UI_WLANCONFIG;
     uiMenu[UI_GPSCONFIG].down = UI_GSMCONFIG;
     uiMenu[UI_GPSCONFIG].rigth = UI_GSMCONFIG;
+    uiMenu[UI_GPSCONFIG].refresh = refreshGPS;
 
     uiMenu[UI_GSMCONFIG].left = UI_GPSCONFIG;
     uiMenu[UI_GSMCONFIG].down = UI_NONE;
     uiMenu[UI_GSMCONFIG].rigth = UI_NONE;
+
 }
 
 lv_obj_t * uiMenu_getCurrent()
@@ -101,6 +109,11 @@ lv_obj_t * uiMenu_getCurrent()
     if (menuIndex < MAX_UI_MENU)
         return uiMenuMap[menuIndex];
     return NULL;
+}
+
+void uiRefreshMenu()
+{
+    if (uiMenu[menuIndex].refresh) uiMenu[menuIndex].refresh();
 }
 
 void uiMenu_right()
@@ -127,6 +140,7 @@ void uiMenu_down()
 void uiMenu_load()
 {
     lv_disp_load_scr( uiMenu_getCurrent() );
+    uiRefreshMenu();
 }
 
 void floatToStr(uint8_t *out, float x,int decimalPoint)
@@ -337,6 +351,12 @@ static void timer_min_cb(lv_timer_t * timer)
         gpsDataInit();
         getGpsData();
     }
+    if ((menuIndex == UI_GSMCONFIG)||(_ui_updater_init))
+    {
+        if (_ui_updater_init) ui_gsm_init();
+        ui_gsm_update();
+    }
+
 }
     
 void ui_updater_init()

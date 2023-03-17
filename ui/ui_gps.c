@@ -21,7 +21,17 @@ typedef struct myGpsData {
     int     nr_sat;
 }tMyGpsData;
 
-
+static void default_lcd()
+{
+    lv_label_set_text(ui_GPS_Label12,"NOT FIXED");
+    lv_obj_set_style_bg_color(ui_GPS_Panel3, lv_color_hex(0xf3e32a), LV_PART_MAIN | LV_STATE_DEFAULT );
+    lv_obj_set_style_border_color(ui_GPS_Panel3, lv_color_hex(0xf3e32a), LV_PART_MAIN | LV_STATE_DEFAULT );
+    lv_label_set_text(ui_GPS_Latitude_label,"--");
+    lv_label_set_text(ui_GPS_Longitude_label, "--");
+    lv_label_set_text(ui_GPS_altitude_label, "--");
+    lv_label_set_text_fmt(ui_GPS_LastFix_label, "--");
+    lv_label_set_text(ui_GPS_altitude_label1, "0/0");
+}
 
 // This gets called once for each new sentence.
 static int update_lcd(struct gps_data_t *gpsdata)
@@ -31,6 +41,8 @@ static int update_lcd(struct gps_data_t *gpsdata)
   int result = -1;
 
  // Get our location in Maidenhead.
+  if (!gpsdata) return result;
+  
   gridsquare = maidenhead(gpsdata->fix.latitude,gpsdata->fix.longitude);
 
   // Fill in the latitude and longitude.
@@ -58,21 +70,26 @@ static int update_lcd(struct gps_data_t *gpsdata)
 
         struct tm tm = *localtime(&gpsdata->fix.time.tv_sec);
         lv_label_set_text_fmt(ui_GPS_LastFix_label, "%02d:%02d:%02d", tm.tm_hour + (tm.tm_isdst==1 ? 1:0), tm.tm_min, tm.tm_sec);
+        LV_LOG_INFO("%02d:%02d:%02d", tm.tm_hour + (tm.tm_isdst==1 ? 1:0), tm.tm_min, tm.tm_sec);
 
-        snprintf(tmpbuf, sizeof(tmpbuf) - 1, "%d/%d", gpsdata->satellites_visible, gpsdata->satellites_used);
+        int i; int _used = 0;
+        for(i=0;i<gpsdata->satellites_visible;i++) {
+            LV_LOG_INFO("PRN %3d az %5.1f el %4.1f u:%d\n",
+                gpsdata->skyview[i].PRN,
+                 gpsdata->skyview[i].azimuth,
+                 gpsdata->skyview[i].elevation, 
+                 gpsdata->skyview[i].used);
+            if (gpsdata->skyview[i].used) {
+                ++_used;
+          }
+      }
+        snprintf(tmpbuf, sizeof(tmpbuf) - 1, "%d/%d", gpsdata->satellites_visible, _used /* gpsdata->satellites_used*/);
         lv_label_set_text(ui_GPS_altitude_label1, tmpbuf);
-        LV_LOG_INFO("Seen/Used: %d/%d",gpsdata->satellites_visible, gpsdata->satellites_used);
+        LV_LOG_INFO("Seen/Used: %d/%d(%d)",gpsdata->satellites_visible, gpsdata->satellites_used, _used);
 
         result = 0;
   }else{
-    lv_label_set_text(ui_GPS_Label12,"NOT FIXED");
-    lv_obj_set_style_bg_color(ui_GPS_Panel3, lv_color_hex(0xf3e32a), LV_PART_MAIN | LV_STATE_DEFAULT );
-    lv_obj_set_style_border_color(ui_GPS_Panel3, lv_color_hex(0xf3e32a), LV_PART_MAIN | LV_STATE_DEFAULT );
-    lv_label_set_text(ui_GPS_Latitude_label,"--");
-    lv_label_set_text(ui_GPS_Longitude_label, "--");
-    lv_label_set_text(ui_GPS_altitude_label, "--");
-    lv_label_set_text_fmt(ui_GPS_LastFix_label, "--");
-    lv_label_set_text(ui_GPS_altitude_label1, "0/0");
+    default_lcd();
   }
 
   return result;
@@ -81,11 +98,13 @@ static int update_lcd(struct gps_data_t *gpsdata)
 void gpsDataInit()
 {
     gpsd_source_spec(NULL, &source);
-    LV_LOG_INFO("GPSD server running %s:%s", source.server, source.port);
+    LV_LOG_INFO("GPSD server running %s:%s dev:%s", 
+        source.server, source.port, source.device);
     
     /* Open the stream to gpsd. */
     if (gps_open(source.server, source.port, &gpsdata) != 0) {
         LV_LOG_ERROR("Cannot open gps source\n");
+        default_lcd();
         return;
     }
 
@@ -99,17 +118,18 @@ void gpsDataInit()
 void getGpsData()
 {
     int result = -1;
+    int maxRetry = 5;
      LV_LOG_INFO("GPSD get data...");
     //for (;;) { /* heart of the client */
     do {
-        if (!gps_waiting(&gpsdata, 50000000)) {
-            LV_LOG_ERROR("lcdgps: error while waiting\n");
+        if (!gps_waiting(&gpsdata, 2000000)) {
+            LV_LOG_ERROR("getGpsData: error while waiting\n");
             return;
         } else {
             LV_LOG_INFO("GPSD read data...");  
 
             int status = gps_read(&gpsdata, NULL, 0);
-            if (status > 0)
+            if (status >= 0)
             {
                 result = update_lcd(&gpsdata);
             }else{
@@ -117,8 +137,14 @@ void getGpsData()
             }
         }
 
-    }while (result != 0);
+    }while((result != 0) && (--maxRetry));
     // Close the GPS
     gps_stream(&gpsdata, WATCH_DISABLE, NULL);
     gps_close (&gpsdata);
+}
+
+void refreshGPS()
+{
+    gpsDataInit();
+    getGpsData();
 }
