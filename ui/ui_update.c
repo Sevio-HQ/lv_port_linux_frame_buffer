@@ -23,6 +23,7 @@ uint8_t _temp[MAX_FLOAT_STR_SIZE]="0.0";
 uint8_t  voltage[MAX_FLOAT_STR_SIZE]="0.0";
 uint8_t  current[MAX_FLOAT_STR_SIZE]="0.0";
 static bool _ui_updater_init = true;
+bool wwan_up = false;
 
 void refreshGPS();
 void ui_gsm_update();
@@ -101,6 +102,7 @@ void uiMenu_init()
     uiMenu[UI_GSMCONFIG].left = UI_GPSCONFIG;
     uiMenu[UI_GSMCONFIG].down = UI_NONE;
     uiMenu[UI_GSMCONFIG].rigth = UI_NONE;
+    uiMenu[UI_GSMCONFIG].refresh = ui_gsm_update;
 
 }
 
@@ -303,6 +305,13 @@ void updateWlanConfig(bool _ifup, const char* _ip, unsigned int _mask, const cha
     lv_label_set_text_fmt(ui_WANIPCONFIG_Label7, "GW:  %s", _gw);
 }
 
+void updateWwanConfig(bool _ifup, const char* _ip, unsigned int _mask, const char* _gw)
+{
+    LV_LOG_INFO("WWAN ip:%s", _ip);
+    if (strlen(_ip) > 0) wwan_up = true;
+    else wwan_up = false;
+}
+
 static int count = 0;
 
 static void timer_sec_cb(lv_timer_t * timer)
@@ -327,6 +336,11 @@ static void timer_sec_cb(lv_timer_t * timer)
         if ((menuIndex == UI_WLANCONFIG)||(_ui_updater_init))
         {
             updateInterfaceStatus("wlan", updateWlanConfig);
+        }
+
+        if ((menuIndex == UI_GSMCONFIG)||(_ui_updater_init))
+        {
+            updateInterfaceStatus("wwan", updateWwanConfig);
         }
         count = 0;
     }

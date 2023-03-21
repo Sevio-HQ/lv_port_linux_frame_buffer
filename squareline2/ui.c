@@ -10,9 +10,9 @@
 ///////////////////// VARIABLES ////////////////////
 lv_obj_t *ui_MOBILE;
 lv_obj_t *ui_Screen2_Label1;
-lv_obj_t *ui_WANIPCONFIG_Panel2;
+lv_obj_t *ui_MobileStatus_Panel;
 lv_obj_t *ui_MOBILE_Status_label;
-lv_obj_t *ui_WANIPCONFIG_Label4;
+lv_obj_t *ui_MobileStatus_Label4;
 lv_obj_t *ui_WANIPCONFIG_Image2;
 lv_obj_t *ui_WANIPCONFIG_Button_RG;
 lv_obj_t *ui_WANIPCONFIG_ButtonDN;
@@ -27,6 +27,7 @@ lv_obj_t *ui_MOBILE_Signal2;
 lv_obj_t *ui_MOBILE_Signal3;
 lv_obj_t *ui_MOBILE_Signal4;
 lv_obj_t *ui_MOBILE_Signal5;
+lv_obj_t *ui_MOBILE_NO_Signal;
 lv_obj_t *ui_GPS_Screen;
 lv_obj_t *ui_GPS_label;
 lv_obj_t *ui_GPS_Panel3;
@@ -79,18 +80,18 @@ lv_obj_set_style_text_font(ui_Screen2_Label1, &lv_font_montserrat_12, LV_PART_MA
 lv_obj_set_style_bg_color(ui_Screen2_Label1, lv_color_hex(0x5A5D5B), LV_PART_MAIN | LV_STATE_DEFAULT );
 lv_obj_set_style_bg_opa(ui_Screen2_Label1, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
 
-ui_WANIPCONFIG_Panel2 = lv_obj_create(ui_MOBILE);
-lv_obj_set_width( ui_WANIPCONFIG_Panel2, 77);
-lv_obj_set_height( ui_WANIPCONFIG_Panel2, 13);
-lv_obj_set_x( ui_WANIPCONFIG_Panel2, 23 );
-lv_obj_set_y( ui_WANIPCONFIG_Panel2, -33 );
-lv_obj_set_align( ui_WANIPCONFIG_Panel2, LV_ALIGN_CENTER );
-lv_obj_clear_flag( ui_WANIPCONFIG_Panel2, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
-lv_obj_set_style_radius(ui_WANIPCONFIG_Panel2, 5, LV_PART_MAIN| LV_STATE_DEFAULT);
-lv_obj_set_style_bg_color(ui_WANIPCONFIG_Panel2, lv_color_hex(0x11F308), LV_PART_MAIN | LV_STATE_DEFAULT );
-lv_obj_set_style_bg_opa(ui_WANIPCONFIG_Panel2, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
-lv_obj_set_style_border_color(ui_WANIPCONFIG_Panel2, lv_color_hex(0x11F308), LV_PART_MAIN | LV_STATE_DEFAULT );
-lv_obj_set_style_border_opa(ui_WANIPCONFIG_Panel2, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
+ui_MobileStatus_Panel = lv_obj_create(ui_MOBILE);
+lv_obj_set_width( ui_MobileStatus_Panel, 77);
+lv_obj_set_height( ui_MobileStatus_Panel, 13);
+lv_obj_set_x( ui_MobileStatus_Panel, 23 );
+lv_obj_set_y( ui_MobileStatus_Panel, -33 );
+lv_obj_set_align( ui_MobileStatus_Panel, LV_ALIGN_CENTER );
+lv_obj_clear_flag( ui_MobileStatus_Panel, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
+lv_obj_set_style_radius(ui_MobileStatus_Panel, 5, LV_PART_MAIN| LV_STATE_DEFAULT);
+lv_obj_set_style_bg_color(ui_MobileStatus_Panel, lv_color_hex(0x11F308), LV_PART_MAIN | LV_STATE_DEFAULT );
+lv_obj_set_style_bg_opa(ui_MobileStatus_Panel, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
+lv_obj_set_style_border_color(ui_MobileStatus_Panel, lv_color_hex(0x11F308), LV_PART_MAIN | LV_STATE_DEFAULT );
+lv_obj_set_style_border_opa(ui_MobileStatus_Panel, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 ui_MOBILE_Status_label = lv_label_create(ui_MOBILE);
 lv_obj_set_width( ui_MOBILE_Status_label, LV_SIZE_CONTENT);  /// 1
@@ -103,16 +104,16 @@ lv_obj_set_style_text_color(ui_MOBILE_Status_label, lv_color_hex(0x808080), LV_P
 lv_obj_set_style_text_opa(ui_MOBILE_Status_label, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
 lv_obj_set_style_text_font(ui_MOBILE_Status_label, &lv_font_montserrat_10, LV_PART_MAIN| LV_STATE_DEFAULT);
 
-ui_WANIPCONFIG_Label4 = lv_label_create(ui_MOBILE);
-lv_obj_set_width( ui_WANIPCONFIG_Label4, LV_SIZE_CONTENT);  /// 1
-lv_obj_set_height( ui_WANIPCONFIG_Label4, LV_SIZE_CONTENT);   /// 1
-lv_obj_set_x( ui_WANIPCONFIG_Label4, 25 );
-lv_obj_set_y( ui_WANIPCONFIG_Label4, -33 );
-lv_obj_set_align( ui_WANIPCONFIG_Label4, LV_ALIGN_CENTER );
-lv_label_set_text(ui_WANIPCONFIG_Label4,"REGISTERED");
-lv_obj_set_style_text_color(ui_WANIPCONFIG_Label4, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT );
-lv_obj_set_style_text_opa(ui_WANIPCONFIG_Label4, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
-lv_obj_set_style_text_font(ui_WANIPCONFIG_Label4, &lv_font_montserrat_10, LV_PART_MAIN| LV_STATE_DEFAULT);
+ui_MobileStatus_Label4 = lv_label_create(ui_MOBILE);
+lv_obj_set_width( ui_MobileStatus_Label4, LV_SIZE_CONTENT);  /// 1
+lv_obj_set_height( ui_MobileStatus_Label4, LV_SIZE_CONTENT);   /// 1
+lv_obj_set_x( ui_MobileStatus_Label4, 25 );
+lv_obj_set_y( ui_MobileStatus_Label4, -33 );
+lv_obj_set_align( ui_MobileStatus_Label4, LV_ALIGN_CENTER );
+lv_label_set_text(ui_MobileStatus_Label4,"REGISTERED");
+lv_obj_set_style_text_color(ui_MobileStatus_Label4, lv_color_hex(0x211E1E), LV_PART_MAIN | LV_STATE_DEFAULT );
+lv_obj_set_style_text_opa(ui_MobileStatus_Label4, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
+lv_obj_set_style_text_font(ui_MobileStatus_Label4, &lv_font_montserrat_10, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 ui_WANIPCONFIG_Image2 = lv_img_create(ui_MOBILE);
 lv_img_set_src(ui_WANIPCONFIG_Image2, &ui_img_frecce_d_r_png);
@@ -259,6 +260,16 @@ lv_obj_set_align( ui_MOBILE_Signal5, LV_ALIGN_CENTER );
 lv_obj_add_flag( ui_MOBILE_Signal5, LV_OBJ_FLAG_ADV_HITTEST );   /// Flags
 lv_obj_clear_flag( ui_MOBILE_Signal5, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
 
+ui_MOBILE_NO_Signal = lv_img_create(ui_MOBILE);
+lv_img_set_src(ui_MOBILE_NO_Signal, &ui_img_nosignal_png);
+lv_obj_set_width( ui_MOBILE_NO_Signal, LV_SIZE_CONTENT);  /// 1
+lv_obj_set_height( ui_MOBILE_NO_Signal, LV_SIZE_CONTENT);   /// 1
+lv_obj_set_x( ui_MOBILE_NO_Signal, 38 );
+lv_obj_set_y( ui_MOBILE_NO_Signal, 27 );
+lv_obj_set_align( ui_MOBILE_NO_Signal, LV_ALIGN_CENTER );
+lv_obj_add_flag( ui_MOBILE_NO_Signal, LV_OBJ_FLAG_ADV_HITTEST );   /// Flags
+lv_obj_clear_flag( ui_MOBILE_NO_Signal, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
+
 }
 void ui_GPS_Screen_screen_init(void)
 {
@@ -311,7 +322,7 @@ lv_obj_set_x( ui_GPS_Label12, 23 );
 lv_obj_set_y( ui_GPS_Label12, -36 );
 lv_obj_set_align( ui_GPS_Label12, LV_ALIGN_CENTER );
 lv_label_set_text(ui_GPS_Label12,"REGISTERED");
-lv_obj_set_style_text_color(ui_GPS_Label12, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT );
+lv_obj_set_style_text_color(ui_GPS_Label12, lv_color_hex(0x211E1E), LV_PART_MAIN | LV_STATE_DEFAULT );
 lv_obj_set_style_text_opa(ui_GPS_Label12, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
 lv_obj_set_style_text_font(ui_GPS_Label12, &lv_font_montserrat_10, LV_PART_MAIN| LV_STATE_DEFAULT);
 

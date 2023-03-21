@@ -14,9 +14,9 @@ extern "C" {
 
 extern lv_obj_t *ui_MOBILE;
 extern lv_obj_t *ui_Screen2_Label1;
-extern lv_obj_t *ui_WANIPCONFIG_Panel2;
+extern lv_obj_t *ui_MobileStatus_Panel;
 extern lv_obj_t *ui_MOBILE_Status_label;
-extern lv_obj_t *ui_WANIPCONFIG_Label4;
+extern lv_obj_t *ui_MobileStatus_Label4;
 extern lv_obj_t *ui_WANIPCONFIG_Image2;
 extern lv_obj_t *ui_WANIPCONFIG_Button_RG;
 extern lv_obj_t *ui_WANIPCONFIG_ButtonDN;
@@ -31,6 +31,7 @@ extern lv_obj_t *ui_MOBILE_Signal2;
 extern lv_obj_t *ui_MOBILE_Signal3;
 extern lv_obj_t *ui_MOBILE_Signal4;
 extern lv_obj_t *ui_MOBILE_Signal5;
+extern lv_obj_t *ui_MOBILE_NO_Signal;
 extern lv_obj_t *ui_GPS_Screen;
 extern lv_obj_t *ui_GPS_label;
 extern lv_obj_t *ui_GPS_Panel3;
@@ -57,6 +58,7 @@ LV_IMG_DECLARE( ui_img_2_png);   // assets/2.png
 LV_IMG_DECLARE( ui_img_3_png);   // assets/3.png
 LV_IMG_DECLARE( ui_img_4_png);   // assets/4.png
 LV_IMG_DECLARE( ui_img_5_png);   // assets/5.png
+LV_IMG_DECLARE( ui_img_nosignal_png);   // assets/Nosignal.png
 LV_IMG_DECLARE( ui_img_gps_png);   // assets/gps.png
 
 
