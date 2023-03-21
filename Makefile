@@ -47,7 +47,7 @@ UI_GEN_SRC = \
     $(LVGL_DIR)/squareline2/ui_img_3_png.c \
     $(LVGL_DIR)/squareline2/ui_img_4_png.c \
     $(LVGL_DIR)/squareline2/ui_img_5_png.c \
-    $(LVGL_DIR)/squareline2/ui_img_nosginal_png.c 
+    $(LVGL_DIR)/squareline2/ui_img_nosignal_png.c 
     
 UI_SRC = $(LVGL_DIR)/ui/ui_update.c  $(LVGL_DIR)/ui/ubus.c $(LVGL_DIR)/ui/ui_gps.c $(LVGL_DIR)/ui/ui_gsm.c $(LVGL_DIR)/ui/gpsdclient.c
 CSRCS +=$(LVGL_DIR)/mouse_cursor_icon.c $(UI_GEN_SRC) $(UI_SRC)
