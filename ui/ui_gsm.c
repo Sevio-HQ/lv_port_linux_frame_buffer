@@ -95,6 +95,7 @@ void showLevel(tSigLevel _lvl)
         case SIG_LEVEL_3: lv_obj_clear_flag(ui_MOBILE_Signal3, LV_OBJ_FLAG_HIDDEN); break;
         case SIG_LEVEL_4: lv_obj_clear_flag(ui_MOBILE_Signal4, LV_OBJ_FLAG_HIDDEN); break;
         case SIG_LEVEL_5: lv_obj_clear_flag(ui_MOBILE_Signal5, LV_OBJ_FLAG_HIDDEN); break;
+        case NO_SIG_LEVEL: lv_obj_clear_flag(ui_MOBILE_NO_Signal, LV_OBJ_FLAG_HIDDEN); break;
     }
 }
 
@@ -107,7 +108,7 @@ void hideLevel(tSigLevel _lvl)
         case SIG_LEVEL_3: lv_obj_add_flag(ui_MOBILE_Signal3, LV_OBJ_FLAG_HIDDEN); break;
         case SIG_LEVEL_4: lv_obj_add_flag(ui_MOBILE_Signal4, LV_OBJ_FLAG_HIDDEN); break;
         case SIG_LEVEL_5: lv_obj_add_flag(ui_MOBILE_Signal5, LV_OBJ_FLAG_HIDDEN); break;
-        case NO_SIG_LEVEL: lv_obj_add_flag(ui_img_nosignal_png, LV_OBJ_FLAG_HIDDEN); break;
+        case NO_SIG_LEVEL: lv_obj_add_flag(ui_MOBILE_NO_Signal, LV_OBJ_FLAG_HIDDEN); break;
     }
 }
 
@@ -141,5 +142,5 @@ void ui_gsm_init()
     lv_obj_add_flag(ui_MOBILE_Signal3, LV_OBJ_FLAG_HIDDEN);
     lv_obj_add_flag(ui_MOBILE_Signal4, LV_OBJ_FLAG_HIDDEN);
     lv_obj_add_flag(ui_MOBILE_Signal5, LV_OBJ_FLAG_HIDDEN);
-    lv_obj_add_flag(ui_img_nosignal_png, LV_OBJ_FLAG_HIDDEN);
+    lv_obj_add_flag(ui_MOBILE_NO_Signal, LV_OBJ_FLAG_HIDDEN);
 }
