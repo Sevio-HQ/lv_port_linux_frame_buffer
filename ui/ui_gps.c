@@ -10,6 +10,7 @@ static enum deg_str_type deg_type = deg_dd;
 
 static float altfactor = 1; //METERS_TO_FEET;
 static char *altunits = "m"; // "ft";
+#undef FEET_TO_METERS
 #define FEET_TO_METERS 3.281f
 
 typedef struct myGpsData {
@@ -115,7 +116,7 @@ void gpsDataInit()
     (void)gps_stream(&gpsdata, flags, source.device);
 }
 
-void getGpsData()
+int getGpsData()
 {
     int result = -1;
     int maxRetry = 5;
@@ -124,7 +125,7 @@ void getGpsData()
     do {
         if (!gps_waiting(&gpsdata, 2000000)) {
             LV_LOG_ERROR("getGpsData: error while waiting\n");
-            return;
+            return -1;
         } else {
             LV_LOG_INFO("GPSD read data...");  
 
@@ -141,10 +142,17 @@ void getGpsData()
     // Close the GPS
     gps_stream(&gpsdata, WATCH_DISABLE, NULL);
     gps_close (&gpsdata);
+    return result;
 }
 
-void refreshGPS()
+int refreshGPS()
 {
     gpsDataInit();
-    getGpsData();
+    return getGpsData();
+}
+
+
+int refreshGPS_ui()
+{
+    return update_lcd(&gpsdata);
 }

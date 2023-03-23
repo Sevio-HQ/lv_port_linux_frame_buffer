@@ -14,6 +14,8 @@
 
 #define TIMER_1MIN  60000
 #define TIMER_1SEC  60*10
+#define TIMER_UPDATE  1*10
+#define TIMER_STARTUP  60*100
 #define ADC_CH_VOLTAGE  4
 #define ADC_CH_CURRENT  5
 #define MAX_FLOAT_STR_SIZE 5
@@ -23,10 +25,16 @@ uint8_t _temp[MAX_FLOAT_STR_SIZE]="0.0";
 uint8_t  voltage[MAX_FLOAT_STR_SIZE]="0.0";
 uint8_t  current[MAX_FLOAT_STR_SIZE]="0.0";
 static bool _ui_updater_init = true;
+static bool gpsNotFixed = true;
 bool wwan_up = false;
+lv_timer_t * minTimer = NULL;
+lv_timer_t * secTimer = NULL;
+lv_timer_t * refreshTimer = NULL;
 
-void refreshGPS();
-void ui_gsm_update();
+int refreshGPS();
+int refreshGPS_ui();
+int ui_gsm_update_ui();
+int ui_gsm_update();
 void ui_gsm_init();
 
 typedef enum eUiMenuIndex {
@@ -42,7 +50,7 @@ typedef enum eUiMenuIndex {
     MAX_UI_MENU
 } tUiMenuIndex;
 
-typedef void (*RefreshUI)();
+typedef int (*RefreshUI)();
 
 typedef struct sUiMenu {  
     tUiMenuIndex left;
@@ -97,12 +105,12 @@ void uiMenu_init()
     uiMenu[UI_GPSCONFIG].left = UI_WLANCONFIG;
     uiMenu[UI_GPSCONFIG].down = UI_GSMCONFIG;
     uiMenu[UI_GPSCONFIG].rigth = UI_GSMCONFIG;
-    uiMenu[UI_GPSCONFIG].refresh = refreshGPS;
+    uiMenu[UI_GPSCONFIG].refresh = refreshGPS_ui;
 
     uiMenu[UI_GSMCONFIG].left = UI_GPSCONFIG;
     uiMenu[UI_GSMCONFIG].down = UI_NONE;
     uiMenu[UI_GSMCONFIG].rigth = UI_NONE;
-    uiMenu[UI_GSMCONFIG].refresh = ui_gsm_update;
+    uiMenu[UI_GSMCONFIG].refresh = ui_gsm_update_ui;
 
 }
 
@@ -113,9 +121,10 @@ lv_obj_t * uiMenu_getCurrent()
     return NULL;
 }
 
-void uiRefreshMenu()
+void timer_refresh_cb()
 {
     if (uiMenu[menuIndex].refresh) uiMenu[menuIndex].refresh();
+    lv_timer_del(refreshTimer);
 }
 
 void uiMenu_right()
@@ -139,10 +148,15 @@ void uiMenu_down()
     }
 }
 
+void startUiRefresh()
+{
+    refreshTimer = lv_timer_create(timer_refresh_cb, TIMER_UPDATE, lv_scr_act());
+}
+
 void uiMenu_load()
 {
     lv_disp_load_scr( uiMenu_getCurrent() );
-    uiRefreshMenu();
+    startUiRefresh();
 }
 
 void floatToStr(uint8_t *out, float x,int decimalPoint)
@@ -360,10 +374,19 @@ static void timer_min_cb(lv_timer_t * timer)
         lv_obj_invalidate(timer->user_data);
     }
     
-    if ((menuIndex == UI_GPSCONFIG)||(_ui_updater_init))
+    if ((menuIndex == UI_GPSCONFIG)||(_ui_updater_init)||(gpsNotFixed==true))
     {
-        gpsDataInit();
-        getGpsData();
+        if (refreshGPS() != 0) 
+        {
+            gpsNotFixed = true;
+            LV_LOG_INFO("GPS NOT fixed");
+        }
+        else 
+        {
+            LV_LOG_INFO("GPS fixed");
+            gpsNotFixed = false;
+        }
+
     }
     if ((menuIndex == UI_GSMCONFIG)||(_ui_updater_init))
     {
@@ -373,13 +396,20 @@ static void timer_min_cb(lv_timer_t * timer)
 
 }
     
-void ui_updater_init()
+static void timer_startup_cb(lv_timer_t * timer)
 {
-    lv_timer_t * minTimer = lv_timer_create(timer_min_cb, TIMER_1MIN, lv_scr_act());
-    lv_timer_t * secTimer = lv_timer_create(timer_sec_cb, TIMER_1SEC, lv_scr_act());
+    minTimer = lv_timer_create(timer_min_cb, TIMER_1MIN, lv_scr_act());
+    secTimer = lv_timer_create(timer_sec_cb, TIMER_1SEC, lv_scr_act());
     timer_min_cb(minTimer);
     timer_sec_cb(secTimer);
     // restart init flag
     if (_ui_updater_init) _ui_updater_init = false;
+    lv_timer_del(timer);
+}
+
+
+void ui_updater_init()
+{
+    lv_timer_t * startUpTimer = lv_timer_create(timer_startup_cb, TIMER_STARTUP, lv_scr_act());
 }
 
