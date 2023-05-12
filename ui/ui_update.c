@@ -39,7 +39,6 @@ void ui_gsm_init();
 
 typedef enum eUiMenuIndex {
     UI_NONE, 
-    UI_SPLASH, 
     UI_HOME, 
     UI_VPNSTATUS, 
     UI_WANCONFIG, 
@@ -62,14 +61,13 @@ typedef struct sUiMenu {
 
 tUiMenu uiMenu[MAX_UI_MENU] = { };
 lv_obj_t *  uiMenuMap[MAX_UI_MENU] = { };
-tUiMenuIndex menuIndex = UI_SPLASH;
+tUiMenuIndex menuIndex = UI_HOME;
 
 void getGpsData();
 void gpsDataInit();
 
 void uiMenu_init()
 {
-    uiMenuMap[UI_SPLASH] = ui_Splash;
     uiMenuMap[UI_HOME] = ui_Home;
     uiMenuMap[UI_VPNSTATUS] = ui_VPNSTATUS;
     uiMenuMap[UI_WANCONFIG] = ui_WANIPCONFIG;
@@ -78,11 +76,7 @@ void uiMenu_init()
     uiMenuMap[UI_GPSCONFIG] = ui_GPS_Screen;
     uiMenuMap[UI_GSMCONFIG] = ui_MOBILE;
 
-    uiMenu[UI_SPLASH].left = UI_NONE;
-    uiMenu[UI_SPLASH].down = UI_HOME;
-    uiMenu[UI_SPLASH].rigth = UI_HOME;
-
-    uiMenu[UI_HOME].left = UI_SPLASH;
+    uiMenu[UI_HOME].left = UI_HOME;
     uiMenu[UI_HOME].down = UI_VPNSTATUS;
     uiMenu[UI_HOME].rigth = UI_VPNSTATUS;
 
@@ -368,9 +362,11 @@ static void timer_min_cb(lv_timer_t * timer)
         printLocalTime();
         get_uptime();
 
-        readBoardValues();   
+        // Removed the values related to voltage and current
+        //readBoardValues();   
         readTempValues();
-        lv_label_set_text_fmt(ui_boardStatusLabel, "%sV / %sA / %s°C", voltage, current, _temp);
+        //lv_label_set_text_fmt(ui_boardStatusLabel, "%sV / %sA / %s°C", voltage, current, _temp);
+        lv_label_set_text_fmt(ui_boardStatusLabel, "%s °C", _temp);
         lv_obj_invalidate(timer->user_data);
     }
     

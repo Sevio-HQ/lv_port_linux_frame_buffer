@@ -62,8 +62,6 @@ extern lv_obj_t *ui_WANIPCONFIG_Label7;
 extern lv_obj_t *ui_WANIPCONFIG_Image3;
 extern lv_obj_t *ui_WANIPCONFIG_Label8;
 extern lv_obj_t *ui_WANIPCONFIG_Image4;
-extern lv_obj_t *ui_Splash;
-extern lv_obj_t *ui_Screen1_Image2;
 
 
 LV_IMG_DECLARE( ui_img_logo_png);   // assets/logo.png
