@@ -5,30 +5,27 @@
  * SPDX-License-Identifier: BSD-2-clause
  */
 
-//#include "../include/gpsd_config.h"  // must be before all includes
-
 #include <assert.h>
 #include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include <strings.h>   // for strcasecmp()
+#include <strings.h>   /* for strcasecmp() */
 
 #include "gps.h"
 #include "gpsdclient.h"
-//#include "os_compat.h"
+//#include "../include/os_compat.h"
 
 static struct exportmethod_t exportmethods[] = {
 #if defined(DBUS_EXPORT_ENABLE)
     {"dbus", GPSD_DBUS_EXPORT, "DBUS broadcast"},
-#endif  // defined(DBUS_EXPORT_ENABLE)
-    {"file", GPSD_LOCAL_FILE, "local file"},
+#endif /* defined(DBUS_EXPORT_ENABLE) */
 #ifdef SHM_EXPORT_ENABLE
     {"shm", GPSD_SHARED_MEMORY, "shared memory"},
-#endif  // SOCKET_EXPORT_ENABLE
+#endif /* SOCKET_EXPORT_ENABLE */
 #ifdef SOCKET_EXPORT_ENABLE
     {"sockets", NULL, "JSON via sockets"},
-#endif  // SOCKET_EXPORT_ENABLE
+#endif /* SOCKET_EXPORT_ENABLE */
 };
 
 /* convert value of double degrees to a buffer.
@@ -85,36 +82,35 @@ char *deg_to_str2(enum deg_str_type type, double f,
      * Intel trying to kill off round to nearest even. */
     switch (type) {
     default:
-        // huh?
+        /* huh? */
         type = deg_dd;
-        // It's not worth battling fallthrough warnings just for two lines
-        f += 0.5 * 1e-8;              // round up
+        /* It's not worth battling fallthrough warnings just for two lines */
+        f += 0.5 * 1e-8;              /* round up */
         break;
     case deg_dd:
         /* DD.dddddddd */
-        f += 0.5 * 1e-8;              // round up
+        f += 0.5 * 1e-8;              /* round up */
         break;
     case deg_ddmm:
         /* DD MM.mmmmmm */
-        f += (0.5 * 1e-6) / 60;       // round up
+        f += (0.5 * 1e-6) / 60;       /* round up */
         break;
     case deg_ddmmss:
-        f += (0.5 * 1e-5) / 3600;     // round up
+        f += (0.5 * 1e-5) / 3600;     /* round up */
         break;
     }
     fmin = modf(f, &fdeg);
     deg = (int)fdeg;
     if (360 == deg) {
-        // fix round-up roll-over
+        /* fix round-up roll-over */
         deg = 0;
         fmin = 0.0;
     }
 
     if (deg_dd == type) {
-        // DD.dddddddd
+        /* DD.dddddddd */
         long frac_deg = (long)(fmin * 100000000.0);
-        // cm level accuracy requires the %08ld
-        // FIXME: NEO-F9P reports to 0.1mm
+        /* cm level accuracy requires the %08ld */
         (void)snprintf(buf, buf_size, "%3d.%08ld%s", deg, frac_deg, suffix);
         return buf;
     }
@@ -123,13 +119,13 @@ char *deg_to_str2(enum deg_str_type type, double f,
     min = (int)fmin;
 
     if (deg_ddmm == type) {
-        // DD MM.mmmmmm
+        /* DD MM.mmmmmm */
         sec = (int)(fsec * 1000000.0);
         (void)snprintf(buf, buf_size, "%3d %02d.%06d'%s", deg, min, sec,
                        suffix);
         return buf;
     }
-    // else DD MM SS.sss
+    /* else DD MM SS.sss */
     fdsec = modf(fsec * 60.0, &fsec);
     sec = (int)fsec;
     dsec = (int)(fdsec * 100000.0);
@@ -207,104 +203,77 @@ enum unit gpsd_units(void)
         if (0 == strcasecmp(envu, "metric")) {
             return metric;
         }
-        // unrecognized, ignore it
+        /* unrecognized, ignore it */
     }
-    if (((envu = getenv("LC_MEASUREMENT")) != NULL && *envu != '\0') ||
-        ((envu = getenv("LANG")) != NULL && *envu != '\0')) {
+    if (((envu = getenv("LC_MEASUREMENT")) != NULL && *envu != '\0')
+        || ((envu = getenv("LANG")) != NULL && *envu != '\0')) {
         if (strncasecmp(envu, "en_US", 5) == 0
             || strcasecmp(envu, "C") == 0 || strcasecmp(envu, "POSIX") == 0) {
             return imperial;
         }
-        // Other, must be metric
+        /* Other, must be metric */
         return metric;
     }
-    // TODO: allow a compile time default here
+    /* TODO: allow a compile time default here */
     return unspecified;
 }
 
-/* standard parsing of a GPS data source spec
- * arg can be:
- *     enpty
- * a gpsd erver
- *     "server[:port[:device]]"
- *         server can be an IPv6 address in []
- * or:
- *     "/dev/XXX" short cut for "::/dev/ttyXX"
- *
- * If arg is NULL, use "localhost:2947"
- */
+/* standard parsing of a GPS data source spec */
 void gpsd_source_spec(const char *arg, struct fixsource_t *source)
 {
-    char *server, *colon1, *colon2, *skipto, *rbrk;
+    /* the casts attempt to head off a -Wwrite-strings warning */
+    source->server = (char *)"localhost";
+    source->port = (char *)DEFAULT_GPSD_PORT;
+    source->device = NULL;
 
-    memset(source, 0, sizeof(struct fixsource_t));
-    source->server = "localhost";
-    source->port = DEFAULT_GPSD_PORT;
+    if (arg != NULL) {
+        char *colon1, *skipto, *rbrk;
+        source->spec = (char *)arg;
+        assert(source->spec != NULL);
 
-    if (NULL == arg ||
-        '\0' == arg[0]) {
-        // no source, use defaults
-        strncpy(source->spec, "localhost:" DEFAULT_GPSD_PORT,
-                sizeof(source->spec));
-        return;
-    }
-    // else
-    // grab a copy
-    strlcpy(source->spec, arg, sizeof(source->spec));
-
-    if ('/' == source->spec[0]) {
-        // it is a bare device
-        source->device = source->spec;
-        return;
-    }
-
-    server = source->spec;
-    skipto = server;
-    if ('[' == *skipto &&
-        NULL != (rbrk = strchr(skipto, ']'))) {
-        // We have an IPv6 literal as server
-        // remove []'s
-        server++;
-        *rbrk = '\0';
-        skipto = rbrk + 1;
-    }
-
-    // do we have a port?
-    colon1 = strchr(skipto, ':');
-    if (NULL == colon1) {
-        // No, it is a bare server
-        source->server = server;
-        return;
-    }
-
-    // we have a port
-    *colon1 = '\0';
-    if (colon1 != server) {
-        // and we have a server
-        source->server = server;
-    }
-    if ('\0' != colon1[1] &&
-        ':' != colon1[1]) {
-        // override default only if there is a port string.
-        source->port = colon1 + 1;
-    }
-    colon2 = strchr(colon1 + 1, ':');
-    if (NULL != colon2) {
-        *colon2 = '\0';
-        if ('\0' != colon2[1]) {
-            // override default only if there is a device string.
-            source->device = colon2 + 1;
+        skipto = source->spec;
+        if (*skipto == '[' && (rbrk = strchr(skipto, ']')) != NULL) {
+            skipto = rbrk;
         }
+        colon1 = strchr(skipto, ':');
+
+        if (colon1 != NULL) {
+            char *colon2;
+            *colon1 = '\0';
+            if (colon1 != source->spec) {
+                source->server = source->spec;
+            }
+            if ('\0' != colon1[1] &&
+                ':' != colon1[1]) {
+                // override default only if there is a port string.
+                source->port = colon1 + 1;
+            }
+            colon2 = strchr(colon1 + 1, ':');
+            if (colon2 != NULL) {
+                *colon2 = '\0';
+                if ('\0' != colon2[1]) {
+                    // override default only if there is a device string.
+                    source->device = colon2 + 1;
+                }
+            }
+        } else if (strchr(source->spec, '/') != NULL) {
+            source->device = source->spec;
+        } else {
+            source->server = source->spec;
+        }
+    }
+
+    if (*source->server == '[') {
+        char *rbrk = strchr(source->server, ']');
+        ++source->server;
+        if (rbrk != NULL)
+            *rbrk = '\0';
     }
 }
 
 
-/* lat/lon to Maidenhead
- * Warning, not thread safe due to static return string
- *
- * Return: pointer to NUL terminated static string
- */
-const char *maidenhead(double lat, double lon)
+/* lat/lon to Maidenhead */
+char *maidenhead(double lat, double lon)
 {
     /*
      * Specification at
@@ -329,12 +298,7 @@ const char *maidenhead(double lat, double lon)
 
     int t1;
 
-    // range check
-    if (180.001 < fabs(lon) ||
-        90.001 < fabs(lat)) {
-        return "    n/a ";
-    }
-    // longitude
+    /* longitude */
     if (179.99999 < lon) {
         /* force 180, just inside lon_sq 'R'
          * otherwise we get illegal 'S' */
@@ -346,7 +310,7 @@ const char *maidenhead(double lat, double lon)
     t1 = (int)(lon / 20);
     buf[0] = (char)t1 + 'A';
     if ('R' < buf[0]) {
-        // A to R
+        /* A to R */
         buf[0] = 'R';
     }
     lon -= (float)t1 * 20.0;
@@ -375,7 +339,7 @@ const char *maidenhead(double lat, double lon)
     }
     buf[6] = (char) ((char)t1 + '0');
 
-    // latitude
+    /* latitude */
     if (89.99999 < lat) {
         /* force 90 to just inside lat_sq 'R'
          * otherwise we get illegal 'S' */
@@ -387,7 +351,7 @@ const char *maidenhead(double lat, double lon)
     t1 = (int)(lat / 10.0);
     buf[1] = (char)t1 + 'A';
     if ('R' < buf[1]) {
-        // A to R, North Pole is R
+        /* A to R, North Pole is R */
         buf[1] = 'R';
     }
     lat -= (float)t1 * 10.0;
@@ -420,24 +384,22 @@ const char *maidenhead(double lat, double lon)
     return buf;
 }
 
-#define NITEMS(x) (int)(sizeof(x)/sizeof(x[0])) // from gpsd.h-tail
+#define NITEMS(x) (int)(sizeof(x)/sizeof(x[0])) /* from gpsd.h-tail */
 
-// Look up an available export method by name
+/* Look up an available export method by name */
 struct exportmethod_t *export_lookup(const char *name)
 {
     struct exportmethod_t *mp, *method = NULL;
 
     for (mp = exportmethods;
          mp < exportmethods + NITEMS(exportmethods);
-         mp++) {
-        if (0 == strcmp(mp->name, name)) {
+         mp++)
+        if (strcmp(mp->name, name) == 0)
             method = mp;
-        }
-    }
     return method;
 }
 
-// list known export methods
+/* list known export methods */
 void export_list(FILE *fp)
 {
     struct exportmethod_t *method;
@@ -453,4 +415,5 @@ struct exportmethod_t *export_default(void)
     return (NITEMS(exportmethods) > 0) ? &exportmethods[0] : NULL;
 }
 
+/* gpsdclient.c ends here */
 // vim: set expandtab shiftwidth=4
