@@ -17,10 +17,10 @@ extern lv_obj_t *ui_Screen2_Label1;
 extern lv_obj_t *ui_MobileStatus_Panel;
 extern lv_obj_t *ui_MOBILE_Status_label;
 extern lv_obj_t *ui_MobileStatus_Label4;
-extern lv_obj_t *ui_WANIPCONFIG_Image2;
-extern lv_obj_t *ui_WANIPCONFIG_Button_RG;
-extern lv_obj_t *ui_WANIPCONFIG_ButtonDN;
-extern lv_obj_t *ui_WANIPCONFIG_Button_LF;
+extern lv_obj_t *ui_Menuarrowbottom;
+extern lv_obj_t *ui_Arrow_Bottom_Button_RG;
+extern lv_obj_t *ui_Arrow_Bottom_ButtonDN;
+extern lv_obj_t *ui_Arrow_Bottom_Button_LF;
 extern lv_obj_t *ui_MOBILE_operator_Label;
 extern lv_obj_t *ui_MOBILE_APN_label;
 extern lv_obj_t *ui_MOBILE_operator_Value;
@@ -64,7 +64,7 @@ LV_IMG_DECLARE( ui_img_gps_png);   // assets/gps.png
 
 
 
-void ui2_init(void);
+void ui_init(void);
 
 #ifdef __cplusplus
 } /*extern "C"*/
