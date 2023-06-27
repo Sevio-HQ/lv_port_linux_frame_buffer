@@ -456,7 +456,7 @@ lv_obj_set_style_text_font(ui_GPS_altitude_label1, &lv_font_montserrat_10, LV_PA
 
 }
 
-void ui_init( void )
+void ui2_init( void )
 {LV_EVENT_GET_COMP_CHILD = lv_event_register_id();
 
 lv_disp_t *dispp = lv_disp_get_default();
