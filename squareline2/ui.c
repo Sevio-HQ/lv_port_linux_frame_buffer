@@ -9,7 +9,7 @@
 
 ///////////////////// VARIABLES ////////////////////
 lv_obj_t *ui_MOBILE;
-lv_obj_t *ui_Screen2_Label1;
+lv_obj_t *ui_Mobile_Screen;
 lv_obj_t *ui_MobileStatus_Panel;
 lv_obj_t *ui_MOBILE_Status_label;
 lv_obj_t *ui_MobileStatus_Label4;
@@ -66,19 +66,19 @@ lv_obj_clear_flag( ui_MOBILE, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
 lv_obj_set_style_bg_color(ui_MOBILE, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT );
 lv_obj_set_style_bg_opa(ui_MOBILE, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
 
-ui_Screen2_Label1 = lv_label_create(ui_MOBILE);
-lv_obj_set_width( ui_Screen2_Label1, 128);
-lv_obj_set_height( ui_Screen2_Label1, 18);
-lv_obj_set_x( ui_Screen2_Label1, 0 );
-lv_obj_set_y( ui_Screen2_Label1, -55 );
-lv_obj_set_align( ui_Screen2_Label1, LV_ALIGN_CENTER );
-lv_label_set_text(ui_Screen2_Label1,"MOBILE");
-lv_obj_set_style_text_color(ui_Screen2_Label1, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT );
-lv_obj_set_style_text_opa(ui_Screen2_Label1, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
-lv_obj_set_style_text_align(ui_Screen2_Label1, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN| LV_STATE_DEFAULT);
-lv_obj_set_style_text_font(ui_Screen2_Label1, &lv_font_montserrat_12, LV_PART_MAIN| LV_STATE_DEFAULT);
-lv_obj_set_style_bg_color(ui_Screen2_Label1, lv_color_hex(0x5A5D5B), LV_PART_MAIN | LV_STATE_DEFAULT );
-lv_obj_set_style_bg_opa(ui_Screen2_Label1, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
+ui_Mobile_Screen = lv_label_create(ui_MOBILE);
+lv_obj_set_width( ui_Mobile_Screen, 128);
+lv_obj_set_height( ui_Mobile_Screen, 18);
+lv_obj_set_x( ui_Mobile_Screen, 0 );
+lv_obj_set_y( ui_Mobile_Screen, -55 );
+lv_obj_set_align( ui_Mobile_Screen, LV_ALIGN_CENTER );
+lv_label_set_text(ui_Mobile_Screen,"MOBILE");
+lv_obj_set_style_text_color(ui_Mobile_Screen, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT );
+lv_obj_set_style_text_opa(ui_Mobile_Screen, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
+lv_obj_set_style_text_align(ui_Mobile_Screen, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN| LV_STATE_DEFAULT);
+lv_obj_set_style_text_font(ui_Mobile_Screen, &lv_font_montserrat_12, LV_PART_MAIN| LV_STATE_DEFAULT);
+lv_obj_set_style_bg_color(ui_Mobile_Screen, lv_color_hex(0x5A5D5B), LV_PART_MAIN | LV_STATE_DEFAULT );
+lv_obj_set_style_bg_opa(ui_Mobile_Screen, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
 
 ui_MobileStatus_Panel = lv_obj_create(ui_MOBILE);
 lv_obj_set_width( ui_MobileStatus_Panel, 77);

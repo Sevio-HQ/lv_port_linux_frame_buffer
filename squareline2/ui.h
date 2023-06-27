@@ -13,7 +13,7 @@ extern "C" {
     #include "lvgl/lvgl.h"
 
 extern lv_obj_t *ui_MOBILE;
-extern lv_obj_t *ui_Screen2_Label1;
+extern lv_obj_t *ui_Mobile_Screen;
 extern lv_obj_t *ui_MobileStatus_Panel;
 extern lv_obj_t *ui_MOBILE_Status_label;
 extern lv_obj_t *ui_MobileStatus_Label4;
