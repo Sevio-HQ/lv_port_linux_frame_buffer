@@ -64,7 +64,7 @@ lv_obj_t *  uiMenuMap[MAX_UI_MENU] = { };
 tUiMenuIndex menuIndex = UI_HOME;
 
 void getGpsData();
-void gpsDataInit();
+bool gpsDataInit();
 
 void uiMenu_init()
 {

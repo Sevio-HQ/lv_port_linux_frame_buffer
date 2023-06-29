@@ -96,7 +96,7 @@ static int update_lcd(struct gps_data_t *gpsdata)
   return result;
 }
 
-void gpsDataInit()
+bool gpsDataInit()
 {
     gpsd_source_spec(NULL, &source);
     LV_LOG_INFO("GPSD server running %s:%s dev:%s", 
@@ -106,7 +106,7 @@ void gpsDataInit()
     if (gps_open(source.server, source.port, &gpsdata) != 0) {
         LV_LOG_ERROR("Cannot open gps source\n");
         default_lcd();
-        return;
+        return false;
     }
 
     /* Here's where updates go. */
@@ -114,6 +114,7 @@ void gpsDataInit()
     if (source.device != NULL)
         flags |= WATCH_DEVICE;
     (void)gps_stream(&gpsdata, flags, source.device);
+    return true;
 }
 
 int getGpsData()
@@ -147,8 +148,7 @@ int getGpsData()
 
 int refreshGPS()
 {
-    gpsDataInit();
-    return getGpsData();
+    return (gpsDataInit() ? getGpsData() : -1);
 }
 
 
