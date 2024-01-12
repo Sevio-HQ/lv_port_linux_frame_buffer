@@ -229,7 +229,7 @@ lv_obj_set_x( ui_VPNSTATUS_Label2, 0 );
 lv_obj_set_y( ui_VPNSTATUS_Label2, -33 );
 lv_obj_set_align( ui_VPNSTATUS_Label2, LV_ALIGN_CENTER );
 lv_label_set_text(ui_VPNSTATUS_Label2,"CONNECTED PORT");
-lv_obj_set_style_text_color(ui_VPNSTATUS_Label2, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT );
+lv_obj_set_style_text_color(ui_VPNSTATUS_Label2, lv_color_hex(0xE50909), LV_PART_MAIN | LV_STATE_DEFAULT );
 lv_obj_set_style_text_opa(ui_VPNSTATUS_Label2, 255, LV_PART_MAIN| LV_STATE_DEFAULT);
 lv_obj_set_style_text_font(ui_VPNSTATUS_Label2, &lv_font_montserrat_10, LV_PART_MAIN| LV_STATE_DEFAULT);
 
