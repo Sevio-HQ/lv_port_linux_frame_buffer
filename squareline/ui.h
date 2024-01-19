@@ -41,13 +41,14 @@ extern lv_obj_t * ui_WANIPCONFIG_ButtonDN;
 extern lv_obj_t * ui_WANIPCONFIG_Button_LF;
 extern lv_obj_t * ui_WANIPCONFIG_Panel4;
 extern lv_obj_t * ui_WANIPCONFIG_Label11;
-extern lv_obj_t * ui_WANIPCONFIG_Image21;
 extern lv_obj_t * ui_VPNSTATUS_Image1;
 extern lv_obj_t * ui_VPNSTATUS_Image2;
 extern lv_obj_t * ui_WANIPCONFIG_Label13;
 extern lv_obj_t * ui_WANIPCONFIG_Label14;
 extern lv_obj_t * ui_WANIPCONFIG_Label15;
 extern lv_obj_t * ui_WANIPCONFIG_Image24;
+extern lv_obj_t * ui_WANIPCONFIG_Image25;
+extern lv_obj_t * ui_WANIPCONFIG_Image27;
 extern lv_obj_t * ui_LANIPCONFIG;
 extern lv_obj_t * ui_Screen2_Label3;
 extern lv_obj_t * ui_WANIPCONFIG_Label3;
@@ -76,8 +77,9 @@ LV_IMG_DECLARE(ui_img_vpn_png);    // assets\vpn.png
 LV_IMG_DECLARE(ui_img_row_l_png);    // assets\row_l.png
 LV_IMG_DECLARE(ui_img_status_pass_png);    // assets\status_pass.png
 LV_IMG_DECLARE(ui_img_status_fail_png);    // assets\status_fail.png
-LV_IMG_DECLARE(ui_img_sel_on_png);    // assets\sel_on.png
 LV_IMG_DECLARE(ui_img_network_png);    // assets\network.png
+LV_IMG_DECLARE(ui_img_sel_on_png);    // assets\sel_on.png
+LV_IMG_DECLARE(ui_img_row_d_png);    // assets\row_d.png
 LV_IMG_DECLARE(ui_img_frecce_d_r_png);    // assets\frecce_d_r.png
 
 
