@@ -21,17 +21,17 @@ extern lv_obj_t * ui_uptimeLabel;
 extern lv_obj_t * ui_dateTimeLabel;
 extern lv_obj_t * ui_VPNSTATUS;
 extern lv_obj_t * ui_VPNSTATUS_Image3;
-extern lv_obj_t * ui_VPNSTATUS_Image12;
+extern lv_obj_t * ui_VPNSTATUS_Image17;
 extern lv_obj_t * ui_VPNSTATUS_Label1;
 extern lv_obj_t * ui_VPNSTATUS_Label2;
 extern lv_obj_t * ui_VPNSTATUS_Label3;
 extern lv_obj_t * ui_VPNSTATUS_Label4;
 extern lv_obj_t * ui_VPNSTATUS_Label5;
-extern lv_obj_t * ui_VPNSTATUS_Image9;
-extern lv_obj_t * ui_VPNSTATUS_Image10;
-extern lv_obj_t * ui_VPNSTATUS_Panel2;
+extern lv_obj_t * ui_VPNSTATUS_Panel3;
 extern lv_obj_t * ui_VPNSTATUS_Image13;
 extern lv_obj_t * ui_VPNSTATUS_Image14;
+extern lv_obj_t * ui_VPNSTATUS_Image18;
+extern lv_obj_t * ui_VPNSTATUS_Image19;
 extern lv_obj_t * ui_WANIPCONFIG;
 extern lv_obj_t * ui_Screen2_Label1;
 extern lv_obj_t * ui_WANIPCONFIG_Panel2;
@@ -67,9 +67,9 @@ LV_IMG_DECLARE(ui_img_logo_png);    // assets\logo.png
 LV_IMG_DECLARE(ui_img_row_r_png);    // assets\row_r.png
 LV_IMG_DECLARE(ui_img_status_tree_png);    // assets\status_tree.png
 LV_IMG_DECLARE(ui_img_vpn_png);    // assets\vpn.png
-LV_IMG_DECLARE(ui_img_status_pass2_png);    // assets\status_pass2.png
-LV_IMG_DECLARE(ui_img_status_fail2_png);    // assets\status_fail2.png
 LV_IMG_DECLARE(ui_img_row_l_png);    // assets\row_l.png
+LV_IMG_DECLARE(ui_img_status_pass_png);    // assets\status_pass.png
+LV_IMG_DECLARE(ui_img_status_fail_png);    // assets\status_fail.png
 LV_IMG_DECLARE(ui_img_eth_img_png);    // assets\eth_img.png
 LV_IMG_DECLARE(ui_img_frecce_d_r_png);    // assets\frecce_d_r.png
 LV_IMG_DECLARE(ui_img_wifi_img2_png);    // assets\wifi_img2.png
