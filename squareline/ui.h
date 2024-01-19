@@ -64,7 +64,7 @@ extern lv_obj_t * ui_WANIPCONFIG_Label8;
 extern lv_obj_t * ui_WANIPCONFIG_Image4;
 
 
-LV_IMG_DECLARE(ui_img_logo_png);    // assets\logo.png
+LV_IMG_DECLARE(ui_img_logo2_png);    // assets\logo2.png
 LV_IMG_DECLARE(ui_img_vpn_png);    // assets\vpn.png
 LV_IMG_DECLARE(ui_img_eth_img_png);    // assets\eth_img.png
 LV_IMG_DECLARE(ui_img_frecce_d_r_png);    // assets\frecce_d_r.png
