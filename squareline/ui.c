@@ -81,9 +81,9 @@ void ui_Home_screen_init(void)
     lv_obj_set_style_text_font(ui_Home, &lv_font_montserrat_10, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_Home_Image1 = lv_img_create(ui_Home);
-    lv_img_set_src(ui_Home_Image1, &ui_img_logo2_png);
-    lv_obj_set_width(ui_Home_Image1, LV_SIZE_CONTENT);   /// 113
-    lv_obj_set_height(ui_Home_Image1, LV_SIZE_CONTENT);    /// 112
+    lv_img_set_src(ui_Home_Image1, &ui_img_logo_png);
+    lv_obj_set_width(ui_Home_Image1, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_Home_Image1, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_align(ui_Home_Image1, LV_ALIGN_CENTER);
     lv_obj_add_flag(ui_Home_Image1, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
     lv_obj_clear_flag(ui_Home_Image1, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
@@ -92,7 +92,7 @@ void ui_Home_screen_init(void)
     lv_obj_set_width(ui_Screen1_Label1, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_Screen1_Label1, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_x(ui_Screen1_Label1, 0);
-    lv_obj_set_y(ui_Screen1_Label1, -27);
+    lv_obj_set_y(ui_Screen1_Label1, -36);
     lv_obj_set_align(ui_Screen1_Label1, LV_ALIGN_CENTER);
     lv_label_set_text(ui_Screen1_Label1, "MRRVWQB");
     lv_obj_set_style_text_color(ui_Screen1_Label1, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -104,7 +104,7 @@ void ui_Home_screen_init(void)
     lv_obj_set_width(ui_boardStatusLabel, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_boardStatusLabel, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_x(ui_boardStatusLabel, 0);
-    lv_obj_set_y(ui_boardStatusLabel, 67);
+    lv_obj_set_y(ui_boardStatusLabel, 62);
     lv_obj_set_align(ui_boardStatusLabel, LV_ALIGN_TOP_MID);
     lv_label_set_text(ui_boardStatusLabel, "23.4  C");
     lv_obj_set_style_text_color(ui_boardStatusLabel, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -115,7 +115,7 @@ void ui_Home_screen_init(void)
     lv_obj_set_width(ui_uptimeLabel, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_uptimeLabel, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_x(ui_uptimeLabel, 0);
-    lv_obj_set_y(ui_uptimeLabel, 82);
+    lv_obj_set_y(ui_uptimeLabel, 84);
     lv_obj_set_align(ui_uptimeLabel, LV_ALIGN_TOP_MID);
     lv_label_set_text(ui_uptimeLabel, "5d 7h 56' 32''");
     lv_obj_set_style_text_color(ui_uptimeLabel, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -124,14 +124,14 @@ void ui_Home_screen_init(void)
 
     ui_dateTimeLabel = lv_label_create(ui_Home);
     lv_obj_set_width(ui_dateTimeLabel, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_dateTimeLabel, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_height(ui_dateTimeLabel, LV_SIZE_CONTENT);    /// 2
     lv_obj_set_x(ui_dateTimeLabel, 0);
-    lv_obj_set_y(ui_dateTimeLabel, 97);
+    lv_obj_set_y(ui_dateTimeLabel, 99);
     lv_obj_set_align(ui_dateTimeLabel, LV_ALIGN_TOP_MID);
-    lv_label_set_text(ui_dateTimeLabel, "18:54 22/01/2019\nUDT");
+    lv_label_set_text(ui_dateTimeLabel, "18:54 22/01/2019");
     lv_obj_set_style_text_color(ui_dateTimeLabel, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_dateTimeLabel, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_dateTimeLabel, &ui_font_tahomabd, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_dateTimeLabel, &ui_font_tahoma, LV_PART_MAIN | LV_STATE_DEFAULT);
 
 }
 void ui_VPNSTATUS_screen_init(void)
