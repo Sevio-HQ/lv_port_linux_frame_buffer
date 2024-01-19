@@ -9,25 +9,24 @@
 ///////////////////// VARIABLES ////////////////////
 lv_obj_t * ui_Home;
 lv_obj_t * ui_Home_Image1;
+lv_obj_t * ui_Home_Image2;
 lv_obj_t * ui_Screen1_Label1;
 lv_obj_t * ui_boardStatusLabel;
 lv_obj_t * ui_uptimeLabel;
 lv_obj_t * ui_dateTimeLabel;
 lv_obj_t * ui_VPNSTATUS;
-lv_obj_t * ui_Screen2_Label4;
-lv_obj_t * ui_CONNECTED_PORT;
-lv_obj_t * ui_DHCP_NEG_Panel;
-lv_obj_t * ui_GATEWAY_panel;
-lv_obj_t * ui_INTERNET_CONN_Panel;
+lv_obj_t * ui_VPNSTATUS_Image3;
+lv_obj_t * ui_VPNSTATUS_Image12;
 lv_obj_t * ui_VPNSTATUS_Label1;
 lv_obj_t * ui_VPNSTATUS_Label2;
 lv_obj_t * ui_VPNSTATUS_Label3;
 lv_obj_t * ui_VPNSTATUS_Label4;
-lv_obj_t * ui_PORTS_Panel;
 lv_obj_t * ui_VPNSTATUS_Label5;
-lv_obj_t * ui_VPN_Panel;
-lv_obj_t * ui_VPNSTATUS_Label6;
-lv_obj_t * ui_VPNSTATUS_Image1;
+lv_obj_t * ui_VPNSTATUS_Image9;
+lv_obj_t * ui_VPNSTATUS_Image10;
+lv_obj_t * ui_VPNSTATUS_Panel2;
+lv_obj_t * ui_VPNSTATUS_Image13;
+lv_obj_t * ui_VPNSTATUS_Image14;
 lv_obj_t * ui_WANIPCONFIG;
 lv_obj_t * ui_Screen2_Label1;
 lv_obj_t * ui_WANIPCONFIG_Panel2;
@@ -82,29 +81,38 @@ void ui_Home_screen_init(void)
 
     ui_Home_Image1 = lv_img_create(ui_Home);
     lv_img_set_src(ui_Home_Image1, &ui_img_logo_png);
-    lv_obj_set_width(ui_Home_Image1, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_Home_Image1, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_width(ui_Home_Image1, LV_SIZE_CONTENT);   /// 113
+    lv_obj_set_height(ui_Home_Image1, LV_SIZE_CONTENT);    /// 112
     lv_obj_set_align(ui_Home_Image1, LV_ALIGN_CENTER);
     lv_obj_add_flag(ui_Home_Image1, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
     lv_obj_clear_flag(ui_Home_Image1, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+
+    ui_Home_Image2 = lv_img_create(ui_Home);
+    lv_img_set_src(ui_Home_Image2, &ui_img_row_r_png);
+    lv_obj_set_width(ui_Home_Image2, LV_SIZE_CONTENT);   /// 11
+    lv_obj_set_height(ui_Home_Image2, LV_SIZE_CONTENT);    /// 11
+    lv_obj_set_x(ui_Home_Image2, 115);
+    lv_obj_set_y(ui_Home_Image2, 115);
+    lv_obj_add_flag(ui_Home_Image2, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
+    lv_obj_clear_flag(ui_Home_Image2, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
 
     ui_Screen1_Label1 = lv_label_create(ui_Home);
     lv_obj_set_width(ui_Screen1_Label1, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_Screen1_Label1, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_x(ui_Screen1_Label1, 0);
-    lv_obj_set_y(ui_Screen1_Label1, -36);
-    lv_obj_set_align(ui_Screen1_Label1, LV_ALIGN_CENTER);
+    lv_obj_set_y(ui_Screen1_Label1, 25);
+    lv_obj_set_align(ui_Screen1_Label1, LV_ALIGN_TOP_MID);
     lv_label_set_text(ui_Screen1_Label1, "MRRVWQB");
-    lv_obj_set_style_text_color(ui_Screen1_Label1, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_Screen1_Label1, lv_color_hex(0xD1D0D0), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_Screen1_Label1, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_align(ui_Screen1_Label1, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_Screen1_Label1, &ui_font_tahoma, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_Screen1_Label1, &ui_font_tahomabd, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_boardStatusLabel = lv_label_create(ui_Home);
     lv_obj_set_width(ui_boardStatusLabel, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_boardStatusLabel, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_x(ui_boardStatusLabel, 0);
-    lv_obj_set_y(ui_boardStatusLabel, 62);
+    lv_obj_set_y(ui_boardStatusLabel, 60);
     lv_obj_set_align(ui_boardStatusLabel, LV_ALIGN_TOP_MID);
     lv_label_set_text(ui_boardStatusLabel, "23.4  C");
     lv_obj_set_style_text_color(ui_boardStatusLabel, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -115,7 +123,7 @@ void ui_Home_screen_init(void)
     lv_obj_set_width(ui_uptimeLabel, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_uptimeLabel, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_x(ui_uptimeLabel, 0);
-    lv_obj_set_y(ui_uptimeLabel, 81);
+    lv_obj_set_y(ui_uptimeLabel, 75);
     lv_obj_set_align(ui_uptimeLabel, LV_ALIGN_TOP_MID);
     lv_label_set_text(ui_uptimeLabel, "5d 7h 56' 32''");
     lv_obj_set_style_text_color(ui_uptimeLabel, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -124,11 +132,11 @@ void ui_Home_screen_init(void)
 
     ui_dateTimeLabel = lv_label_create(ui_Home);
     lv_obj_set_width(ui_dateTimeLabel, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_dateTimeLabel, LV_SIZE_CONTENT);    /// 2
+    lv_obj_set_height(ui_dateTimeLabel, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_x(ui_dateTimeLabel, 0);
-    lv_obj_set_y(ui_dateTimeLabel, 101);
+    lv_obj_set_y(ui_dateTimeLabel, 90);
     lv_obj_set_align(ui_dateTimeLabel, LV_ALIGN_TOP_MID);
-    lv_label_set_text(ui_dateTimeLabel, "18:54 22/01/2019");
+    lv_label_set_text(ui_dateTimeLabel, "18:54 22/01/2019 UDT");
     lv_obj_set_style_text_color(ui_dateTimeLabel, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_dateTimeLabel, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_dateTimeLabel, &ui_font_tahoma, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -138,200 +146,130 @@ void ui_VPNSTATUS_screen_init(void)
 {
     ui_VPNSTATUS = lv_obj_create(NULL);
     lv_obj_clear_flag(ui_VPNSTATUS, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
-    lv_obj_set_style_bg_color(ui_VPNSTATUS, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_color(ui_VPNSTATUS, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_opa(ui_VPNSTATUS, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_align(ui_VPNSTATUS, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_VPNSTATUS, &lv_font_montserrat_10, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_Screen2_Label4 = lv_label_create(ui_VPNSTATUS);
-    lv_obj_set_width(ui_Screen2_Label4, 128);
-    lv_obj_set_height(ui_Screen2_Label4, 18);
-    lv_obj_set_x(ui_Screen2_Label4, 0);
-    lv_obj_set_y(ui_Screen2_Label4, -55);
-    lv_obj_set_align(ui_Screen2_Label4, LV_ALIGN_CENTER);
-    lv_label_set_text(ui_Screen2_Label4, "VPN STATUS");
-    lv_obj_set_style_text_color(ui_Screen2_Label4, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_opa(ui_Screen2_Label4, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_align(ui_Screen2_Label4, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_Screen2_Label4, &lv_font_montserrat_14, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_color(ui_Screen2_Label4, lv_color_hex(0x5A5D5B), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_opa(ui_Screen2_Label4, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    ui_VPNSTATUS_Image3 = lv_img_create(ui_VPNSTATUS);
+    lv_img_set_src(ui_VPNSTATUS_Image3, &ui_img_status_tree_png);
+    lv_obj_set_width(ui_VPNSTATUS_Image3, LV_SIZE_CONTENT);   /// 15
+    lv_obj_set_height(ui_VPNSTATUS_Image3, LV_SIZE_CONTENT);    /// 98
+    lv_obj_set_x(ui_VPNSTATUS_Image3, -50);
+    lv_obj_set_y(ui_VPNSTATUS_Image3, -7);
+    lv_obj_set_align(ui_VPNSTATUS_Image3, LV_ALIGN_CENTER);
+    lv_obj_add_flag(ui_VPNSTATUS_Image3, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
+    lv_obj_clear_flag(ui_VPNSTATUS_Image3, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
 
-    ui_CONNECTED_PORT = lv_obj_create(ui_VPNSTATUS);
-    lv_obj_set_width(ui_CONNECTED_PORT, 128);
-    lv_obj_set_height(ui_CONNECTED_PORT, 17);
-    lv_obj_set_x(ui_CONNECTED_PORT, 1);
-    lv_obj_set_y(ui_CONNECTED_PORT, -34);
-    lv_obj_set_align(ui_CONNECTED_PORT, LV_ALIGN_CENTER);
-    lv_obj_clear_flag(ui_CONNECTED_PORT, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
-    lv_obj_set_style_radius(ui_CONNECTED_PORT, 6, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_color(ui_CONNECTED_PORT, lv_color_hex(0x11F108), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_opa(ui_CONNECTED_PORT, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_border_color(ui_CONNECTED_PORT, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_border_opa(ui_CONNECTED_PORT, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_shadow_color(ui_CONNECTED_PORT, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_shadow_opa(ui_CONNECTED_PORT, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_color(ui_CONNECTED_PORT, lv_color_hex(0xF10808), LV_PART_MAIN | LV_STATE_CHECKED);
-    lv_obj_set_style_bg_opa(ui_CONNECTED_PORT, 255, LV_PART_MAIN | LV_STATE_CHECKED);
-
-    ui_DHCP_NEG_Panel = lv_obj_create(ui_VPNSTATUS);
-    lv_obj_set_width(ui_DHCP_NEG_Panel, 128);
-    lv_obj_set_height(ui_DHCP_NEG_Panel, 17);
-    lv_obj_set_x(ui_DHCP_NEG_Panel, 0);
-    lv_obj_set_y(ui_DHCP_NEG_Panel, -17);
-    lv_obj_set_align(ui_DHCP_NEG_Panel, LV_ALIGN_CENTER);
-    lv_obj_clear_flag(ui_DHCP_NEG_Panel, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
-    lv_obj_set_style_radius(ui_DHCP_NEG_Panel, 6, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_color(ui_DHCP_NEG_Panel, lv_color_hex(0x11F108), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_opa(ui_DHCP_NEG_Panel, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_border_color(ui_DHCP_NEG_Panel, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_border_opa(ui_DHCP_NEG_Panel, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_shadow_color(ui_DHCP_NEG_Panel, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_shadow_opa(ui_DHCP_NEG_Panel, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_color(ui_DHCP_NEG_Panel, lv_color_hex(0xF10808), LV_PART_MAIN | LV_STATE_CHECKED);
-    lv_obj_set_style_bg_opa(ui_DHCP_NEG_Panel, 255, LV_PART_MAIN | LV_STATE_CHECKED);
-
-    ui_GATEWAY_panel = lv_obj_create(ui_VPNSTATUS);
-    lv_obj_set_width(ui_GATEWAY_panel, 128);
-    lv_obj_set_height(ui_GATEWAY_panel, 17);
-    lv_obj_set_align(ui_GATEWAY_panel, LV_ALIGN_CENTER);
-    lv_obj_clear_flag(ui_GATEWAY_panel, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
-    lv_obj_set_style_radius(ui_GATEWAY_panel, 6, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_color(ui_GATEWAY_panel, lv_color_hex(0x11F108), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_opa(ui_GATEWAY_panel, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_border_color(ui_GATEWAY_panel, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_border_opa(ui_GATEWAY_panel, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_shadow_color(ui_GATEWAY_panel, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_shadow_opa(ui_GATEWAY_panel, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_color(ui_GATEWAY_panel, lv_color_hex(0xF10808), LV_PART_MAIN | LV_STATE_CHECKED);
-    lv_obj_set_style_bg_opa(ui_GATEWAY_panel, 255, LV_PART_MAIN | LV_STATE_CHECKED);
-
-    ui_INTERNET_CONN_Panel = lv_obj_create(ui_VPNSTATUS);
-    lv_obj_set_width(ui_INTERNET_CONN_Panel, 128);
-    lv_obj_set_height(ui_INTERNET_CONN_Panel, 17);
-    lv_obj_set_x(ui_INTERNET_CONN_Panel, 0);
-    lv_obj_set_y(ui_INTERNET_CONN_Panel, 17);
-    lv_obj_set_align(ui_INTERNET_CONN_Panel, LV_ALIGN_CENTER);
-    lv_obj_clear_flag(ui_INTERNET_CONN_Panel, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
-    lv_obj_set_style_radius(ui_INTERNET_CONN_Panel, 6, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_color(ui_INTERNET_CONN_Panel, lv_color_hex(0x11F108), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_opa(ui_INTERNET_CONN_Panel, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_border_color(ui_INTERNET_CONN_Panel, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_border_opa(ui_INTERNET_CONN_Panel, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_shadow_color(ui_INTERNET_CONN_Panel, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_shadow_opa(ui_INTERNET_CONN_Panel, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_color(ui_INTERNET_CONN_Panel, lv_color_hex(0xF10808), LV_PART_MAIN | LV_STATE_CHECKED);
-    lv_obj_set_style_bg_opa(ui_INTERNET_CONN_Panel, 255, LV_PART_MAIN | LV_STATE_CHECKED);
+    ui_VPNSTATUS_Image12 = lv_img_create(ui_VPNSTATUS);
+    lv_img_set_src(ui_VPNSTATUS_Image12, &ui_img_vpn_png);
+    lv_obj_set_width(ui_VPNSTATUS_Image12, LV_SIZE_CONTENT);   /// 61
+    lv_obj_set_height(ui_VPNSTATUS_Image12, LV_SIZE_CONTENT);    /// 81
+    lv_obj_set_x(ui_VPNSTATUS_Image12, 1);
+    lv_obj_set_y(ui_VPNSTATUS_Image12, -8);
+    lv_obj_set_align(ui_VPNSTATUS_Image12, LV_ALIGN_CENTER);
+    lv_obj_add_flag(ui_VPNSTATUS_Image12, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
+    lv_obj_clear_flag(ui_VPNSTATUS_Image12, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
 
     ui_VPNSTATUS_Label1 = lv_label_create(ui_VPNSTATUS);
     lv_obj_set_width(ui_VPNSTATUS_Label1, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_VPNSTATUS_Label1, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_VPNSTATUS_Label1, 1);
-    lv_obj_set_y(ui_VPNSTATUS_Label1, -16);
-    lv_obj_set_align(ui_VPNSTATUS_Label1, LV_ALIGN_CENTER);
-    lv_label_set_text(ui_VPNSTATUS_Label1, "DHCP NEGOTIATION");
-    lv_obj_set_style_text_color(ui_VPNSTATUS_Label1, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_x(ui_VPNSTATUS_Label1, 30);
+    lv_obj_set_y(ui_VPNSTATUS_Label1, 9);
+    lv_label_set_text(ui_VPNSTATUS_Label1, "Physical Uplink");
+    lv_obj_set_style_text_color(ui_VPNSTATUS_Label1, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_VPNSTATUS_Label1, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_VPNSTATUS_Label1, &lv_font_montserrat_10, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_VPNSTATUS_Label1, &ui_font_tahoma, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_VPNSTATUS_Label2 = lv_label_create(ui_VPNSTATUS);
     lv_obj_set_width(ui_VPNSTATUS_Label2, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_VPNSTATUS_Label2, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_VPNSTATUS_Label2, 0);
-    lv_obj_set_y(ui_VPNSTATUS_Label2, -33);
-    lv_obj_set_align(ui_VPNSTATUS_Label2, LV_ALIGN_CENTER);
-    lv_label_set_text(ui_VPNSTATUS_Label2, "CONNECTED PORT");
-    lv_obj_set_style_text_color(ui_VPNSTATUS_Label2, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_x(ui_VPNSTATUS_Label2, 30);
+    lv_obj_set_y(ui_VPNSTATUS_Label2, 30);
+    lv_label_set_text(ui_VPNSTATUS_Label2, "IP Address");
+    lv_obj_set_style_text_color(ui_VPNSTATUS_Label2, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_VPNSTATUS_Label2, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_VPNSTATUS_Label2, &lv_font_montserrat_10, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_VPNSTATUS_Label2, &ui_font_tahoma, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_VPNSTATUS_Label3 = lv_label_create(ui_VPNSTATUS);
     lv_obj_set_width(ui_VPNSTATUS_Label3, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_VPNSTATUS_Label3, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_VPNSTATUS_Label3, -1);
-    lv_obj_set_y(ui_VPNSTATUS_Label3, 0);
-    lv_obj_set_align(ui_VPNSTATUS_Label3, LV_ALIGN_CENTER);
-    lv_label_set_text(ui_VPNSTATUS_Label3, "GATEWAY");
-    lv_obj_set_style_text_color(ui_VPNSTATUS_Label3, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_x(ui_VPNSTATUS_Label3, 30);
+    lv_obj_set_y(ui_VPNSTATUS_Label3, 51);
+    lv_label_set_text(ui_VPNSTATUS_Label3, "Gateway");
+    lv_obj_set_style_text_color(ui_VPNSTATUS_Label3, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_VPNSTATUS_Label3, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_VPNSTATUS_Label3, &lv_font_montserrat_10, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_VPNSTATUS_Label3, &ui_font_tahoma, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_VPNSTATUS_Label4 = lv_label_create(ui_VPNSTATUS);
     lv_obj_set_width(ui_VPNSTATUS_Label4, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_VPNSTATUS_Label4, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_VPNSTATUS_Label4, -1);
-    lv_obj_set_y(ui_VPNSTATUS_Label4, 17);
-    lv_obj_set_align(ui_VPNSTATUS_Label4, LV_ALIGN_CENTER);
-    lv_label_set_text(ui_VPNSTATUS_Label4, "INTERNET CONNECT.");
-    lv_obj_set_style_text_color(ui_VPNSTATUS_Label4, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_x(ui_VPNSTATUS_Label4, 30);
+    lv_obj_set_y(ui_VPNSTATUS_Label4, 72);
+    lv_label_set_text(ui_VPNSTATUS_Label4, "Internet");
+    lv_obj_set_style_text_color(ui_VPNSTATUS_Label4, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_VPNSTATUS_Label4, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_VPNSTATUS_Label4, &lv_font_montserrat_10, LV_PART_MAIN | LV_STATE_DEFAULT);
-
-    ui_PORTS_Panel = lv_obj_create(ui_VPNSTATUS);
-    lv_obj_set_width(ui_PORTS_Panel, 70);
-    lv_obj_set_height(ui_PORTS_Panel, 17);
-    lv_obj_set_x(ui_PORTS_Panel, 29);
-    lv_obj_set_y(ui_PORTS_Panel, 34);
-    lv_obj_set_align(ui_PORTS_Panel, LV_ALIGN_CENTER);
-    lv_obj_clear_flag(ui_PORTS_Panel, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
-    lv_obj_set_style_radius(ui_PORTS_Panel, 6, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_color(ui_PORTS_Panel, lv_color_hex(0xF3D208), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_opa(ui_PORTS_Panel, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_border_color(ui_PORTS_Panel, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_border_opa(ui_PORTS_Panel, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_shadow_color(ui_PORTS_Panel, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_shadow_opa(ui_PORTS_Panel, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_color(ui_PORTS_Panel, lv_color_hex(0xF10808), LV_PART_MAIN | LV_STATE_CHECKED);
-    lv_obj_set_style_bg_opa(ui_PORTS_Panel, 255, LV_PART_MAIN | LV_STATE_CHECKED);
+    lv_obj_set_style_text_font(ui_VPNSTATUS_Label4, &ui_font_tahoma, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_VPNSTATUS_Label5 = lv_label_create(ui_VPNSTATUS);
     lv_obj_set_width(ui_VPNSTATUS_Label5, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_VPNSTATUS_Label5, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_VPNSTATUS_Label5, 29);
-    lv_obj_set_y(ui_VPNSTATUS_Label5, 33);
-    lv_obj_set_align(ui_VPNSTATUS_Label5, LV_ALIGN_CENTER);
-    lv_label_set_text(ui_VPNSTATUS_Label5, "PORTS");
-    lv_obj_set_style_text_color(ui_VPNSTATUS_Label5, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_x(ui_VPNSTATUS_Label5, 30);
+    lv_obj_set_y(ui_VPNSTATUS_Label5, 93);
+    lv_label_set_text(ui_VPNSTATUS_Label5, "VPN ports");
+    lv_obj_set_style_text_color(ui_VPNSTATUS_Label5, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_VPNSTATUS_Label5, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_VPNSTATUS_Label5, &lv_font_montserrat_10, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_VPNSTATUS_Label5, &ui_font_tahoma, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_VPN_Panel = lv_obj_create(ui_VPNSTATUS);
-    lv_obj_set_width(ui_VPN_Panel, 70);
-    lv_obj_set_height(ui_VPN_Panel, 17);
-    lv_obj_set_x(ui_VPN_Panel, 28);
-    lv_obj_set_y(ui_VPN_Panel, 51);
-    lv_obj_set_align(ui_VPN_Panel, LV_ALIGN_CENTER);
-    lv_obj_clear_flag(ui_VPN_Panel, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
-    lv_obj_set_style_radius(ui_VPN_Panel, 6, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_color(ui_VPN_Panel, lv_color_hex(0xF31108), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_opa(ui_VPN_Panel, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_border_color(ui_VPN_Panel, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_border_opa(ui_VPN_Panel, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_shadow_color(ui_VPN_Panel, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_shadow_opa(ui_VPN_Panel, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_color(ui_VPN_Panel, lv_color_hex(0xF10808), LV_PART_MAIN | LV_STATE_CHECKED);
-    lv_obj_set_style_bg_opa(ui_VPN_Panel, 255, LV_PART_MAIN | LV_STATE_CHECKED);
+    ui_VPNSTATUS_Image9 = lv_img_create(ui_VPNSTATUS);
+    lv_img_set_src(ui_VPNSTATUS_Image9, &ui_img_status_pass2_png);
+    lv_obj_set_width(ui_VPNSTATUS_Image9, LV_SIZE_CONTENT);   /// 14
+    lv_obj_set_height(ui_VPNSTATUS_Image9, LV_SIZE_CONTENT);    /// 14
+    lv_obj_set_x(ui_VPNSTATUS_Image9, -50);
+    lv_obj_set_y(ui_VPNSTATUS_Image9, -49);
+    lv_obj_set_align(ui_VPNSTATUS_Image9, LV_ALIGN_CENTER);
+    lv_obj_add_flag(ui_VPNSTATUS_Image9, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
+    lv_obj_clear_flag(ui_VPNSTATUS_Image9, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
 
-    ui_VPNSTATUS_Label6 = lv_label_create(ui_VPNSTATUS);
-    lv_obj_set_width(ui_VPNSTATUS_Label6, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_VPNSTATUS_Label6, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_VPNSTATUS_Label6, 29);
-    lv_obj_set_y(ui_VPNSTATUS_Label6, 51);
-    lv_obj_set_align(ui_VPNSTATUS_Label6, LV_ALIGN_CENTER);
-    lv_label_set_text(ui_VPNSTATUS_Label6, "VPN");
-    lv_obj_set_style_text_color(ui_VPNSTATUS_Label6, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_opa(ui_VPNSTATUS_Label6, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_VPNSTATUS_Label6, &lv_font_montserrat_10, LV_PART_MAIN | LV_STATE_DEFAULT);
+    ui_VPNSTATUS_Image10 = lv_img_create(ui_VPNSTATUS);
+    lv_img_set_src(ui_VPNSTATUS_Image10, &ui_img_status_fail2_png);
+    lv_obj_set_width(ui_VPNSTATUS_Image10, LV_SIZE_CONTENT);   /// 14
+    lv_obj_set_height(ui_VPNSTATUS_Image10, LV_SIZE_CONTENT);    /// 14
+    lv_obj_set_x(ui_VPNSTATUS_Image10, -49);
+    lv_obj_set_y(ui_VPNSTATUS_Image10, -28);
+    lv_obj_set_align(ui_VPNSTATUS_Image10, LV_ALIGN_CENTER);
+    lv_obj_add_flag(ui_VPNSTATUS_Image10, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
+    lv_obj_clear_flag(ui_VPNSTATUS_Image10, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
 
-    ui_VPNSTATUS_Image1 = lv_img_create(ui_VPNSTATUS);
-    lv_img_set_src(ui_VPNSTATUS_Image1, &ui_img_vpn_png);
-    lv_obj_set_width(ui_VPNSTATUS_Image1, LV_SIZE_CONTENT);   /// 20
-    lv_obj_set_height(ui_VPNSTATUS_Image1, LV_SIZE_CONTENT);    /// 22
-    lv_obj_set_x(ui_VPNSTATUS_Image1, -44);
-    lv_obj_set_y(ui_VPNSTATUS_Image1, 44);
-    lv_obj_set_align(ui_VPNSTATUS_Image1, LV_ALIGN_CENTER);
-    lv_obj_add_flag(ui_VPNSTATUS_Image1, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
-    lv_obj_clear_flag(ui_VPNSTATUS_Image1, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    ui_VPNSTATUS_Panel2 = lv_obj_create(ui_VPNSTATUS);
+    lv_obj_set_width(ui_VPNSTATUS_Panel2, 128);
+    lv_obj_set_height(ui_VPNSTATUS_Panel2, 15);
+    lv_obj_set_x(ui_VPNSTATUS_Panel2, 0);
+    lv_obj_set_y(ui_VPNSTATUS_Panel2, 56);
+    lv_obj_set_align(ui_VPNSTATUS_Panel2, LV_ALIGN_CENTER);
+    lv_obj_clear_flag(ui_VPNSTATUS_Panel2, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    lv_obj_set_style_radius(ui_VPNSTATUS_Panel2, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_color(ui_VPNSTATUS_Panel2, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_opa(ui_VPNSTATUS_Panel2, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_border_side(ui_VPNSTATUS_Panel2, LV_BORDER_SIDE_NONE, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    ui_VPNSTATUS_Image13 = lv_img_create(ui_VPNSTATUS);
+    lv_img_set_src(ui_VPNSTATUS_Image13, &ui_img_row_r_png);
+    lv_obj_set_width(ui_VPNSTATUS_Image13, LV_SIZE_CONTENT);   /// 11
+    lv_obj_set_height(ui_VPNSTATUS_Image13, LV_SIZE_CONTENT);    /// 11
+    lv_obj_set_x(ui_VPNSTATUS_Image13, 115);
+    lv_obj_set_y(ui_VPNSTATUS_Image13, 115);
+    lv_obj_add_flag(ui_VPNSTATUS_Image13, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
+    lv_obj_clear_flag(ui_VPNSTATUS_Image13, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+
+    ui_VPNSTATUS_Image14 = lv_img_create(ui_VPNSTATUS);
+    lv_img_set_src(ui_VPNSTATUS_Image14, &ui_img_row_l_png);
+    lv_obj_set_width(ui_VPNSTATUS_Image14, LV_SIZE_CONTENT);   /// 11
+    lv_obj_set_height(ui_VPNSTATUS_Image14, LV_SIZE_CONTENT);    /// 11
+    lv_obj_set_x(ui_VPNSTATUS_Image14, 2);
+    lv_obj_set_y(ui_VPNSTATUS_Image14, 115);
+    lv_obj_add_flag(ui_VPNSTATUS_Image14, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
+    lv_obj_clear_flag(ui_VPNSTATUS_Image14, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
 
 }
 void ui_WANIPCONFIG_screen_init(void)
