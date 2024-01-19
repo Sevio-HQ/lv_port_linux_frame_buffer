@@ -98,7 +98,7 @@ void ui_Home_screen_init(void)
     lv_obj_set_style_text_color(ui_Screen1_Label1, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_Screen1_Label1, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_align(ui_Screen1_Label1, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_Screen1_Label1, &ui_font_tahomabd, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_Screen1_Label1, &ui_font_tahoma, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_boardStatusLabel = lv_label_create(ui_Home);
     lv_obj_set_width(ui_boardStatusLabel, LV_SIZE_CONTENT);   /// 1
@@ -109,24 +109,24 @@ void ui_Home_screen_init(void)
     lv_label_set_text(ui_boardStatusLabel, "23.4  C");
     lv_obj_set_style_text_color(ui_boardStatusLabel, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_boardStatusLabel, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_boardStatusLabel, &ui_font_tahomabd, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_boardStatusLabel, &ui_font_tahoma, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_uptimeLabel = lv_label_create(ui_Home);
     lv_obj_set_width(ui_uptimeLabel, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_uptimeLabel, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_x(ui_uptimeLabel, 0);
-    lv_obj_set_y(ui_uptimeLabel, 84);
+    lv_obj_set_y(ui_uptimeLabel, 81);
     lv_obj_set_align(ui_uptimeLabel, LV_ALIGN_TOP_MID);
     lv_label_set_text(ui_uptimeLabel, "5d 7h 56' 32''");
     lv_obj_set_style_text_color(ui_uptimeLabel, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_uptimeLabel, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_uptimeLabel, &ui_font_tahomabd, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_uptimeLabel, &ui_font_tahoma, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_dateTimeLabel = lv_label_create(ui_Home);
     lv_obj_set_width(ui_dateTimeLabel, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_dateTimeLabel, LV_SIZE_CONTENT);    /// 2
     lv_obj_set_x(ui_dateTimeLabel, 0);
-    lv_obj_set_y(ui_dateTimeLabel, 99);
+    lv_obj_set_y(ui_dateTimeLabel, 101);
     lv_obj_set_align(ui_dateTimeLabel, LV_ALIGN_TOP_MID);
     lv_label_set_text(ui_dateTimeLabel, "18:54 22/01/2019");
     lv_obj_set_style_text_color(ui_dateTimeLabel, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
