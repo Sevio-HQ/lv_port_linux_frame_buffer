@@ -1,0 +1,16 @@
+{
+  "codename": "tahoma",
+  "ttf_path": "\\assets\\fonts\\tahoma.ttf",
+  "bin_path": "\\assets\\fonts\\ui_font_tahoma.bin",
+  "c_path": "\\assets\\fonts\\ui_font_tahoma.c",
+  "cfg_path": "\\assets\\fonts\\ui_font_tahoma.fcfg",
+  "size": 12,
+  "bpp": 2,
+  "letters": 0,
+  "ranges": [
+    "0x20-0x7f"
+  ],
+  "symbols": "",
+  "customparams": "--no-compress --no-prefilter",
+  "uploaded": false
+}

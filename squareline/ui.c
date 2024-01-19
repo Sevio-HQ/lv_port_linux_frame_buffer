@@ -5,11 +5,10 @@
 
 #include "ui.h"
 #include "ui_helpers.h"
-#include "ui_comp.h"
 
 ///////////////////// VARIABLES ////////////////////
 lv_obj_t * ui_Home;
-lv_obj_t * ui_Screen1_Image1;
+lv_obj_t * ui_Home_Image1;
 lv_obj_t * ui_Screen1_Label1;
 lv_obj_t * ui_boardStatusLabel;
 lv_obj_t * ui_uptimeLabel;
@@ -76,53 +75,63 @@ void ui_Home_screen_init(void)
 {
     ui_Home = lv_obj_create(NULL);
     lv_obj_clear_flag(ui_Home, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
-    lv_obj_set_style_bg_color(ui_Home, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_color(ui_Home, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_opa(ui_Home, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_align(ui_Home, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_Home, &lv_font_montserrat_10, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_Screen1_Image1 = lv_img_create(ui_Home);
-    lv_img_set_src(ui_Screen1_Image1, &ui_img_logo_png);
-    lv_obj_set_width(ui_Screen1_Image1, 128);
-    lv_obj_set_height(ui_Screen1_Image1, 60);
-    lv_obj_set_x(ui_Screen1_Image1, 0);
-    lv_obj_set_y(ui_Screen1_Image1, -5);
-    lv_obj_set_align(ui_Screen1_Image1, LV_ALIGN_TOP_MID);
-    lv_obj_add_flag(ui_Screen1_Image1, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
-    lv_obj_clear_flag(ui_Screen1_Image1, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    ui_Home_Image1 = lv_img_create(ui_Home);
+    lv_img_set_src(ui_Home_Image1, &ui_img_logo_png);
+    lv_obj_set_width(ui_Home_Image1, LV_SIZE_CONTENT);   /// 113
+    lv_obj_set_height(ui_Home_Image1, LV_SIZE_CONTENT);    /// 112
+    lv_obj_set_align(ui_Home_Image1, LV_ALIGN_CENTER);
+    lv_obj_add_flag(ui_Home_Image1, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
+    lv_obj_clear_flag(ui_Home_Image1, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
 
     ui_Screen1_Label1 = lv_label_create(ui_Home);
     lv_obj_set_width(ui_Screen1_Label1, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_Screen1_Label1, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_Screen1_Label1, 10);
-    lv_obj_set_y(ui_Screen1_Label1, -55);
+    lv_obj_set_x(ui_Screen1_Label1, 0);
+    lv_obj_set_y(ui_Screen1_Label1, -36);
     lv_obj_set_align(ui_Screen1_Label1, LV_ALIGN_CENTER);
-    lv_label_set_text(ui_Screen1_Label1, "ST: MRRVWQB");
+    lv_label_set_text(ui_Screen1_Label1, "MRRVWQB");
+    lv_obj_set_style_text_color(ui_Screen1_Label1, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_opa(ui_Screen1_Label1, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_align(ui_Screen1_Label1, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_Screen1_Label1, &ui_font_tahomabd, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_boardStatusLabel = lv_label_create(ui_Home);
     lv_obj_set_width(ui_boardStatusLabel, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_boardStatusLabel, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_x(ui_boardStatusLabel, 0);
-    lv_obj_set_y(ui_boardStatusLabel, 75);
+    lv_obj_set_y(ui_boardStatusLabel, 62);
     lv_obj_set_align(ui_boardStatusLabel, LV_ALIGN_TOP_MID);
-    lv_label_set_text(ui_boardStatusLabel, "23.4°C");
+    lv_label_set_text(ui_boardStatusLabel, "23.4  C");
+    lv_obj_set_style_text_color(ui_boardStatusLabel, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_opa(ui_boardStatusLabel, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_boardStatusLabel, &ui_font_tahomabd, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_uptimeLabel = lv_label_create(ui_Home);
     lv_obj_set_width(ui_uptimeLabel, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_uptimeLabel, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_x(ui_uptimeLabel, 0);
-    lv_obj_set_y(ui_uptimeLabel, 91);
+    lv_obj_set_y(ui_uptimeLabel, 84);
     lv_obj_set_align(ui_uptimeLabel, LV_ALIGN_TOP_MID);
     lv_label_set_text(ui_uptimeLabel, "5d 7h 56' 32''");
+    lv_obj_set_style_text_color(ui_uptimeLabel, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_opa(ui_uptimeLabel, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_uptimeLabel, &ui_font_tahomabd, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_dateTimeLabel = lv_label_create(ui_Home);
     lv_obj_set_width(ui_dateTimeLabel, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_dateTimeLabel, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_x(ui_dateTimeLabel, 0);
-    lv_obj_set_y(ui_dateTimeLabel, 107);
+    lv_obj_set_y(ui_dateTimeLabel, 103);
     lv_obj_set_align(ui_dateTimeLabel, LV_ALIGN_TOP_MID);
     lv_label_set_text(ui_dateTimeLabel, "18:54 22/01/2019");
+    lv_obj_set_style_text_color(ui_dateTimeLabel, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_opa(ui_dateTimeLabel, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_dateTimeLabel, &ui_font_tahomabd, LV_PART_MAIN | LV_STATE_DEFAULT);
 
 }
 void ui_VPNSTATUS_screen_init(void)
@@ -657,8 +666,6 @@ void ui_WLANIPCONFIG_screen_init(void)
 
 void ui_init(void)
 {
-    LV_EVENT_GET_COMP_CHILD = lv_event_register_id();
-
     lv_disp_t * dispp = lv_disp_get_default();
     lv_theme_t * theme = lv_theme_default_init(dispp, lv_palette_main(LV_PALETTE_BLUE), lv_palette_main(LV_PALETTE_RED),
                                                false, LV_FONT_DEFAULT);

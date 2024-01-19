@@ -13,7 +13,7 @@ extern "C" {
 #include "lvgl/lvgl.h"
 
 extern lv_obj_t * ui_Home;
-extern lv_obj_t * ui_Screen1_Image1;
+extern lv_obj_t * ui_Home_Image1;
 extern lv_obj_t * ui_Screen1_Label1;
 extern lv_obj_t * ui_boardStatusLabel;
 extern lv_obj_t * ui_uptimeLabel;
@@ -71,6 +71,8 @@ LV_IMG_DECLARE(ui_img_frecce_d_r_png);    // assets\frecce_d_r.png
 LV_IMG_DECLARE(ui_img_wifi_img2_png);    // assets\wifi_img2.png
 
 
+LV_FONT_DECLARE(ui_font_tahoma);
+LV_FONT_DECLARE(ui_font_tahomabd);
 
 
 void ui_init(void);
