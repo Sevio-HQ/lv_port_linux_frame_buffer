@@ -29,22 +29,29 @@ lv_obj_t * ui_VPNSTATUS_Image18;
 lv_obj_t * ui_VPNSTATUS_Image19;
 lv_obj_t * ui_WANIPCONFIG;
 lv_obj_t * ui_Screen2_Label1;
-lv_obj_t * ui_WANIPCONFIG_Panel2;
+lv_obj_t * ui_VPNSTATUS_Panel1;
 lv_obj_t * ui_WANIPCONFIG_Label1;
-lv_obj_t * ui_WANIPCONFIG_Label2;
-lv_obj_t * ui_WANIPCONFIG_Label3;
-lv_obj_t * ui_WANIPCONFIG_Image1;
-lv_obj_t * ui_WANIPCONFIG_Label4;
-lv_obj_t * ui_WANIPCONFIG_Image2;
 lv_obj_t * ui_WANIPCONFIG_Button_RG;
 lv_obj_t * ui_WANIPCONFIG_ButtonDN;
 lv_obj_t * ui_WANIPCONFIG_Button_LF;
+lv_obj_t * ui_WANIPCONFIG_Image20;
+lv_obj_t * ui_WANIPCONFIG_Panel4;
+lv_obj_t * ui_WANIPCONFIG_Label11;
+lv_obj_t * ui_WANIPCONFIG_Image21;
+lv_obj_t * ui_VPNSTATUS_Image1;
+lv_obj_t * ui_VPNSTATUS_Image2;
+lv_obj_t * ui_WANIPCONFIG_Label13;
+lv_obj_t * ui_WANIPCONFIG_Label14;
+lv_obj_t * ui_WANIPCONFIG_Label15;
 lv_obj_t * ui_LANIPCONFIG;
 lv_obj_t * ui_Screen2_Label3;
+lv_obj_t * ui_WANIPCONFIG_Label3;
+lv_obj_t * ui_WANIPCONFIG_Label2;
+lv_obj_t * ui_WANIPCONFIG_Panel2;
 lv_obj_t * ui_WANIPCONFIG_Panel3;
+lv_obj_t * ui_WANIPCONFIG_Label4;
 lv_obj_t * ui_WANIPCONFIG_Label9;
 lv_obj_t * ui_WANIPCONFIG_Label10;
-lv_obj_t * ui_WANIPCONFIG_Image5;
 lv_obj_t * ui_WANIPCONFIG_Label12;
 lv_obj_t * ui_WANIPCONFIG_Image6;
 lv_obj_t * ui_WLANIPCONFIG;
@@ -53,7 +60,6 @@ lv_obj_t * ui_WANIPCONFIG_Panel1;
 lv_obj_t * ui_WANIPCONFIG_Label5;
 lv_obj_t * ui_WANIPCONFIG_Label6;
 lv_obj_t * ui_WANIPCONFIG_Label7;
-lv_obj_t * ui_WANIPCONFIG_Image3;
 lv_obj_t * ui_WANIPCONFIG_Label8;
 lv_obj_t * ui_WANIPCONFIG_Image4;
 
@@ -165,8 +171,8 @@ void ui_VPNSTATUS_screen_init(void)
     lv_img_set_src(ui_VPNSTATUS_Image17, &ui_img_vpn_png);
     lv_obj_set_width(ui_VPNSTATUS_Image17, LV_SIZE_CONTENT);   /// 46
     lv_obj_set_height(ui_VPNSTATUS_Image17, LV_SIZE_CONTENT);    /// 61
-    lv_obj_set_x(ui_VPNSTATUS_Image17, 21);
-    lv_obj_set_y(ui_VPNSTATUS_Image17, 2);
+    lv_obj_set_x(ui_VPNSTATUS_Image17, 29);
+    lv_obj_set_y(ui_VPNSTATUS_Image17, 7);
     lv_obj_set_align(ui_VPNSTATUS_Image17, LV_ALIGN_CENTER);
     lv_obj_add_flag(ui_VPNSTATUS_Image17, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
     lv_obj_clear_flag(ui_VPNSTATUS_Image17, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
@@ -229,7 +235,7 @@ void ui_VPNSTATUS_screen_init(void)
     lv_obj_set_align(ui_VPNSTATUS_Panel3, LV_ALIGN_CENTER);
     lv_obj_clear_flag(ui_VPNSTATUS_Panel3, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
     lv_obj_set_style_radius(ui_VPNSTATUS_Panel3, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_color(ui_VPNSTATUS_Panel3, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_color(ui_VPNSTATUS_Panel3, lv_color_hex(0x444444), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_opa(ui_VPNSTATUS_Panel3, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_border_side(ui_VPNSTATUS_Panel3, LV_BORDER_SIDE_NONE, LV_PART_MAIN | LV_STATE_DEFAULT);
 
@@ -276,106 +282,41 @@ void ui_WANIPCONFIG_screen_init(void)
 {
     ui_WANIPCONFIG = lv_obj_create(NULL);
     lv_obj_clear_flag(ui_WANIPCONFIG, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
-    lv_obj_set_style_bg_color(ui_WANIPCONFIG, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_color(ui_WANIPCONFIG, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_opa(ui_WANIPCONFIG, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_Screen2_Label1 = lv_label_create(ui_WANIPCONFIG);
-    lv_obj_set_width(ui_Screen2_Label1, 128);
-    lv_obj_set_height(ui_Screen2_Label1, 18);
-    lv_obj_set_x(ui_Screen2_Label1, 0);
-    lv_obj_set_y(ui_Screen2_Label1, -55);
-    lv_obj_set_align(ui_Screen2_Label1, LV_ALIGN_CENTER);
-    lv_label_set_text(ui_Screen2_Label1, "IP CONFIG. - WAN");
-    lv_obj_set_style_text_color(ui_Screen2_Label1, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_width(ui_Screen2_Label1, 50);
+    lv_obj_set_height(ui_Screen2_Label1, 13);
+    lv_obj_set_x(ui_Screen2_Label1, 25);
+    lv_obj_set_y(ui_Screen2_Label1, 3);
+    lv_label_set_text(ui_Screen2_Label1, "WAN");
+    lv_obj_set_style_text_color(ui_Screen2_Label1, lv_color_hex(0x6A6D62), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_Screen2_Label1, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_align(ui_Screen2_Label1, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_Screen2_Label1, &lv_font_montserrat_12, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_color(ui_Screen2_Label1, lv_color_hex(0x5A5D5B), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_opa(ui_Screen2_Label1, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_align(ui_Screen2_Label1, LV_TEXT_ALIGN_LEFT, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_Screen2_Label1, &ui_font_tahomabd, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_WANIPCONFIG_Panel2 = lv_obj_create(ui_WANIPCONFIG);
-    lv_obj_set_width(ui_WANIPCONFIG_Panel2, 70);
-    lv_obj_set_height(ui_WANIPCONFIG_Panel2, 13);
-    lv_obj_set_x(ui_WANIPCONFIG_Panel2, 27);
-    lv_obj_set_y(ui_WANIPCONFIG_Panel2, -33);
-    lv_obj_set_align(ui_WANIPCONFIG_Panel2, LV_ALIGN_CENTER);
-    lv_obj_clear_flag(ui_WANIPCONFIG_Panel2, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
-    lv_obj_set_style_bg_color(ui_WANIPCONFIG_Panel2, lv_color_hex(0x11F308), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_opa(ui_WANIPCONFIG_Panel2, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_border_color(ui_WANIPCONFIG_Panel2, lv_color_hex(0x11F308), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_border_opa(ui_WANIPCONFIG_Panel2, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    ui_VPNSTATUS_Panel1 = lv_obj_create(ui_WANIPCONFIG);
+    lv_obj_set_width(ui_VPNSTATUS_Panel1, 128);
+    lv_obj_set_height(ui_VPNSTATUS_Panel1, 15);
+    lv_obj_set_x(ui_VPNSTATUS_Panel1, 0);
+    lv_obj_set_y(ui_VPNSTATUS_Panel1, 56);
+    lv_obj_set_align(ui_VPNSTATUS_Panel1, LV_ALIGN_CENTER);
+    lv_obj_clear_flag(ui_VPNSTATUS_Panel1, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    lv_obj_set_style_radius(ui_VPNSTATUS_Panel1, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_color(ui_VPNSTATUS_Panel1, lv_color_hex(0x444444), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_opa(ui_VPNSTATUS_Panel1, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_border_side(ui_VPNSTATUS_Panel1, LV_BORDER_SIDE_NONE, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_WANIPCONFIG_Label1 = lv_label_create(ui_WANIPCONFIG);
     lv_obj_set_width(ui_WANIPCONFIG_Label1, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_WANIPCONFIG_Label1, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_WANIPCONFIG_Label1, -38);
-    lv_obj_set_y(ui_WANIPCONFIG_Label1, -34);
-    lv_obj_set_align(ui_WANIPCONFIG_Label1, LV_ALIGN_CENTER);
-    lv_label_set_text(ui_WANIPCONFIG_Label1, "DHCP:");
-    lv_obj_set_style_text_color(ui_WANIPCONFIG_Label1, lv_color_hex(0x808080), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_x(ui_WANIPCONFIG_Label1, 3);
+    lv_obj_set_y(ui_WANIPCONFIG_Label1, 26);
+    lv_label_set_text(ui_WANIPCONFIG_Label1, "DHCP Client:");
+    lv_obj_set_style_text_color(ui_WANIPCONFIG_Label1, lv_color_hex(0x6A6D62), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_WANIPCONFIG_Label1, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_WANIPCONFIG_Label1, &lv_font_montserrat_12, LV_PART_MAIN | LV_STATE_DEFAULT);
-
-    ui_WANIPCONFIG_Label2 = lv_label_create(ui_WANIPCONFIG);
-    lv_obj_set_width(ui_WANIPCONFIG_Label2, 120);
-    lv_obj_set_height(ui_WANIPCONFIG_Label2, 15);
-    lv_obj_set_x(ui_WANIPCONFIG_Label2, 5);
-    lv_obj_set_y(ui_WANIPCONFIG_Label2, -9);
-    lv_obj_set_align(ui_WANIPCONFIG_Label2, LV_ALIGN_LEFT_MID);
-    lv_label_set_text(ui_WANIPCONFIG_Label2, "IP:  192.168.134.27/24");
-    lv_obj_set_style_text_color(ui_WANIPCONFIG_Label2, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_opa(ui_WANIPCONFIG_Label2, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_WANIPCONFIG_Label2, &lv_font_montserrat_10, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_border_color(ui_WANIPCONFIG_Label2, lv_color_hex(0x6E6F6E), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_border_opa(ui_WANIPCONFIG_Label2, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_border_width(ui_WANIPCONFIG_Label2, 1, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_border_side(ui_WANIPCONFIG_Label2, LV_BORDER_SIDE_FULL, LV_PART_MAIN | LV_STATE_DEFAULT);
-
-    ui_WANIPCONFIG_Label3 = lv_label_create(ui_WANIPCONFIG);
-    lv_obj_set_width(ui_WANIPCONFIG_Label3, 120);
-    lv_obj_set_height(ui_WANIPCONFIG_Label3, 15);
-    lv_obj_set_x(ui_WANIPCONFIG_Label3, 5);
-    lv_obj_set_y(ui_WANIPCONFIG_Label3, 11);
-    lv_obj_set_align(ui_WANIPCONFIG_Label3, LV_ALIGN_LEFT_MID);
-    lv_label_set_text(ui_WANIPCONFIG_Label3, "GW:  192.168.1.254");
-    lv_obj_set_style_text_color(ui_WANIPCONFIG_Label3, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_opa(ui_WANIPCONFIG_Label3, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_WANIPCONFIG_Label3, &lv_font_montserrat_10, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_border_color(ui_WANIPCONFIG_Label3, lv_color_hex(0x6E6F6E), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_border_opa(ui_WANIPCONFIG_Label3, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_border_width(ui_WANIPCONFIG_Label3, 1, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_border_side(ui_WANIPCONFIG_Label3, LV_BORDER_SIDE_FULL, LV_PART_MAIN | LV_STATE_DEFAULT);
-
-    ui_WANIPCONFIG_Image1 = lv_img_create(ui_WANIPCONFIG);
-    lv_img_set_src(ui_WANIPCONFIG_Image1, &ui_img_eth_img_png);
-    lv_obj_set_width(ui_WANIPCONFIG_Image1, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_WANIPCONFIG_Image1, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_WANIPCONFIG_Image1, -47);
-    lv_obj_set_y(ui_WANIPCONFIG_Image1, 34);
-    lv_obj_set_align(ui_WANIPCONFIG_Image1, LV_ALIGN_CENTER);
-    lv_obj_add_flag(ui_WANIPCONFIG_Image1, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
-    lv_obj_clear_flag(ui_WANIPCONFIG_Image1, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
-
-    ui_WANIPCONFIG_Label4 = lv_label_create(ui_WANIPCONFIG);
-    lv_obj_set_width(ui_WANIPCONFIG_Label4, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_WANIPCONFIG_Label4, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_WANIPCONFIG_Label4, 28);
-    lv_obj_set_y(ui_WANIPCONFIG_Label4, -33);
-    lv_obj_set_align(ui_WANIPCONFIG_Label4, LV_ALIGN_CENTER);
-    lv_label_set_text(ui_WANIPCONFIG_Label4, "ENABLED");
-    lv_obj_set_style_text_color(ui_WANIPCONFIG_Label4, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_opa(ui_WANIPCONFIG_Label4, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_WANIPCONFIG_Label4, &lv_font_montserrat_10, LV_PART_MAIN | LV_STATE_DEFAULT);
-
-    ui_WANIPCONFIG_Image2 = lv_img_create(ui_WANIPCONFIG);
-    lv_img_set_src(ui_WANIPCONFIG_Image2, &ui_img_frecce_d_r_png);
-    lv_obj_set_width(ui_WANIPCONFIG_Image2, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_WANIPCONFIG_Image2, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_WANIPCONFIG_Image2, 2);
-    lv_obj_set_y(ui_WANIPCONFIG_Image2, 0);
-    lv_obj_set_align(ui_WANIPCONFIG_Image2, LV_ALIGN_BOTTOM_MID);
-    lv_obj_add_flag(ui_WANIPCONFIG_Image2, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
-    lv_obj_clear_flag(ui_WANIPCONFIG_Image2, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
 
     ui_WANIPCONFIG_Button_RG = lv_btn_create(ui_WANIPCONFIG);
     lv_obj_set_width(ui_WANIPCONFIG_Button_RG, 16);
@@ -407,6 +348,96 @@ void ui_WANIPCONFIG_screen_init(void)
     lv_obj_clear_flag(ui_WANIPCONFIG_Button_LF, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
     lv_obj_set_style_opa(ui_WANIPCONFIG_Button_LF, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
 
+    ui_WANIPCONFIG_Image20 = lv_img_create(ui_WANIPCONFIG);
+    lv_img_set_src(ui_WANIPCONFIG_Image20, &ui_img_port_png);
+    lv_obj_set_width(ui_WANIPCONFIG_Image20, LV_SIZE_CONTENT);   /// 19
+    lv_obj_set_height(ui_WANIPCONFIG_Image20, LV_SIZE_CONTENT);    /// 15
+    lv_obj_set_x(ui_WANIPCONFIG_Image20, -52);
+    lv_obj_set_y(ui_WANIPCONFIG_Image20, -54);
+    lv_obj_set_align(ui_WANIPCONFIG_Image20, LV_ALIGN_CENTER);
+    lv_obj_add_flag(ui_WANIPCONFIG_Image20, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
+    lv_obj_clear_flag(ui_WANIPCONFIG_Image20, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+
+    ui_WANIPCONFIG_Panel4 = lv_obj_create(ui_WANIPCONFIG);
+    lv_obj_set_width(ui_WANIPCONFIG_Panel4, 128);
+    lv_obj_set_height(ui_WANIPCONFIG_Panel4, 1);
+    lv_obj_set_x(ui_WANIPCONFIG_Panel4, 0);
+    lv_obj_set_y(ui_WANIPCONFIG_Panel4, -43);
+    lv_obj_set_align(ui_WANIPCONFIG_Panel4, LV_ALIGN_CENTER);
+    lv_obj_clear_flag(ui_WANIPCONFIG_Panel4, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    lv_obj_set_style_radius(ui_WANIPCONFIG_Panel4, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_color(ui_WANIPCONFIG_Panel4, lv_color_hex(0x6A6D62), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_opa(ui_WANIPCONFIG_Panel4, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_border_side(ui_WANIPCONFIG_Panel4, LV_BORDER_SIDE_NONE, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    ui_WANIPCONFIG_Label11 = lv_label_create(ui_WANIPCONFIG);
+    lv_obj_set_width(ui_WANIPCONFIG_Label11, 132);
+    lv_obj_set_height(ui_WANIPCONFIG_Label11, 15);
+    lv_obj_set_x(ui_WANIPCONFIG_Label11, 3);
+    lv_obj_set_y(ui_WANIPCONFIG_Label11, 61);
+    lv_label_set_text(ui_WANIPCONFIG_Label11, "255.255.255.255/24");
+    lv_obj_set_style_text_color(ui_WANIPCONFIG_Label11, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_opa(ui_WANIPCONFIG_Label11, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_WANIPCONFIG_Label11, &ui_font_tahoma, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    ui_WANIPCONFIG_Image21 = lv_img_create(ui_WANIPCONFIG);
+    lv_img_set_src(ui_WANIPCONFIG_Image21, &ui_img_sel_on_png);
+    lv_obj_set_width(ui_WANIPCONFIG_Image21, LV_SIZE_CONTENT);   /// 24
+    lv_obj_set_height(ui_WANIPCONFIG_Image21, LV_SIZE_CONTENT);    /// 14
+    lv_obj_set_x(ui_WANIPCONFIG_Image21, 41);
+    lv_obj_set_y(ui_WANIPCONFIG_Image21, -30);
+    lv_obj_set_align(ui_WANIPCONFIG_Image21, LV_ALIGN_CENTER);
+    lv_obj_add_flag(ui_WANIPCONFIG_Image21, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
+    lv_obj_clear_flag(ui_WANIPCONFIG_Image21, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+
+    ui_VPNSTATUS_Image1 = lv_img_create(ui_WANIPCONFIG);
+    lv_img_set_src(ui_VPNSTATUS_Image1, &ui_img_row_r_png);
+    lv_obj_set_width(ui_VPNSTATUS_Image1, LV_SIZE_CONTENT);   /// 11
+    lv_obj_set_height(ui_VPNSTATUS_Image1, LV_SIZE_CONTENT);    /// 11
+    lv_obj_set_x(ui_VPNSTATUS_Image1, 112);
+    lv_obj_set_y(ui_VPNSTATUS_Image1, 115);
+    lv_obj_add_flag(ui_VPNSTATUS_Image1, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
+    lv_obj_clear_flag(ui_VPNSTATUS_Image1, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+
+    ui_VPNSTATUS_Image2 = lv_img_create(ui_WANIPCONFIG);
+    lv_img_set_src(ui_VPNSTATUS_Image2, &ui_img_row_l_png);
+    lv_obj_set_width(ui_VPNSTATUS_Image2, LV_SIZE_CONTENT);   /// 11
+    lv_obj_set_height(ui_VPNSTATUS_Image2, LV_SIZE_CONTENT);    /// 11
+    lv_obj_set_x(ui_VPNSTATUS_Image2, 2);
+    lv_obj_set_y(ui_VPNSTATUS_Image2, 115);
+    lv_obj_add_flag(ui_VPNSTATUS_Image2, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
+    lv_obj_clear_flag(ui_VPNSTATUS_Image2, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+
+    ui_WANIPCONFIG_Label13 = lv_label_create(ui_WANIPCONFIG);
+    lv_obj_set_width(ui_WANIPCONFIG_Label13, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_WANIPCONFIG_Label13, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_WANIPCONFIG_Label13, 3);
+    lv_obj_set_y(ui_WANIPCONFIG_Label13, 47);
+    lv_label_set_text(ui_WANIPCONFIG_Label13, "IP Address:");
+    lv_obj_set_style_text_color(ui_WANIPCONFIG_Label13, lv_color_hex(0x6A6D62), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_opa(ui_WANIPCONFIG_Label13, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_WANIPCONFIG_Label13, &lv_font_montserrat_12, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    ui_WANIPCONFIG_Label14 = lv_label_create(ui_WANIPCONFIG);
+    lv_obj_set_width(ui_WANIPCONFIG_Label14, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_WANIPCONFIG_Label14, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_WANIPCONFIG_Label14, 3);
+    lv_obj_set_y(ui_WANIPCONFIG_Label14, 79);
+    lv_label_set_text(ui_WANIPCONFIG_Label14, "Gateway:");
+    lv_obj_set_style_text_color(ui_WANIPCONFIG_Label14, lv_color_hex(0x6A6D62), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_opa(ui_WANIPCONFIG_Label14, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_WANIPCONFIG_Label14, &lv_font_montserrat_12, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    ui_WANIPCONFIG_Label15 = lv_label_create(ui_WANIPCONFIG);
+    lv_obj_set_width(ui_WANIPCONFIG_Label15, 132);
+    lv_obj_set_height(ui_WANIPCONFIG_Label15, 15);
+    lv_obj_set_x(ui_WANIPCONFIG_Label15, 3);
+    lv_obj_set_y(ui_WANIPCONFIG_Label15, 94);
+    lv_label_set_text(ui_WANIPCONFIG_Label15, "255.255.255.255");
+    lv_obj_set_style_text_color(ui_WANIPCONFIG_Label15, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_opa(ui_WANIPCONFIG_Label15, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_WANIPCONFIG_Label15, &ui_font_tahoma, LV_PART_MAIN | LV_STATE_DEFAULT);
+
 }
 void ui_LANIPCONFIG_screen_init(void)
 {
@@ -429,6 +460,39 @@ void ui_LANIPCONFIG_screen_init(void)
     lv_obj_set_style_bg_color(ui_Screen2_Label3, lv_color_hex(0x5A5D5B), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_opa(ui_Screen2_Label3, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
 
+    ui_WANIPCONFIG_Label3 = lv_label_create(ui_LANIPCONFIG);
+    lv_obj_set_width(ui_WANIPCONFIG_Label3, 135);
+    lv_obj_set_height(ui_WANIPCONFIG_Label3, 15);
+    lv_obj_set_x(ui_WANIPCONFIG_Label3, 5);
+    lv_obj_set_y(ui_WANIPCONFIG_Label3, 20);
+    lv_obj_set_align(ui_WANIPCONFIG_Label3, LV_ALIGN_LEFT_MID);
+    lv_label_set_text(ui_WANIPCONFIG_Label3, "GW:  192.168.1.254");
+    lv_obj_set_style_text_color(ui_WANIPCONFIG_Label3, lv_color_hex(0xC3E666), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_opa(ui_WANIPCONFIG_Label3, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_WANIPCONFIG_Label3, &ui_font_tahoma, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    ui_WANIPCONFIG_Label2 = lv_label_create(ui_LANIPCONFIG);
+    lv_obj_set_width(ui_WANIPCONFIG_Label2, 132);
+    lv_obj_set_height(ui_WANIPCONFIG_Label2, 15);
+    lv_obj_set_x(ui_WANIPCONFIG_Label2, 3);
+    lv_obj_set_y(ui_WANIPCONFIG_Label2, 5);
+    lv_obj_set_align(ui_WANIPCONFIG_Label2, LV_ALIGN_LEFT_MID);
+    lv_label_set_text(ui_WANIPCONFIG_Label2, "IP:  192.168.134.27/24");
+    lv_obj_set_style_text_color(ui_WANIPCONFIG_Label2, lv_color_hex(0xC3E666), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_opa(ui_WANIPCONFIG_Label2, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_WANIPCONFIG_Label2, &ui_font_tahoma, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    ui_WANIPCONFIG_Panel2 = lv_obj_create(ui_LANIPCONFIG);
+    lv_obj_set_width(ui_WANIPCONFIG_Panel2, 70);
+    lv_obj_set_height(ui_WANIPCONFIG_Panel2, 13);
+    lv_obj_set_x(ui_WANIPCONFIG_Panel2, 22);
+    lv_obj_set_y(ui_WANIPCONFIG_Panel2, 39);
+    lv_obj_set_align(ui_WANIPCONFIG_Panel2, LV_ALIGN_CENTER);
+    lv_obj_clear_flag(ui_WANIPCONFIG_Panel2, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    lv_obj_set_style_bg_color(ui_WANIPCONFIG_Panel2, lv_color_hex(0x3C8F45), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_opa(ui_WANIPCONFIG_Panel2, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_border_side(ui_WANIPCONFIG_Panel2, LV_BORDER_SIDE_NONE, LV_PART_MAIN | LV_STATE_DEFAULT);
+
     ui_WANIPCONFIG_Panel3 = lv_obj_create(ui_LANIPCONFIG);
     lv_obj_set_width(ui_WANIPCONFIG_Panel3, 70);
     lv_obj_set_height(ui_WANIPCONFIG_Panel3, 13);
@@ -440,6 +504,17 @@ void ui_LANIPCONFIG_screen_init(void)
     lv_obj_set_style_bg_opa(ui_WANIPCONFIG_Panel3, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_border_color(ui_WANIPCONFIG_Panel3, lv_color_hex(0x11F308), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_border_opa(ui_WANIPCONFIG_Panel3, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    ui_WANIPCONFIG_Label4 = lv_label_create(ui_LANIPCONFIG);
+    lv_obj_set_width(ui_WANIPCONFIG_Label4, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_WANIPCONFIG_Label4, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_WANIPCONFIG_Label4, 20);
+    lv_obj_set_y(ui_WANIPCONFIG_Label4, 39);
+    lv_obj_set_align(ui_WANIPCONFIG_Label4, LV_ALIGN_CENTER);
+    lv_label_set_text(ui_WANIPCONFIG_Label4, "ENABLED");
+    lv_obj_set_style_text_color(ui_WANIPCONFIG_Label4, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_opa(ui_WANIPCONFIG_Label4, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_WANIPCONFIG_Label4, &lv_font_montserrat_10, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_WANIPCONFIG_Label9 = lv_label_create(ui_LANIPCONFIG);
     lv_obj_set_width(ui_WANIPCONFIG_Label9, LV_SIZE_CONTENT);   /// 1
@@ -455,8 +530,8 @@ void ui_LANIPCONFIG_screen_init(void)
     ui_WANIPCONFIG_Label10 = lv_label_create(ui_LANIPCONFIG);
     lv_obj_set_width(ui_WANIPCONFIG_Label10, 120);
     lv_obj_set_height(ui_WANIPCONFIG_Label10, 15);
-    lv_obj_set_x(ui_WANIPCONFIG_Label10, 5);
-    lv_obj_set_y(ui_WANIPCONFIG_Label10, -9);
+    lv_obj_set_x(ui_WANIPCONFIG_Label10, 6);
+    lv_obj_set_y(ui_WANIPCONFIG_Label10, -19);
     lv_obj_set_align(ui_WANIPCONFIG_Label10, LV_ALIGN_LEFT_MID);
     lv_label_set_text(ui_WANIPCONFIG_Label10, "IP:  192.168.134.27/24");
     lv_obj_set_style_text_color(ui_WANIPCONFIG_Label10, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -466,16 +541,6 @@ void ui_LANIPCONFIG_screen_init(void)
     lv_obj_set_style_border_opa(ui_WANIPCONFIG_Label10, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_border_width(ui_WANIPCONFIG_Label10, 1, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_border_side(ui_WANIPCONFIG_Label10, LV_BORDER_SIDE_FULL, LV_PART_MAIN | LV_STATE_DEFAULT);
-
-    ui_WANIPCONFIG_Image5 = lv_img_create(ui_LANIPCONFIG);
-    lv_img_set_src(ui_WANIPCONFIG_Image5, &ui_img_eth_img_png);
-    lv_obj_set_width(ui_WANIPCONFIG_Image5, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_WANIPCONFIG_Image5, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_WANIPCONFIG_Image5, -47);
-    lv_obj_set_y(ui_WANIPCONFIG_Image5, 34);
-    lv_obj_set_align(ui_WANIPCONFIG_Image5, LV_ALIGN_CENTER);
-    lv_obj_add_flag(ui_WANIPCONFIG_Image5, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
-    lv_obj_clear_flag(ui_WANIPCONFIG_Image5, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
 
     ui_WANIPCONFIG_Label12 = lv_label_create(ui_LANIPCONFIG);
     lv_obj_set_width(ui_WANIPCONFIG_Label12, LV_SIZE_CONTENT);   /// 1
@@ -570,16 +635,6 @@ void ui_WLANIPCONFIG_screen_init(void)
     lv_obj_set_style_border_opa(ui_WANIPCONFIG_Label7, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_border_width(ui_WANIPCONFIG_Label7, 1, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_border_side(ui_WANIPCONFIG_Label7, LV_BORDER_SIDE_FULL, LV_PART_MAIN | LV_STATE_DEFAULT);
-
-    ui_WANIPCONFIG_Image3 = lv_img_create(ui_WLANIPCONFIG);
-    lv_img_set_src(ui_WANIPCONFIG_Image3, &ui_img_wifi_img2_png);
-    lv_obj_set_width(ui_WANIPCONFIG_Image3, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_WANIPCONFIG_Image3, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_WANIPCONFIG_Image3, -47);
-    lv_obj_set_y(ui_WANIPCONFIG_Image3, 34);
-    lv_obj_set_align(ui_WANIPCONFIG_Image3, LV_ALIGN_CENTER);
-    lv_obj_add_flag(ui_WANIPCONFIG_Image3, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
-    lv_obj_clear_flag(ui_WANIPCONFIG_Image3, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
 
     ui_WANIPCONFIG_Label8 = lv_label_create(ui_WLANIPCONFIG);
     lv_obj_set_width(ui_WANIPCONFIG_Label8, LV_SIZE_CONTENT);   /// 1
