@@ -1,6 +1,6 @@
 {
   "codename": "tahomabd",
-  "ttf_path": "\\assets\\fonts\\DejaVuSansCondensed-Bold.ttf",
+  "ttf_path": "\\assets\\fonts\\ARIALNB.TTF",
   "bin_path": "\\assets\\fonts\\ui_font_tahomabd.bin",
   "c_path": "\\assets\\fonts\\ui_font_tahomabd.c",
   "cfg_path": "\\assets\\fonts\\ui_font_tahomabd.fcfg",
