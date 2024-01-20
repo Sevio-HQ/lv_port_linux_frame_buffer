@@ -71,7 +71,7 @@ void ui_MOBILE_screen_init(void)
     lv_obj_set_x(ui_Mobile_Screen, 0);
     lv_obj_set_y(ui_Mobile_Screen, -55);
     lv_obj_set_align(ui_Mobile_Screen, LV_ALIGN_CENTER);
-    lv_label_set_text(ui_Mobile_Screen, "MOBILE sss");
+    lv_label_set_text(ui_Mobile_Screen, "MOBILE ssstt");
     lv_obj_set_style_text_color(ui_Mobile_Screen, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_Mobile_Screen, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_align(ui_Mobile_Screen, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
