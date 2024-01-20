@@ -5,7 +5,7 @@
   "c_path": "\\assets\\fonts\\ui_font_tahoma.c",
   "cfg_path": "\\assets\\fonts\\ui_font_tahoma.fcfg",
   "size": 11,
-  "bpp": 4,
+  "bpp": 2,
   "letters": 0,
   "ranges": [
     "0x20-0x7f"

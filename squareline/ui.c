@@ -413,7 +413,7 @@ void ui_WANIPCONFIG_screen_init(void)
     lv_obj_set_x(ui_WANIPCONFIG_PageLabel, 29);
     lv_obj_set_y(ui_WANIPCONFIG_PageLabel, 4);
     lv_label_set_text(ui_WANIPCONFIG_PageLabel, "WAN");
-    lv_obj_set_style_text_color(ui_WANIPCONFIG_PageLabel, lv_color_hex(0x808080), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_WANIPCONFIG_PageLabel, lv_color_hex(0x959695), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_WANIPCONFIG_PageLabel, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_align(ui_WANIPCONFIG_PageLabel, LV_TEXT_ALIGN_LEFT, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_WANIPCONFIG_PageLabel, &ui_font_tahomabd, LV_PART_MAIN | LV_STATE_DEFAULT);
