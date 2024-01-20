@@ -13,7 +13,6 @@ lv_obj_t * ui_Screen1_Label1;
 lv_obj_t * ui_boardStatusLabel;
 lv_obj_t * ui_uptimeLabel;
 lv_obj_t * ui_dateTimeLabel;
-lv_obj_t * ui_Home_RowRight;
 lv_obj_t * ui_VPNSTATUS;
 lv_obj_t * ui_VPNSTATUS_Logo;
 lv_obj_t * ui_VPNSTATUS_StatusImage;
@@ -122,7 +121,7 @@ void ui_Home_screen_init(void)
     lv_obj_set_width(ui_boardStatusLabel, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_boardStatusLabel, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_x(ui_boardStatusLabel, 0);
-    lv_obj_set_y(ui_boardStatusLabel, 60);
+    lv_obj_set_y(ui_boardStatusLabel, 65);
     lv_obj_set_align(ui_boardStatusLabel, LV_ALIGN_TOP_MID);
     lv_label_set_text(ui_boardStatusLabel, "23.4  C");
     lv_obj_set_style_text_color(ui_boardStatusLabel, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -133,7 +132,7 @@ void ui_Home_screen_init(void)
     lv_obj_set_width(ui_uptimeLabel, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_uptimeLabel, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_x(ui_uptimeLabel, 0);
-    lv_obj_set_y(ui_uptimeLabel, 75);
+    lv_obj_set_y(ui_uptimeLabel, 85);
     lv_obj_set_align(ui_uptimeLabel, LV_ALIGN_TOP_MID);
     lv_label_set_text(ui_uptimeLabel, "5d 7h 56' 32''");
     lv_obj_set_style_text_color(ui_uptimeLabel, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -144,21 +143,12 @@ void ui_Home_screen_init(void)
     lv_obj_set_width(ui_dateTimeLabel, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_dateTimeLabel, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_x(ui_dateTimeLabel, 0);
-    lv_obj_set_y(ui_dateTimeLabel, 90);
+    lv_obj_set_y(ui_dateTimeLabel, 105);
     lv_obj_set_align(ui_dateTimeLabel, LV_ALIGN_TOP_MID);
     lv_label_set_text(ui_dateTimeLabel, "18:54 22/01/2019 UDT");
     lv_obj_set_style_text_color(ui_dateTimeLabel, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_dateTimeLabel, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_dateTimeLabel, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
-
-    ui_Home_RowRight = lv_img_create(ui_Home);
-    lv_img_set_src(ui_Home_RowRight, &ui_img_row_r_png);
-    lv_obj_set_width(ui_Home_RowRight, LV_SIZE_CONTENT);   /// 11
-    lv_obj_set_height(ui_Home_RowRight, LV_SIZE_CONTENT);    /// 11
-    lv_obj_set_x(ui_Home_RowRight, 115);
-    lv_obj_set_y(ui_Home_RowRight, 115);
-    lv_obj_add_flag(ui_Home_RowRight, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
-    lv_obj_clear_flag(ui_Home_RowRight, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
 
 }
 void ui_VPNSTATUS_screen_init(void)

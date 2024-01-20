@@ -18,7 +18,6 @@ extern lv_obj_t * ui_Screen1_Label1;
 extern lv_obj_t * ui_boardStatusLabel;
 extern lv_obj_t * ui_uptimeLabel;
 extern lv_obj_t * ui_dateTimeLabel;
-extern lv_obj_t * ui_Home_RowRight;
 extern lv_obj_t * ui_VPNSTATUS;
 extern lv_obj_t * ui_VPNSTATUS_Logo;
 extern lv_obj_t * ui_VPNSTATUS_StatusImage;
@@ -83,12 +82,12 @@ extern lv_obj_t * ui_WLANIPCONFIG_RowRight;
 
 
 LV_IMG_DECLARE(ui_img_logo_png);    // assets\logo.png
-LV_IMG_DECLARE(ui_img_row_r_png);    // assets\row_r.png
 LV_IMG_DECLARE(ui_img_vpn_png);    // assets\vpn.png
 LV_IMG_DECLARE(ui_img_status_tree_png);    // assets\status_tree.png
 LV_IMG_DECLARE(ui_img_status_fail_png);    // assets\status_fail.png
 LV_IMG_DECLARE(ui_img_status_pass_png);    // assets\status_pass.png
 LV_IMG_DECLARE(ui_img_row_l_png);    // assets\row_l.png
+LV_IMG_DECLARE(ui_img_row_r_png);    // assets\row_r.png
 LV_IMG_DECLARE(ui_img_network_png);    // assets\network.png
 LV_IMG_DECLARE(ui_img_sel_on_png);    // assets\sel_on.png
 LV_IMG_DECLARE(ui_img_row_d_png);    // assets\row_d.png
