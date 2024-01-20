@@ -1,10 +1,10 @@
 {
   "codename": "tahoma",
-  "ttf_path": "\\assets\\fonts\\tahoma.ttf",
+  "ttf_path": "\\assets\\fonts\\DejaVuSans.ttf",
   "bin_path": "\\assets\\fonts\\ui_font_tahoma.bin",
   "c_path": "\\assets\\fonts\\ui_font_tahoma.c",
   "cfg_path": "\\assets\\fonts\\ui_font_tahoma.fcfg",
-  "size": 12,
+  "size": 11,
   "bpp": 4,
   "letters": 0,
   "ranges": [

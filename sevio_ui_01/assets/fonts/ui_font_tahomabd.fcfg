@@ -1,11 +1,11 @@
 {
   "codename": "tahomabd",
-  "ttf_path": "\\assets\\fonts\\tahomabd.ttf",
+  "ttf_path": "\\assets\\fonts\\DejaVuSansCondensed-Bold.ttf",
   "bin_path": "\\assets\\fonts\\ui_font_tahomabd.bin",
   "c_path": "\\assets\\fonts\\ui_font_tahomabd.c",
   "cfg_path": "\\assets\\fonts\\ui_font_tahomabd.fcfg",
-  "size": 14,
-  "bpp": 1,
+  "size": 15,
+  "bpp": 2,
   "letters": 0,
   "ranges": [
     "0x20-0x7f"
