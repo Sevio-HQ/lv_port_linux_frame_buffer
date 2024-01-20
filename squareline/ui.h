@@ -50,7 +50,6 @@ extern lv_obj_t * ui_WANIPCONFIG_BarDown;
 extern lv_obj_t * ui_WANIPCONFIG_RowLF;
 extern lv_obj_t * ui_WANIPCONFIG_RowDN;
 extern lv_obj_t * ui_WANIPCONFIG_RowRG;
-extern lv_obj_t * ui_WANIPCONFIG_Button_LF;
 extern lv_obj_t * ui_WANIPCONFIG_ButtonDN;
 extern lv_obj_t * ui_WANIPCONFIG_Button_RG;
 extern lv_obj_t * ui_LANIPCONFIG;

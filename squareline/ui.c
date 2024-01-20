@@ -45,7 +45,6 @@ lv_obj_t * ui_WANIPCONFIG_BarDown;
 lv_obj_t * ui_WANIPCONFIG_RowLF;
 lv_obj_t * ui_WANIPCONFIG_RowDN;
 lv_obj_t * ui_WANIPCONFIG_RowRG;
-lv_obj_t * ui_WANIPCONFIG_Button_LF;
 lv_obj_t * ui_WANIPCONFIG_ButtonDN;
 lv_obj_t * ui_WANIPCONFIG_Button_RG;
 lv_obj_t * ui_LANIPCONFIG;
@@ -478,16 +477,6 @@ void ui_WANIPCONFIG_screen_init(void)
     lv_obj_set_y(ui_WANIPCONFIG_RowRG, 115);
     lv_obj_add_flag(ui_WANIPCONFIG_RowRG, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
     lv_obj_clear_flag(ui_WANIPCONFIG_RowRG, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
-
-    ui_WANIPCONFIG_Button_LF = lv_btn_create(ui_WANIPCONFIG);
-    lv_obj_set_width(ui_WANIPCONFIG_Button_LF, 15);
-    lv_obj_set_height(ui_WANIPCONFIG_Button_LF, 19);
-    lv_obj_set_x(ui_WANIPCONFIG_Button_LF, -52);
-    lv_obj_set_y(ui_WANIPCONFIG_Button_LF, 56);
-    lv_obj_set_align(ui_WANIPCONFIG_Button_LF, LV_ALIGN_CENTER);
-    lv_obj_add_flag(ui_WANIPCONFIG_Button_LF, LV_OBJ_FLAG_SCROLL_ON_FOCUS);     /// Flags
-    lv_obj_clear_flag(ui_WANIPCONFIG_Button_LF, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
-    lv_obj_set_style_opa(ui_WANIPCONFIG_Button_LF, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_WANIPCONFIG_ButtonDN = lv_btn_create(ui_WANIPCONFIG);
     lv_obj_set_width(ui_WANIPCONFIG_ButtonDN, 15);
