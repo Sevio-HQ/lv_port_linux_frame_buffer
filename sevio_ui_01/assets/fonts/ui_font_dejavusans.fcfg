@@ -1,6 +1,6 @@
 {
   "codename": "dejavusans",
-  "ttf_path": "\\assets\\fonts\\Rubik-Regular.ttf",
+  "ttf_path": "\\assets\\fonts\\DejaVuSans.ttf",
   "bin_path": "\\assets\\fonts\\ui_font_dejavusans.bin",
   "c_path": "\\assets\\fonts\\ui_font_dejavusans.c",
   "cfg_path": "\\assets\\fonts\\ui_font_dejavusans.fcfg",
