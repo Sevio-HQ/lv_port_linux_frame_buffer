@@ -124,7 +124,7 @@ void ui_Home_screen_init(void)
     lv_obj_set_style_text_color(ui_Screen1_Label1, lv_color_hex(0xD1D0D0), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_Screen1_Label1, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_align(ui_Screen1_Label1, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_Screen1_Label1, &ui_font_tahomabd, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_Screen1_Label1, &ui_font_arialbd, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_boardStatusLabel = lv_label_create(ui_Home);
     lv_obj_set_width(ui_boardStatusLabel, LV_SIZE_CONTENT);   /// 1
@@ -135,7 +135,7 @@ void ui_Home_screen_init(void)
     lv_label_set_text(ui_boardStatusLabel, "23.4  C");
     lv_obj_set_style_text_color(ui_boardStatusLabel, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_boardStatusLabel, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_boardStatusLabel, &ui_font_tahoma, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_boardStatusLabel, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_uptimeLabel = lv_label_create(ui_Home);
     lv_obj_set_width(ui_uptimeLabel, LV_SIZE_CONTENT);   /// 1
@@ -146,7 +146,7 @@ void ui_Home_screen_init(void)
     lv_label_set_text(ui_uptimeLabel, "5d 7h 56' 32''");
     lv_obj_set_style_text_color(ui_uptimeLabel, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_uptimeLabel, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_uptimeLabel, &ui_font_tahoma, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_uptimeLabel, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_dateTimeLabel = lv_label_create(ui_Home);
     lv_obj_set_width(ui_dateTimeLabel, LV_SIZE_CONTENT);   /// 1
@@ -157,7 +157,7 @@ void ui_Home_screen_init(void)
     lv_label_set_text(ui_dateTimeLabel, "18:54 22/01/2019 UDT");
     lv_obj_set_style_text_color(ui_dateTimeLabel, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_dateTimeLabel, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_dateTimeLabel, &ui_font_tahoma, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_dateTimeLabel, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_Home_RowRight = lv_img_create(ui_Home);
     lv_img_set_src(ui_Home_RowRight, &ui_img_row_r_png);
@@ -206,7 +206,7 @@ void ui_VPNSTATUS_screen_init(void)
     lv_label_set_text(ui_VPNSTATUS_Label1, "Physical Uplink");
     lv_obj_set_style_text_color(ui_VPNSTATUS_Label1, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_VPNSTATUS_Label1, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_VPNSTATUS_Label1, &ui_font_tahoma, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_VPNSTATUS_Label1, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_VPNSTATUS_KoImage1 = lv_img_create(ui_VPNSTATUS);
     lv_img_set_src(ui_VPNSTATUS_KoImage1, &ui_img_status_fail_png);
@@ -236,7 +236,7 @@ void ui_VPNSTATUS_screen_init(void)
     lv_label_set_text(ui_VPNSTATUS_Label2, "IP Address");
     lv_obj_set_style_text_color(ui_VPNSTATUS_Label2, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_VPNSTATUS_Label2, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_VPNSTATUS_Label2, &ui_font_tahoma, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_VPNSTATUS_Label2, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_VPNSTATUS_KoImage2 = lv_img_create(ui_VPNSTATUS);
     lv_img_set_src(ui_VPNSTATUS_KoImage2, &ui_img_status_fail_png);
@@ -266,7 +266,7 @@ void ui_VPNSTATUS_screen_init(void)
     lv_label_set_text(ui_VPNSTATUS_Label3, "Gateway");
     lv_obj_set_style_text_color(ui_VPNSTATUS_Label3, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_VPNSTATUS_Label3, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_VPNSTATUS_Label3, &ui_font_tahoma, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_VPNSTATUS_Label3, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_VPNSTATUS_KoImage3 = lv_img_create(ui_VPNSTATUS);
     lv_img_set_src(ui_VPNSTATUS_KoImage3, &ui_img_status_fail_png);
@@ -296,7 +296,7 @@ void ui_VPNSTATUS_screen_init(void)
     lv_label_set_text(ui_VPNSTATUS_Label4, "Internet");
     lv_obj_set_style_text_color(ui_VPNSTATUS_Label4, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_VPNSTATUS_Label4, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_VPNSTATUS_Label4, &ui_font_tahoma, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_VPNSTATUS_Label4, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_VPNSTATUS_KoImage4 = lv_img_create(ui_VPNSTATUS);
     lv_img_set_src(ui_VPNSTATUS_KoImage4, &ui_img_status_fail_png);
@@ -326,7 +326,7 @@ void ui_VPNSTATUS_screen_init(void)
     lv_label_set_text(ui_VPNSTATUS_Label5, "VPN ports");
     lv_obj_set_style_text_color(ui_VPNSTATUS_Label5, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_VPNSTATUS_Label5, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_VPNSTATUS_Label5, &ui_font_tahoma, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_VPNSTATUS_Label5, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_VPNSTATUS_KoImage5 = lv_img_create(ui_VPNSTATUS);
     lv_img_set_src(ui_VPNSTATUS_KoImage5, &ui_img_status_fail_png);
@@ -416,7 +416,7 @@ void ui_WANIPCONFIG_screen_init(void)
     lv_obj_set_style_text_color(ui_WANIPCONFIG_PageLabel, lv_color_hex(0x959695), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_WANIPCONFIG_PageLabel, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_align(ui_WANIPCONFIG_PageLabel, LV_TEXT_ALIGN_LEFT, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_WANIPCONFIG_PageLabel, &ui_font_tahomabd, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_WANIPCONFIG_PageLabel, &ui_font_arialbd, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_WANIPCONFIG_BarUp = lv_obj_create(ui_WANIPCONFIG);
     lv_obj_set_width(ui_WANIPCONFIG_BarUp, 120);
@@ -437,7 +437,7 @@ void ui_WANIPCONFIG_screen_init(void)
     lv_label_set_text(ui_WANIPCONFIG_Label1, "DHCP Client:");
     lv_obj_set_style_text_color(ui_WANIPCONFIG_Label1, lv_color_hex(0x6A6D62), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_WANIPCONFIG_Label1, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_WANIPCONFIG_Label1, &ui_font_tahoma, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_WANIPCONFIG_Label1, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_WANIPCONFIG_Image25 = lv_img_create(ui_WANIPCONFIG);
     lv_img_set_src(ui_WANIPCONFIG_Image25, &ui_img_sel_on_png);
@@ -457,7 +457,7 @@ void ui_WANIPCONFIG_screen_init(void)
     lv_label_set_text(ui_WANIPCONFIG_Label13, "IP Address:");
     lv_obj_set_style_text_color(ui_WANIPCONFIG_Label13, lv_color_hex(0x6A6D62), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_WANIPCONFIG_Label13, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_WANIPCONFIG_Label13, &ui_font_tahoma, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_WANIPCONFIG_Label13, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_WANIPCONFIG_Label2 = lv_label_create(ui_WANIPCONFIG);
     lv_obj_set_width(ui_WANIPCONFIG_Label2, 132);
@@ -467,7 +467,7 @@ void ui_WANIPCONFIG_screen_init(void)
     lv_label_set_text(ui_WANIPCONFIG_Label2, "255.255.255.255/24");
     lv_obj_set_style_text_color(ui_WANIPCONFIG_Label2, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_WANIPCONFIG_Label2, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_WANIPCONFIG_Label2, &ui_font_tahoma, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_WANIPCONFIG_Label2, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_WANIPCONFIG_Label14 = lv_label_create(ui_WANIPCONFIG);
     lv_obj_set_width(ui_WANIPCONFIG_Label14, LV_SIZE_CONTENT);   /// 1
@@ -477,7 +477,7 @@ void ui_WANIPCONFIG_screen_init(void)
     lv_label_set_text(ui_WANIPCONFIG_Label14, "Gateway:");
     lv_obj_set_style_text_color(ui_WANIPCONFIG_Label14, lv_color_hex(0x6A6D62), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_WANIPCONFIG_Label14, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_WANIPCONFIG_Label14, &ui_font_tahoma, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_WANIPCONFIG_Label14, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_WANIPCONFIG_Label3 = lv_label_create(ui_WANIPCONFIG);
     lv_obj_set_width(ui_WANIPCONFIG_Label3, 132);
@@ -487,7 +487,7 @@ void ui_WANIPCONFIG_screen_init(void)
     lv_label_set_text(ui_WANIPCONFIG_Label3, "255.255.255.255");
     lv_obj_set_style_text_color(ui_WANIPCONFIG_Label3, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_WANIPCONFIG_Label3, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_WANIPCONFIG_Label3, &ui_font_tahoma, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_WANIPCONFIG_Label3, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_WANIPCONFIG_BarDown = lv_obj_create(ui_WANIPCONFIG);
     lv_obj_set_width(ui_WANIPCONFIG_BarDown, 128);
@@ -589,7 +589,7 @@ void ui_LANIPCONFIG_screen_init(void)
     lv_obj_set_style_text_color(ui_LANIPCONFIG_PageLabel, lv_color_hex(0x808080), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_LANIPCONFIG_PageLabel, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_align(ui_LANIPCONFIG_PageLabel, LV_TEXT_ALIGN_LEFT, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_LANIPCONFIG_PageLabel, &ui_font_tahomabd, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_LANIPCONFIG_PageLabel, &ui_font_arialbd, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_LANIPCONFIG_BarUp = lv_obj_create(ui_LANIPCONFIG);
     lv_obj_set_width(ui_LANIPCONFIG_BarUp, 120);
@@ -610,7 +610,7 @@ void ui_LANIPCONFIG_screen_init(void)
     lv_label_set_text(ui_WANIPCONFIG_Label16, "DHCP Server:");
     lv_obj_set_style_text_color(ui_WANIPCONFIG_Label16, lv_color_hex(0x6A6D62), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_WANIPCONFIG_Label16, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_WANIPCONFIG_Label16, &ui_font_tahoma, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_WANIPCONFIG_Label16, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_WANIPCONFIG_Image1 = lv_img_create(ui_LANIPCONFIG);
     lv_img_set_src(ui_WANIPCONFIG_Image1, &ui_img_sel_on_png);
@@ -630,7 +630,7 @@ void ui_LANIPCONFIG_screen_init(void)
     lv_label_set_text(ui_WANIPCONFIG_Label9, "IP Address:");
     lv_obj_set_style_text_color(ui_WANIPCONFIG_Label9, lv_color_hex(0x6A6D62), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_WANIPCONFIG_Label9, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_WANIPCONFIG_Label9, &ui_font_tahoma, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_WANIPCONFIG_Label9, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_WANIPCONFIG_Label17 = lv_label_create(ui_LANIPCONFIG);
     lv_obj_set_width(ui_WANIPCONFIG_Label17, 132);
@@ -640,7 +640,7 @@ void ui_LANIPCONFIG_screen_init(void)
     lv_label_set_text(ui_WANIPCONFIG_Label17, "255.255.255.255/24");
     lv_obj_set_style_text_color(ui_WANIPCONFIG_Label17, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_WANIPCONFIG_Label17, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_WANIPCONFIG_Label17, &ui_font_tahoma, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_WANIPCONFIG_Label17, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_LANIPCONFIG_BarDown = lv_obj_create(ui_LANIPCONFIG);
     lv_obj_set_width(ui_LANIPCONFIG_BarDown, 128);
@@ -753,7 +753,7 @@ void ui_WLANIPCONFIG_screen_init(void)
     lv_obj_set_style_text_color(ui_WLANIPCONFIG_PageLabel, lv_color_hex(0x808080), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_WLANIPCONFIG_PageLabel, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_align(ui_WLANIPCONFIG_PageLabel, LV_TEXT_ALIGN_LEFT, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_WLANIPCONFIG_PageLabel, &ui_font_tahomabd, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_WLANIPCONFIG_PageLabel, &ui_font_arialbd, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_WLANIPCONFIG_BarUp = lv_obj_create(ui_WLANIPCONFIG);
     lv_obj_set_width(ui_WLANIPCONFIG_BarUp, 120);
@@ -774,7 +774,7 @@ void ui_WLANIPCONFIG_screen_init(void)
     lv_label_set_text(ui_WLANIPCONFIG_Label5, "DHCP Client:");
     lv_obj_set_style_text_color(ui_WLANIPCONFIG_Label5, lv_color_hex(0x6A6D62), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_WLANIPCONFIG_Label5, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_WLANIPCONFIG_Label5, &ui_font_tahoma, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_WLANIPCONFIG_Label5, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_WLANIPCONFIG_Image2 = lv_img_create(ui_WLANIPCONFIG);
     lv_img_set_src(ui_WLANIPCONFIG_Image2, &ui_img_sel_on_png);
@@ -794,7 +794,7 @@ void ui_WLANIPCONFIG_screen_init(void)
     lv_label_set_text(ui_WLANIPCONFIG_Label18, "IP Address:");
     lv_obj_set_style_text_color(ui_WLANIPCONFIG_Label18, lv_color_hex(0x6A6D62), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_WLANIPCONFIG_Label18, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_WLANIPCONFIG_Label18, &ui_font_tahoma, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_WLANIPCONFIG_Label18, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_WLANIPCONFIG_Label19 = lv_label_create(ui_WLANIPCONFIG);
     lv_obj_set_width(ui_WLANIPCONFIG_Label19, 132);
@@ -804,7 +804,7 @@ void ui_WLANIPCONFIG_screen_init(void)
     lv_label_set_text(ui_WLANIPCONFIG_Label19, "255.255.255.255/24");
     lv_obj_set_style_text_color(ui_WLANIPCONFIG_Label19, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_WLANIPCONFIG_Label19, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_WLANIPCONFIG_Label19, &ui_font_tahoma, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_WLANIPCONFIG_Label19, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_WLANIPCONFIG_Label20 = lv_label_create(ui_WLANIPCONFIG);
     lv_obj_set_width(ui_WLANIPCONFIG_Label20, LV_SIZE_CONTENT);   /// 1
@@ -814,7 +814,7 @@ void ui_WLANIPCONFIG_screen_init(void)
     lv_label_set_text(ui_WLANIPCONFIG_Label20, "Gateway:");
     lv_obj_set_style_text_color(ui_WLANIPCONFIG_Label20, lv_color_hex(0x6A6D62), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_WLANIPCONFIG_Label20, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_WLANIPCONFIG_Label20, &ui_font_tahoma, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_WLANIPCONFIG_Label20, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_WLANIPCONFIG_Label21 = lv_label_create(ui_WLANIPCONFIG);
     lv_obj_set_width(ui_WLANIPCONFIG_Label21, 132);
@@ -824,7 +824,7 @@ void ui_WLANIPCONFIG_screen_init(void)
     lv_label_set_text(ui_WLANIPCONFIG_Label21, "255.255.255.255");
     lv_obj_set_style_text_color(ui_WLANIPCONFIG_Label21, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_WLANIPCONFIG_Label21, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_WLANIPCONFIG_Label21, &ui_font_tahoma, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_WLANIPCONFIG_Label21, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_WLANIPCONFIG_BarDown = lv_obj_create(ui_WLANIPCONFIG);
     lv_obj_set_width(ui_WLANIPCONFIG_BarDown, 128);

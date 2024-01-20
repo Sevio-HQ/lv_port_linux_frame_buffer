@@ -1,16 +1,16 @@
 /*******************************************************************************
  * Size: 16 px
  * Bpp: 2
- * Opts: --bpp 2 --size 16 --font C:\Users\Stefano Bandi\Documents\GitHub\lv_port_linux_frame_buffer\sevio_ui_01\assets\fonts\ARIALNB.TTF -o C:\Users\Stefano Bandi\Documents\GitHub\lv_port_linux_frame_buffer\sevio_ui_01\assets\fonts\ui_font_tahomabd.c --format lvgl -r 0x20-0x7f --no-compress --no-prefilter
+ * Opts: --bpp 2 --size 16 --font C:\Users\Stefano Bandi\Documents\GitHub\lv_port_linux_frame_buffer\sevio_ui_01\assets\fonts\ARIALNB.TTF -o C:\Users\Stefano Bandi\Documents\GitHub\lv_port_linux_frame_buffer\sevio_ui_01\assets\fonts\ui_font_arialbd.c --format lvgl -r 0x20-0x7f --no-compress --no-prefilter
  ******************************************************************************/
 
 #include "ui.h"
 
-#ifndef UI_FONT_TAHOMABD
-#define UI_FONT_TAHOMABD 1
+#ifndef UI_FONT_ARIALBD
+#define UI_FONT_ARIALBD 1
 #endif
 
-#if UI_FONT_TAHOMABD
+#if UI_FONT_ARIALBD
 
 /*-----------------
  *    BITMAPS
@@ -763,9 +763,9 @@ static lv_font_fmt_txt_dsc_t font_dsc = {
 
 /*Initialize a public general font descriptor*/
 #if LV_VERSION_CHECK(8, 0, 0)
-const lv_font_t ui_font_tahomabd = {
+const lv_font_t ui_font_arialbd = {
 #else
-lv_font_t ui_font_tahomabd = {
+lv_font_t ui_font_arialbd = {
 #endif
     .get_glyph_dsc = lv_font_get_glyph_dsc_fmt_txt,    /*Function pointer to get glyph's data*/
     .get_glyph_bitmap = lv_font_get_bitmap_fmt_txt,    /*Function pointer to get glyph's bitmap*/
@@ -783,5 +783,5 @@ lv_font_t ui_font_tahomabd = {
 
 
 
-#endif /*#if UI_FONT_TAHOMABD*/
+#endif /*#if UI_FONT_ARIALBD*/
 

@@ -102,8 +102,8 @@ LV_IMG_DECLARE(ui_img_sel_on_png);    // assets\sel_on.png
 LV_IMG_DECLARE(ui_img_row_d_png);    // assets\row_d.png
 
 
-LV_FONT_DECLARE(ui_font_tahoma);
-LV_FONT_DECLARE(ui_font_tahomabd);
+LV_FONT_DECLARE(ui_font_arialbd);
+LV_FONT_DECLARE(ui_font_dejavusans);
 
 
 void ui_init(void);

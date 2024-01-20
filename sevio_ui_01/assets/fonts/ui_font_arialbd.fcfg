@@ -1,9 +1,9 @@
 {
-  "codename": "tahomabd",
+  "codename": "arialbd",
   "ttf_path": "\\assets\\fonts\\ARIALNB.TTF",
-  "bin_path": "\\assets\\fonts\\ui_font_tahomabd.bin",
-  "c_path": "\\assets\\fonts\\ui_font_tahomabd.c",
-  "cfg_path": "\\assets\\fonts\\ui_font_tahomabd.fcfg",
+  "bin_path": "\\assets\\fonts\\ui_font_arialbd.bin",
+  "c_path": "\\assets\\fonts\\ui_font_arialbd.c",
+  "cfg_path": "\\assets\\fonts\\ui_font_arialbd.fcfg",
   "size": 16,
   "bpp": 2,
   "letters": 0,
