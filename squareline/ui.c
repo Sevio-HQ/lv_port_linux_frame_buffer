@@ -109,7 +109,7 @@ void ui_Home_screen_init(void)
     lv_obj_set_width(ui_Screen1_Label1, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_Screen1_Label1, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_x(ui_Screen1_Label1, 0);
-    lv_obj_set_y(ui_Screen1_Label1, 25);
+    lv_obj_set_y(ui_Screen1_Label1, 26);
     lv_obj_set_align(ui_Screen1_Label1, LV_ALIGN_TOP_MID);
     lv_label_set_text(ui_Screen1_Label1, "MRRVWQB");
     lv_obj_set_style_text_color(ui_Screen1_Label1, lv_color_hex(0xD1D0D0), LV_PART_MAIN | LV_STATE_DEFAULT);
