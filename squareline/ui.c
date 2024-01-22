@@ -14,7 +14,7 @@ lv_obj_t * ui_Home_temperature_value;
 lv_obj_t * ui_Home_temperature_label;
 lv_obj_t * ui_Home_temperature_degree_label;
 lv_obj_t * ui_Home_uptime_value;
-lv_obj_t * ui_Home_datetime_label;
+lv_obj_t * ui_Home_datetime_value;
 lv_obj_t * ui_VPNSTATUS;
 lv_obj_t * ui_VPNSTATUS_logo;
 lv_obj_t * ui_VPNSTATUS_status_image;
@@ -165,16 +165,16 @@ void ui_Home_screen_init(void)
     lv_obj_set_style_text_opa(ui_Home_uptime_value, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_Home_uptime_value, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_Home_datetime_label = lv_label_create(ui_Home);
-    lv_obj_set_width(ui_Home_datetime_label, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_Home_datetime_label, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_Home_datetime_label, 0);
-    lv_obj_set_y(ui_Home_datetime_label, 100);
-    lv_obj_set_align(ui_Home_datetime_label, LV_ALIGN_TOP_MID);
-    lv_label_set_text(ui_Home_datetime_label, "18:54 22/01/2019 UDT");
-    lv_obj_set_style_text_color(ui_Home_datetime_label, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_opa(ui_Home_datetime_label, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_Home_datetime_label, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
+    ui_Home_datetime_value = lv_label_create(ui_Home);
+    lv_obj_set_width(ui_Home_datetime_value, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_Home_datetime_value, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_Home_datetime_value, 0);
+    lv_obj_set_y(ui_Home_datetime_value, 100);
+    lv_obj_set_align(ui_Home_datetime_value, LV_ALIGN_TOP_MID);
+    lv_label_set_text(ui_Home_datetime_value, "18:54 22/01/2019 UDT");
+    lv_obj_set_style_text_color(ui_Home_datetime_value, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_opa(ui_Home_datetime_value, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_Home_datetime_value, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
 
 }
 void ui_VPNSTATUS_screen_init(void)

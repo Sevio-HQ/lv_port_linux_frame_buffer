@@ -19,7 +19,7 @@ extern lv_obj_t * ui_Home_temperature_value;
 extern lv_obj_t * ui_Home_temperature_label;
 extern lv_obj_t * ui_Home_temperature_degree_label;
 extern lv_obj_t * ui_Home_uptime_value;
-extern lv_obj_t * ui_Home_datetime_label;
+extern lv_obj_t * ui_Home_datetime_value;
 extern lv_obj_t * ui_VPNSTATUS;
 extern lv_obj_t * ui_VPNSTATUS_logo;
 extern lv_obj_t * ui_VPNSTATUS_status_image;
