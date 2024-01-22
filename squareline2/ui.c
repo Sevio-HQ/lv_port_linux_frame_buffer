@@ -69,9 +69,9 @@ void ui_MOBILE_screen_init(void)
     lv_obj_set_width(ui_Mobile_Screen, 128);
     lv_obj_set_height(ui_Mobile_Screen, 18);
     lv_obj_set_x(ui_Mobile_Screen, 0);
-    lv_obj_set_y(ui_Mobile_Screen, -55);
+    lv_obj_set_y(ui_Mobile_Screen, 47);
     lv_obj_set_align(ui_Mobile_Screen, LV_ALIGN_CENTER);
-    lv_label_set_text(ui_Mobile_Screen, "MOBILE_s");
+    lv_label_set_text(ui_Mobile_Screen, "MOBILE_sss");
     lv_obj_set_style_text_color(ui_Mobile_Screen, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_Mobile_Screen, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_align(ui_Mobile_Screen, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -283,7 +283,7 @@ void ui_GPS_Screen_screen_init(void)
     lv_obj_set_x(ui_GPS_label, 0);
     lv_obj_set_y(ui_GPS_label, -55);
     lv_obj_set_align(ui_GPS_label, LV_ALIGN_CENTER);
-    lv_label_set_text(ui_GPS_label, "GPS");
+    lv_label_set_text(ui_GPS_label, "GPS_ttt");
     lv_obj_set_style_text_color(ui_GPS_label, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_GPS_label, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_align(ui_GPS_label, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
