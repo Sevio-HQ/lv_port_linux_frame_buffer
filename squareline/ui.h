@@ -47,7 +47,7 @@ extern lv_obj_t * ui_WANIPCONFIG_DHCP_Label;
 extern lv_obj_t * ui_WANIPCONFIG_DHCP_OFF;
 extern lv_obj_t * ui_WANIPCONFIG_DHCP_ON;
 extern lv_obj_t * ui_WANIPCONFIG_IP_Label;
-extern lv_obj_t * ui_WANIPCONFIG_IpValue;
+extern lv_obj_t * ui_WANIPCONFIG_IP_Value;
 extern lv_obj_t * ui_WANIPCONFIG_Gateway_Label;
 extern lv_obj_t * ui_WANIPCONFIG_Label3;
 extern lv_obj_t * ui_WANIPCONFIG_BarDown;
