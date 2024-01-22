@@ -28,7 +28,7 @@ lv_obj_t * ui_MOBILE_bar_down;
 lv_obj_t * ui_MOBILE_page_left;
 lv_obj_t * ui_MOBILE_page_down;
 lv_obj_t * ui_MOBILE_page_right;
-lv_obj_t * ui_GPS_Screen;
+lv_obj_t * ui_GPS;
 lv_obj_t * ui_GPS_logo;
 lv_obj_t * ui_GPS_page_label;
 lv_obj_t * ui_GPS_bar_up;
@@ -335,14 +335,14 @@ void ui_MOBILE_screen_init(void)
     lv_obj_clear_flag(ui_MOBILE_page_right, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
 
 }
-void ui_GPS_Screen_screen_init(void)
+void ui_GPS_screen_init(void)
 {
-    ui_GPS_Screen = lv_obj_create(NULL);
-    lv_obj_clear_flag(ui_GPS_Screen, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
-    lv_obj_set_style_bg_color(ui_GPS_Screen, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_opa(ui_GPS_Screen, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    ui_GPS = lv_obj_create(NULL);
+    lv_obj_clear_flag(ui_GPS, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    lv_obj_set_style_bg_color(ui_GPS, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_opa(ui_GPS, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_GPS_logo = lv_img_create(ui_GPS_Screen);
+    ui_GPS_logo = lv_img_create(ui_GPS);
     lv_img_set_src(ui_GPS_logo, &ui_img_gnss_png);
     lv_obj_set_width(ui_GPS_logo, LV_SIZE_CONTENT);   /// 19
     lv_obj_set_height(ui_GPS_logo, LV_SIZE_CONTENT);    /// 16
@@ -352,7 +352,7 @@ void ui_GPS_Screen_screen_init(void)
     lv_obj_add_flag(ui_GPS_logo, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
     lv_obj_clear_flag(ui_GPS_logo, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
 
-    ui_GPS_page_label = lv_label_create(ui_GPS_Screen);
+    ui_GPS_page_label = lv_label_create(ui_GPS);
     lv_obj_set_width(ui_GPS_page_label, 102);
     lv_obj_set_height(ui_GPS_page_label, 18);
     lv_obj_set_x(ui_GPS_page_label, 29);
@@ -363,7 +363,7 @@ void ui_GPS_Screen_screen_init(void)
     lv_obj_set_style_text_align(ui_GPS_page_label, LV_TEXT_ALIGN_LEFT, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_GPS_page_label, &ui_font_arialbd, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_GPS_bar_up = lv_obj_create(ui_GPS_Screen);
+    ui_GPS_bar_up = lv_obj_create(ui_GPS);
     lv_obj_set_width(ui_GPS_bar_up, 120);
     lv_obj_set_height(ui_GPS_bar_up, 1);
     lv_obj_set_x(ui_GPS_bar_up, 0);
@@ -375,7 +375,7 @@ void ui_GPS_Screen_screen_init(void)
     lv_obj_set_style_bg_opa(ui_GPS_bar_up, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_border_side(ui_GPS_bar_up, LV_BORDER_SIDE_NONE, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_GPS_status_label = lv_label_create(ui_GPS_Screen);
+    ui_GPS_status_label = lv_label_create(ui_GPS);
     lv_obj_set_width(ui_GPS_status_label, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_GPS_status_label, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_x(ui_GPS_status_label, 3);
@@ -385,7 +385,7 @@ void ui_GPS_Screen_screen_init(void)
     lv_obj_set_style_text_opa(ui_GPS_status_label, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_GPS_status_label, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_GPS_status_panel = lv_obj_create(ui_GPS_Screen);
+    ui_GPS_status_panel = lv_obj_create(ui_GPS);
     lv_obj_set_width(ui_GPS_status_panel, 77);
     lv_obj_set_height(ui_GPS_status_panel, 14);
     lv_obj_set_x(ui_GPS_status_panel, 23);
@@ -397,7 +397,7 @@ void ui_GPS_Screen_screen_init(void)
     lv_obj_set_style_bg_opa(ui_GPS_status_panel, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_border_side(ui_GPS_status_panel, LV_BORDER_SIDE_NONE, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_GPS_status_value = lv_label_create(ui_GPS_Screen);
+    ui_GPS_status_value = lv_label_create(ui_GPS);
     lv_obj_set_width(ui_GPS_status_value, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_GPS_status_value, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_x(ui_GPS_status_value, 23);
@@ -408,7 +408,7 @@ void ui_GPS_Screen_screen_init(void)
     lv_obj_set_style_text_opa(ui_GPS_status_value, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_GPS_status_value, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_GPS_latitude_label = lv_label_create(ui_GPS_Screen);
+    ui_GPS_latitude_label = lv_label_create(ui_GPS);
     lv_obj_set_width(ui_GPS_latitude_label, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_GPS_latitude_label, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_x(ui_GPS_latitude_label, 3);
@@ -418,7 +418,7 @@ void ui_GPS_Screen_screen_init(void)
     lv_obj_set_style_text_opa(ui_GPS_latitude_label, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_GPS_latitude_label, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_GPS_latitude_value = lv_label_create(ui_GPS_Screen);
+    ui_GPS_latitude_value = lv_label_create(ui_GPS);
     lv_obj_set_width(ui_GPS_latitude_value, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_GPS_latitude_value, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_x(ui_GPS_latitude_value, -3);
@@ -429,7 +429,7 @@ void ui_GPS_Screen_screen_init(void)
     lv_obj_set_style_text_opa(ui_GPS_latitude_value, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_GPS_latitude_value, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_GPS_longitude_label = lv_label_create(ui_GPS_Screen);
+    ui_GPS_longitude_label = lv_label_create(ui_GPS);
     lv_obj_set_width(ui_GPS_longitude_label, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_GPS_longitude_label, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_x(ui_GPS_longitude_label, 3);
@@ -439,7 +439,7 @@ void ui_GPS_Screen_screen_init(void)
     lv_obj_set_style_text_opa(ui_GPS_longitude_label, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_GPS_longitude_label, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_GPS_longitude_value = lv_label_create(ui_GPS_Screen);
+    ui_GPS_longitude_value = lv_label_create(ui_GPS);
     lv_obj_set_width(ui_GPS_longitude_value, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_GPS_longitude_value, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_x(ui_GPS_longitude_value, -3);
@@ -450,7 +450,7 @@ void ui_GPS_Screen_screen_init(void)
     lv_obj_set_style_text_opa(ui_GPS_longitude_value, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_GPS_longitude_value, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_GPS_lastfix_label = lv_label_create(ui_GPS_Screen);
+    ui_GPS_lastfix_label = lv_label_create(ui_GPS);
     lv_obj_set_width(ui_GPS_lastfix_label, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_GPS_lastfix_label, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_x(ui_GPS_lastfix_label, 3);
@@ -460,7 +460,7 @@ void ui_GPS_Screen_screen_init(void)
     lv_obj_set_style_text_opa(ui_GPS_lastfix_label, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_GPS_lastfix_label, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_GPS_lastfix_value = lv_label_create(ui_GPS_Screen);
+    ui_GPS_lastfix_value = lv_label_create(ui_GPS);
     lv_obj_set_width(ui_GPS_lastfix_value, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_GPS_lastfix_value, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_x(ui_GPS_lastfix_value, -3);
@@ -471,7 +471,7 @@ void ui_GPS_Screen_screen_init(void)
     lv_obj_set_style_text_opa(ui_GPS_lastfix_value, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_GPS_lastfix_value, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_GPS_altitude_label = lv_label_create(ui_GPS_Screen);
+    ui_GPS_altitude_label = lv_label_create(ui_GPS);
     lv_obj_set_width(ui_GPS_altitude_label, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_GPS_altitude_label, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_x(ui_GPS_altitude_label, 3);
@@ -481,7 +481,7 @@ void ui_GPS_Screen_screen_init(void)
     lv_obj_set_style_text_opa(ui_GPS_altitude_label, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_GPS_altitude_label, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_GPS_altitude_value = lv_label_create(ui_GPS_Screen);
+    ui_GPS_altitude_value = lv_label_create(ui_GPS);
     lv_obj_set_width(ui_GPS_altitude_value, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_GPS_altitude_value, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_x(ui_GPS_altitude_value, -3);
@@ -492,7 +492,7 @@ void ui_GPS_Screen_screen_init(void)
     lv_obj_set_style_text_opa(ui_GPS_altitude_value, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_GPS_altitude_value, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_GPS_satellites_label = lv_label_create(ui_GPS_Screen);
+    ui_GPS_satellites_label = lv_label_create(ui_GPS);
     lv_obj_set_width(ui_GPS_satellites_label, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_GPS_satellites_label, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_x(ui_GPS_satellites_label, 3);
@@ -502,7 +502,7 @@ void ui_GPS_Screen_screen_init(void)
     lv_obj_set_style_text_opa(ui_GPS_satellites_label, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_GPS_satellites_label, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_GPS_satellites_value = lv_label_create(ui_GPS_Screen);
+    ui_GPS_satellites_value = lv_label_create(ui_GPS);
     lv_obj_set_width(ui_GPS_satellites_value, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_GPS_satellites_value, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_x(ui_GPS_satellites_value, -3);
@@ -513,7 +513,7 @@ void ui_GPS_Screen_screen_init(void)
     lv_obj_set_style_text_opa(ui_GPS_satellites_value, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_GPS_satellites_value, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_GPS_bar_down = lv_obj_create(ui_GPS_Screen);
+    ui_GPS_bar_down = lv_obj_create(ui_GPS);
     lv_obj_set_width(ui_GPS_bar_down, 128);
     lv_obj_set_height(ui_GPS_bar_down, 16);
     lv_obj_set_x(ui_GPS_bar_down, 0);
@@ -525,7 +525,7 @@ void ui_GPS_Screen_screen_init(void)
     lv_obj_set_style_bg_opa(ui_GPS_bar_down, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_border_side(ui_GPS_bar_down, LV_BORDER_SIDE_NONE, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_GPS_page_left = lv_img_create(ui_GPS_Screen);
+    ui_GPS_page_left = lv_img_create(ui_GPS);
     lv_img_set_src(ui_GPS_page_left, &ui_img_row_l_png);
     lv_obj_set_width(ui_GPS_page_left, LV_SIZE_CONTENT);   /// 11
     lv_obj_set_height(ui_GPS_page_left, LV_SIZE_CONTENT);    /// 11
@@ -534,7 +534,7 @@ void ui_GPS_Screen_screen_init(void)
     lv_obj_add_flag(ui_GPS_page_left, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
     lv_obj_clear_flag(ui_GPS_page_left, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
 
-    ui_GPS_page_down = lv_img_create(ui_GPS_Screen);
+    ui_GPS_page_down = lv_img_create(ui_GPS);
     lv_img_set_src(ui_GPS_page_down, &ui_img_row_d_png);
     lv_obj_set_width(ui_GPS_page_down, LV_SIZE_CONTENT);   /// 11
     lv_obj_set_height(ui_GPS_page_down, LV_SIZE_CONTENT);    /// 11
@@ -543,7 +543,7 @@ void ui_GPS_Screen_screen_init(void)
     lv_obj_add_flag(ui_GPS_page_down, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
     lv_obj_clear_flag(ui_GPS_page_down, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
 
-    ui_GPS_page_right = lv_img_create(ui_GPS_Screen);
+    ui_GPS_page_right = lv_img_create(ui_GPS);
     lv_img_set_src(ui_GPS_page_right, &ui_img_row_r_png);
     lv_obj_set_width(ui_GPS_page_right, LV_SIZE_CONTENT);   /// 11
     lv_obj_set_height(ui_GPS_page_right, LV_SIZE_CONTENT);    /// 11
@@ -1177,7 +1177,7 @@ void ui2_init(void)
                                                false, LV_FONT_DEFAULT);
     lv_disp_set_theme(dispp, theme);
     ui_MOBILE_screen_init();
-    ui_GPS_Screen_screen_init();
+    ui_GPS_screen_init();
     ui_WIFI_screen_init();
     ui_IO_screen_init();
     ui_PORTS_screen_init();

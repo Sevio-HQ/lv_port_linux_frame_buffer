@@ -33,7 +33,7 @@ extern lv_obj_t * ui_MOBILE_bar_down;
 extern lv_obj_t * ui_MOBILE_page_left;
 extern lv_obj_t * ui_MOBILE_page_down;
 extern lv_obj_t * ui_MOBILE_page_right;
-extern lv_obj_t * ui_GPS_Screen;
+extern lv_obj_t * ui_GPS;
 extern lv_obj_t * ui_GPS_logo;
 extern lv_obj_t * ui_GPS_page_label;
 extern lv_obj_t * ui_GPS_bar_up;

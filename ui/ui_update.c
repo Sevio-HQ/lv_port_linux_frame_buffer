@@ -78,7 +78,7 @@ void uiMenu_init()
     uiMenuMap[UI_WLANCONFIG] = ui_WLANIPCONFIG;
     uiMenuMap[UI_WIFICONFIG] = ui_WIFI;	
 	uiMenuMap[UI_GSMCONFIG] = ui_MOBILE;
-    uiMenuMap[UI_GPSCONFIG] = ui_GPS_Screen;
+    uiMenuMap[UI_GPSCONFIG] = ui_GPS;
 	uiMenuMap[UI_IOCONFIG] = ui_IO;
 	uiMenuMap[UI_PORTSCONFIG] = ui_PORTS;
 
