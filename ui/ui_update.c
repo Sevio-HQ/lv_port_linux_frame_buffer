@@ -312,7 +312,7 @@ void updateWanConfig(bool _ifup, const char* _ip, unsigned int _mask, const char
 {
     //lv_label_set_text(ui_WANIPCONFIG_Label2,"IP:  192.168.134.27/24");
     //lv_label_set_text(ui_WANIPCONFIG_Label3,"GW:  192.168.1.254");
-    lv_label_set_text_fmt(ui_WANIPCONFIG_IP_Values, "IP:  %s/%d", _ip, _mask);
+    lv_label_set_text_fmt(ui_WANIPCONFIG_IP_Value, "IP:  %s/%d", _ip, _mask);
     lv_label_set_text_fmt(ui_WANIPCONFIG_Label3, "GW:  %s", _gw);
 }
 
