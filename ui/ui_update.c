@@ -76,13 +76,13 @@ void uiMenu_init()
     uiMenuMap[UI_WANCONFIG] = ui_WANIPCONFIG;
     uiMenuMap[UI_LANCONFIG] = ui_LANIPCONFIG;
     uiMenuMap[UI_WLANCONFIG] = ui_WLANIPCONFIG;
-    uiMenuMap[UI_WIFICONFIG] = ui_WIFI;	
-	uiMenuMap[UI_GSMCONFIG] = ui_MOBILE;
-    uiMenuMap[UI_GPSCONFIG] = ui_GPS;
+    uiMenuMap[UI_WIFICONFIG] = ui_WIFI;
 	uiMenuMap[UI_IOCONFIG] = ui_IO;
 	uiMenuMap[UI_PORTSCONFIG] = ui_PORTS;
+	uiMenuMap[UI_GSMCONFIG] = ui_MOBILE;
+    uiMenuMap[UI_GPSCONFIG] = ui_GPS;
 
-    uiMenu[UI_HOME].left = UI_PORTSCONFIG;
+    uiMenu[UI_HOME].left = UI_GSMCONFIG;
     uiMenu[UI_HOME].down = UI_NONE;
     uiMenu[UI_HOME].rigth = UI_VPNSTATUS;
 
@@ -104,25 +104,25 @@ void uiMenu_init()
 
     uiMenu[UI_WIFICONFIG].left = UI_WANCONFIG;
     uiMenu[UI_WIFICONFIG].down = UI_NONE;
-    uiMenu[UI_WIFICONFIG].rigth = UI_GSMCONFIG;
+    uiMenu[UI_WIFICONFIG].rigth = UI_IOCONFIG;
 
-    uiMenu[UI_GSMCONFIG].left = UI_WIFICONFIG;
-    uiMenu[UI_GSMCONFIG].down = UI_GPSCONFIG;
-    uiMenu[UI_GSMCONFIG].rigth = UI_IOCONFIG;
-    uiMenu[UI_GSMCONFIG].refresh = ui_gsm_update_ui;
-
-    uiMenu[UI_GPSCONFIG].left = UI_WIFICONFIG;
-    uiMenu[UI_GPSCONFIG].down = UI_GSMCONFIG;
-    uiMenu[UI_GPSCONFIG].rigth = UI_IOCONFIG;
-    uiMenu[UI_GPSCONFIG].refresh = refreshGPS_ui;
-
-    uiMenu[UI_IOCONFIG].left = UI_GSMCONFIG;
+    uiMenu[UI_IOCONFIG].left = UI_WIFICONFIG;
     uiMenu[UI_IOCONFIG].down = UI_NONE;
     uiMenu[UI_IOCONFIG].rigth = UI_PORTSCONFIG;
 
     uiMenu[UI_PORTSCONFIG].left = UI_IOCONFIG;
     uiMenu[UI_PORTSCONFIG].down = UI_NONE;
-    uiMenu[UI_PORTSCONFIG].rigth = UI_HOME;
+    uiMenu[UI_PORTSCONFIG].rigth = UI_GSMCONFIG;
+	
+    uiMenu[UI_GSMCONFIG].left = UI_PORTSCONFIG;
+    uiMenu[UI_GSMCONFIG].down = UI_GPSCONFIG;
+    uiMenu[UI_GSMCONFIG].rigth = UI_HOME;
+    uiMenu[UI_GSMCONFIG].refresh = ui_gsm_update_ui;
+
+    uiMenu[UI_GPSCONFIG].left = UI_PORTSCONFIG;
+    uiMenu[UI_GPSCONFIG].down = UI_GSMCONFIG;
+    uiMenu[UI_GPSCONFIG].rigth = UI_HOME;
+    uiMenu[UI_GPSCONFIG].refresh = refreshGPS_ui;
 }
 
 lv_obj_t * uiMenu_getCurrent()
