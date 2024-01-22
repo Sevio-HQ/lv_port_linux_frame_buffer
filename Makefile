@@ -53,7 +53,7 @@ UI_GEN_SRC = \
     $(LVGL_DIR)/squareline2/ui_img_gnss_png.c \
 	$(LVGL_DIR)/squareline2/ui_img_io_png.c \
 	$(LVGL_DIR)/squareline2/ui_img_port_png.c \
-	$(LVGL_DIR)/squareline2/ui_wifi_png.c \
+	$(LVGL_DIR)/squareline2/ui_img_wifi_png.c \
     $(LVGL_DIR)/squareline/ui_font_dejavusans.c \
     $(LVGL_DIR)/squareline/ui_font_arialbd.c
 
