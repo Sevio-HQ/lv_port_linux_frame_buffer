@@ -238,7 +238,7 @@ void get_uptime()
     time_t t = tsv.tv_sec; // just in case types aren't the same
     struct tm tmv;
     localtime_r(&t, &tmv); // populate tmv with local time info
-    lv_label_set_text_fmt(ui_uptimeLabel, "%dd %02dh %02d'",
+    lv_label_set_text_fmt(ui_Home_uptime_value, "%dd %02dh %02d'",
         tmv.tm_mday-1, tmv.tm_hour, tmv.tm_min);
 
 }
@@ -247,7 +247,7 @@ void printLocalTime()
 {
     time_t t = time(NULL);
     struct tm tm = *localtime(&t);
-    lv_label_set_text_fmt(ui_dateTimeLabel, "%02d:%02d %02d/%02d/%d UTC", tm.tm_hour + (tm.tm_isdst==1 ? 1:0), tm.tm_min, tm.tm_mday,  tm.tm_mon + 1, tm.tm_year + 1900);
+    lv_label_set_text_fmt(ui_Home_datetime_value, "%02d:%02d %02d/%02d/%d UTC", tm.tm_hour + (tm.tm_isdst==1 ? 1:0), tm.tm_min, tm.tm_mday,  tm.tm_mon + 1, tm.tm_year + 1900);
 }
 
 int readAdcValues(int _ch)
@@ -383,7 +383,7 @@ static void timer_min_cb(lv_timer_t * timer)
         //readBoardValues();   
         readTempValues();
         //lv_label_set_text_fmt(ui_boardStatusLabel, "%sV / %sA / %s°C", voltage, current, _temp);
-        lv_label_set_text_fmt(ui_boardStatusLabel, "%s °C", _temp);
+        lv_label_set_text_fmt(ui_Home_temperature_value, "%s", _temp);
         lv_obj_invalidate(timer->user_data);
     }
     

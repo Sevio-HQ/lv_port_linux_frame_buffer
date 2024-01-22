@@ -9,10 +9,12 @@
 ///////////////////// VARIABLES ////////////////////
 lv_obj_t * ui_Home;
 lv_obj_t * ui_Home_Logo;
-lv_obj_t * ui_Screen1_Label1;
-lv_obj_t * ui_boardStatusLabel;
-lv_obj_t * ui_uptimeLabel;
-lv_obj_t * ui_dateTimeLabel;
+lv_obj_t * ui_Home_servicetag;
+lv_obj_t * ui_Home_temperature_value;
+lv_obj_t * ui_Home_temperature_label;
+lv_obj_t * ui_Home_temperature_degree_label;
+lv_obj_t * ui_Home_uptime_value;
+lv_obj_t * ui_Home_datetime_label;
 lv_obj_t * ui_VPNSTATUS;
 lv_obj_t * ui_VPNSTATUS_logo;
 lv_obj_t * ui_VPNSTATUS_status_image;
@@ -108,50 +110,71 @@ void ui_Home_screen_init(void)
     lv_obj_add_flag(ui_Home_Logo, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
     lv_obj_clear_flag(ui_Home_Logo, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
 
-    ui_Screen1_Label1 = lv_label_create(ui_Home);
-    lv_obj_set_width(ui_Screen1_Label1, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_Screen1_Label1, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_Screen1_Label1, 0);
-    lv_obj_set_y(ui_Screen1_Label1, 20);
-    lv_obj_set_align(ui_Screen1_Label1, LV_ALIGN_TOP_MID);
-    lv_label_set_text(ui_Screen1_Label1, "MRRVWQB");
-    lv_obj_set_style_text_color(ui_Screen1_Label1, lv_color_hex(0xD1D0D0), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_opa(ui_Screen1_Label1, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_align(ui_Screen1_Label1, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_Screen1_Label1, &ui_font_arialbd, LV_PART_MAIN | LV_STATE_DEFAULT);
+    ui_Home_servicetag = lv_label_create(ui_Home);
+    lv_obj_set_width(ui_Home_servicetag, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_Home_servicetag, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_Home_servicetag, 0);
+    lv_obj_set_y(ui_Home_servicetag, 20);
+    lv_obj_set_align(ui_Home_servicetag, LV_ALIGN_TOP_MID);
+    lv_label_set_text(ui_Home_servicetag, "MRRVWQB");
+    lv_obj_set_style_text_color(ui_Home_servicetag, lv_color_hex(0xD1D0D0), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_opa(ui_Home_servicetag, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_align(ui_Home_servicetag, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_Home_servicetag, &ui_font_arialbd, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_boardStatusLabel = lv_label_create(ui_Home);
-    lv_obj_set_width(ui_boardStatusLabel, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_boardStatusLabel, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_boardStatusLabel, 0);
-    lv_obj_set_y(ui_boardStatusLabel, 60);
-    lv_obj_set_align(ui_boardStatusLabel, LV_ALIGN_TOP_MID);
-    lv_label_set_text(ui_boardStatusLabel, "23.4  C");
-    lv_obj_set_style_text_color(ui_boardStatusLabel, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_opa(ui_boardStatusLabel, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_boardStatusLabel, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
+    ui_Home_temperature_value = lv_label_create(ui_Home);
+    lv_obj_set_width(ui_Home_temperature_value, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_Home_temperature_value, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_Home_temperature_value, 45);
+    lv_obj_set_y(ui_Home_temperature_value, 60);
+    lv_label_set_text(ui_Home_temperature_value, "23.4");
+    lv_obj_set_style_text_color(ui_Home_temperature_value, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_opa(ui_Home_temperature_value, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_Home_temperature_value, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_uptimeLabel = lv_label_create(ui_Home);
-    lv_obj_set_width(ui_uptimeLabel, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_uptimeLabel, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_uptimeLabel, 0);
-    lv_obj_set_y(ui_uptimeLabel, 80);
-    lv_obj_set_align(ui_uptimeLabel, LV_ALIGN_TOP_MID);
-    lv_label_set_text(ui_uptimeLabel, "5d 7h 56' 32''");
-    lv_obj_set_style_text_color(ui_uptimeLabel, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_opa(ui_uptimeLabel, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_uptimeLabel, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
+    ui_Home_temperature_label = lv_label_create(ui_Home);
+    lv_obj_set_width(ui_Home_temperature_label, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_Home_temperature_label, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_Home_temperature_label, -45);
+    lv_obj_set_y(ui_Home_temperature_label, 60);
+    lv_obj_set_align(ui_Home_temperature_label, LV_ALIGN_TOP_RIGHT);
+    lv_label_set_text(ui_Home_temperature_label, "  C");
+    lv_obj_set_style_text_color(ui_Home_temperature_label, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_opa(ui_Home_temperature_label, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_Home_temperature_label, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_dateTimeLabel = lv_label_create(ui_Home);
-    lv_obj_set_width(ui_dateTimeLabel, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_dateTimeLabel, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_dateTimeLabel, 0);
-    lv_obj_set_y(ui_dateTimeLabel, 100);
-    lv_obj_set_align(ui_dateTimeLabel, LV_ALIGN_TOP_MID);
-    lv_label_set_text(ui_dateTimeLabel, "18:54 22/01/2019 UDT");
-    lv_obj_set_style_text_color(ui_dateTimeLabel, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_opa(ui_dateTimeLabel, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_dateTimeLabel, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
+    ui_Home_temperature_degree_label = lv_label_create(ui_Home);
+    lv_obj_set_width(ui_Home_temperature_degree_label, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_Home_temperature_degree_label, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_Home_temperature_degree_label, -53);
+    lv_obj_set_y(ui_Home_temperature_degree_label, 57);
+    lv_obj_set_align(ui_Home_temperature_degree_label, LV_ALIGN_TOP_RIGHT);
+    lv_label_set_text(ui_Home_temperature_degree_label, "°");
+    lv_obj_set_style_text_color(ui_Home_temperature_degree_label, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_opa(ui_Home_temperature_degree_label, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_Home_temperature_degree_label, &lv_font_montserrat_10, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    ui_Home_uptime_value = lv_label_create(ui_Home);
+    lv_obj_set_width(ui_Home_uptime_value, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_Home_uptime_value, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_Home_uptime_value, 0);
+    lv_obj_set_y(ui_Home_uptime_value, 80);
+    lv_obj_set_align(ui_Home_uptime_value, LV_ALIGN_TOP_MID);
+    lv_label_set_text(ui_Home_uptime_value, "5d 7h 56' 32''");
+    lv_obj_set_style_text_color(ui_Home_uptime_value, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_opa(ui_Home_uptime_value, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_Home_uptime_value, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    ui_Home_datetime_label = lv_label_create(ui_Home);
+    lv_obj_set_width(ui_Home_datetime_label, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_Home_datetime_label, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_Home_datetime_label, 0);
+    lv_obj_set_y(ui_Home_datetime_label, 100);
+    lv_obj_set_align(ui_Home_datetime_label, LV_ALIGN_TOP_MID);
+    lv_label_set_text(ui_Home_datetime_label, "18:54 22/01/2019 UDT");
+    lv_obj_set_style_text_color(ui_Home_datetime_label, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_opa(ui_Home_datetime_label, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_Home_datetime_label, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
 
 }
 void ui_VPNSTATUS_screen_init(void)

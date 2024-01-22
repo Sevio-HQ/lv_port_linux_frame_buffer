@@ -14,10 +14,12 @@ extern "C" {
 
 extern lv_obj_t * ui_Home;
 extern lv_obj_t * ui_Home_Logo;
-extern lv_obj_t * ui_Screen1_Label1;
-extern lv_obj_t * ui_boardStatusLabel;
-extern lv_obj_t * ui_uptimeLabel;
-extern lv_obj_t * ui_dateTimeLabel;
+extern lv_obj_t * ui_Home_servicetag;
+extern lv_obj_t * ui_Home_temperature_value;
+extern lv_obj_t * ui_Home_temperature_label;
+extern lv_obj_t * ui_Home_temperature_degree_label;
+extern lv_obj_t * ui_Home_uptime_value;
+extern lv_obj_t * ui_Home_datetime_label;
 extern lv_obj_t * ui_VPNSTATUS;
 extern lv_obj_t * ui_VPNSTATUS_logo;
 extern lv_obj_t * ui_VPNSTATUS_status_image;
