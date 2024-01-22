@@ -30,21 +30,21 @@ lv_obj_t * ui_MOBILE_page_down;
 lv_obj_t * ui_MOBILE_page_right;
 lv_obj_t * ui_GPS_Screen;
 lv_obj_t * ui_GPS_logo;
-lv_obj_t * ui_GPS_page_lLabel;
+lv_obj_t * ui_GPS_page_label;
 lv_obj_t * ui_GPS_bar_up;
-lv_obj_t * ui_GPS_status_Label;
-lv_obj_t * ui_GPS_Panel3;
-lv_obj_t * ui_GPS_Label12;
-lv_obj_t * ui_GPS_Label1;
-lv_obj_t * ui_GPS_Latitude_label;
-lv_obj_t * ui_GPS_Label2;
-lv_obj_t * ui_GPS_Longitude_label;
-lv_obj_t * ui_GPS_Label3;
-lv_obj_t * ui_GPS_LastFix_label;
-lv_obj_t * ui_GPS_Label10;
+lv_obj_t * ui_GPS_status_label;
+lv_obj_t * ui_GPS_status_panel;
+lv_obj_t * ui_GPS_status_value;
+lv_obj_t * ui_GPS_latitude_label;
+lv_obj_t * ui_GPS_latitude_value;
+lv_obj_t * ui_GPS_longitude_label;
+lv_obj_t * ui_GPS_longitude_value;
+lv_obj_t * ui_GPS_lastfix_label;
+lv_obj_t * ui_GPS_lastfix_value;
 lv_obj_t * ui_GPS_altitude_label;
-lv_obj_t * ui_GPS_Label11;
-lv_obj_t * ui_GPS_altitude_label1;
+lv_obj_t * ui_GPS_altitude_value;
+lv_obj_t * ui_GPS_satellites_label;
+lv_obj_t * ui_GPS_satellites_value;
 lv_obj_t * ui_GPS_bar_down;
 lv_obj_t * ui_GPS_page_left;
 lv_obj_t * ui_GPS_page_down;
@@ -53,19 +53,19 @@ lv_obj_t * ui_WIFI;
 lv_obj_t * ui_WIFI_logo;
 lv_obj_t * ui_WIFI_page_label;
 lv_obj_t * ui_WIFI_bar_up;
-lv_obj_t * ui_WIFI_Status_label;
-lv_obj_t * ui_WIFI_Status_Panel;
-lv_obj_t * ui_WIFI_Status_Label;
-lv_obj_t * ui_WIFI_Mode_Label;
-lv_obj_t * ui_WIFI_Mode_Value;
-lv_obj_t * ui_WIFI_SSID_label;
-lv_obj_t * ui_WIFI_SSID__Value;
-lv_obj_t * ui_WIFI_NO_Signal;
-lv_obj_t * ui_WIFI_Signal1;
-lv_obj_t * ui_WIFI_Signal2;
-lv_obj_t * ui_WIFI_Signal3;
-lv_obj_t * ui_WIFI_Signal4;
-lv_obj_t * ui_WIFI_Signal5;
+lv_obj_t * ui_WIFI_status_label;
+lv_obj_t * ui_WIFI_Status_panel;
+lv_obj_t * ui_WIFI_status_value;
+lv_obj_t * ui_WIFI_mode_label;
+lv_obj_t * ui_WIFI_mode_value;
+lv_obj_t * ui_WIFI_ssid_label;
+lv_obj_t * ui_WIFI_ssid__value;
+lv_obj_t * ui_WIFI_no_signal;
+lv_obj_t * ui_WIFI_signal1;
+lv_obj_t * ui_WIFI_signal2;
+lv_obj_t * ui_WIFI_signal3;
+lv_obj_t * ui_WIFI_signal4;
+lv_obj_t * ui_WIFI_signal5;
 lv_obj_t * ui_WIFI_bar_down;
 lv_obj_t * ui_WIFI_page_left;
 lv_obj_t * ui_WIFI_page_right;
@@ -352,16 +352,16 @@ void ui_GPS_Screen_screen_init(void)
     lv_obj_add_flag(ui_GPS_logo, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
     lv_obj_clear_flag(ui_GPS_logo, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
 
-    ui_GPS_page_lLabel = lv_label_create(ui_GPS_Screen);
-    lv_obj_set_width(ui_GPS_page_lLabel, 102);
-    lv_obj_set_height(ui_GPS_page_lLabel, 18);
-    lv_obj_set_x(ui_GPS_page_lLabel, 29);
-    lv_obj_set_y(ui_GPS_page_lLabel, 4);
-    lv_label_set_text(ui_GPS_page_lLabel, "GNSS");
-    lv_obj_set_style_text_color(ui_GPS_page_lLabel, lv_color_hex(0xB4B2B4), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_opa(ui_GPS_page_lLabel, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_align(ui_GPS_page_lLabel, LV_TEXT_ALIGN_LEFT, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_GPS_page_lLabel, &ui_font_arialbd, LV_PART_MAIN | LV_STATE_DEFAULT);
+    ui_GPS_page_label = lv_label_create(ui_GPS_Screen);
+    lv_obj_set_width(ui_GPS_page_label, 102);
+    lv_obj_set_height(ui_GPS_page_label, 18);
+    lv_obj_set_x(ui_GPS_page_label, 29);
+    lv_obj_set_y(ui_GPS_page_label, 4);
+    lv_label_set_text(ui_GPS_page_label, "GNSS");
+    lv_obj_set_style_text_color(ui_GPS_page_label, lv_color_hex(0xB4B2B4), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_opa(ui_GPS_page_label, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_align(ui_GPS_page_label, LV_TEXT_ALIGN_LEFT, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_GPS_page_label, &ui_font_arialbd, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_GPS_bar_up = lv_obj_create(ui_GPS_Screen);
     lv_obj_set_width(ui_GPS_bar_up, 120);
@@ -375,143 +375,143 @@ void ui_GPS_Screen_screen_init(void)
     lv_obj_set_style_bg_opa(ui_GPS_bar_up, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_border_side(ui_GPS_bar_up, LV_BORDER_SIDE_NONE, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_GPS_status_Label = lv_label_create(ui_GPS_Screen);
-    lv_obj_set_width(ui_GPS_status_Label, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_GPS_status_Label, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_GPS_status_Label, 3);
-    lv_obj_set_y(ui_GPS_status_Label, 28);
-    lv_label_set_text(ui_GPS_status_Label, "Status:");
-    lv_obj_set_style_text_color(ui_GPS_status_Label, lv_color_hex(0x808080), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_opa(ui_GPS_status_Label, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_GPS_status_Label, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
+    ui_GPS_status_label = lv_label_create(ui_GPS_Screen);
+    lv_obj_set_width(ui_GPS_status_label, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_GPS_status_label, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_GPS_status_label, 3);
+    lv_obj_set_y(ui_GPS_status_label, 28);
+    lv_label_set_text(ui_GPS_status_label, "Status:");
+    lv_obj_set_style_text_color(ui_GPS_status_label, lv_color_hex(0x808080), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_opa(ui_GPS_status_label, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_GPS_status_label, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_GPS_Panel3 = lv_obj_create(ui_GPS_Screen);
-    lv_obj_set_width(ui_GPS_Panel3, 77);
-    lv_obj_set_height(ui_GPS_Panel3, 14);
-    lv_obj_set_x(ui_GPS_Panel3, 23);
-    lv_obj_set_y(ui_GPS_Panel3, -30);
-    lv_obj_set_align(ui_GPS_Panel3, LV_ALIGN_CENTER);
-    lv_obj_clear_flag(ui_GPS_Panel3, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
-    lv_obj_set_style_radius(ui_GPS_Panel3, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_color(ui_GPS_Panel3, lv_color_hex(0x2061EE), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_opa(ui_GPS_Panel3, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_border_side(ui_GPS_Panel3, LV_BORDER_SIDE_NONE, LV_PART_MAIN | LV_STATE_DEFAULT);
+    ui_GPS_status_panel = lv_obj_create(ui_GPS_Screen);
+    lv_obj_set_width(ui_GPS_status_panel, 77);
+    lv_obj_set_height(ui_GPS_status_panel, 14);
+    lv_obj_set_x(ui_GPS_status_panel, 23);
+    lv_obj_set_y(ui_GPS_status_panel, -30);
+    lv_obj_set_align(ui_GPS_status_panel, LV_ALIGN_CENTER);
+    lv_obj_clear_flag(ui_GPS_status_panel, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    lv_obj_set_style_radius(ui_GPS_status_panel, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_color(ui_GPS_status_panel, lv_color_hex(0x2061EE), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_opa(ui_GPS_status_panel, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_border_side(ui_GPS_status_panel, LV_BORDER_SIDE_NONE, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_GPS_Label12 = lv_label_create(ui_GPS_Screen);
-    lv_obj_set_width(ui_GPS_Label12, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_GPS_Label12, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_GPS_Label12, 23);
-    lv_obj_set_y(ui_GPS_Label12, -29);
-    lv_obj_set_align(ui_GPS_Label12, LV_ALIGN_CENTER);
-    lv_label_set_text(ui_GPS_Label12, "REGISTERED");
-    lv_obj_set_style_text_color(ui_GPS_Label12, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_opa(ui_GPS_Label12, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_GPS_Label12, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
+    ui_GPS_status_value = lv_label_create(ui_GPS_Screen);
+    lv_obj_set_width(ui_GPS_status_value, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_GPS_status_value, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_GPS_status_value, 23);
+    lv_obj_set_y(ui_GPS_status_value, -29);
+    lv_obj_set_align(ui_GPS_status_value, LV_ALIGN_CENTER);
+    lv_label_set_text(ui_GPS_status_value, "REGISTERED");
+    lv_obj_set_style_text_color(ui_GPS_status_value, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_opa(ui_GPS_status_value, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_GPS_status_value, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_GPS_Label1 = lv_label_create(ui_GPS_Screen);
-    lv_obj_set_width(ui_GPS_Label1, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_GPS_Label1, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_GPS_Label1, 3);
-    lv_obj_set_y(ui_GPS_Label1, 42);
-    lv_label_set_text(ui_GPS_Label1, "Latitude:");
-    lv_obj_set_style_text_color(ui_GPS_Label1, lv_color_hex(0x808080), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_opa(ui_GPS_Label1, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_GPS_Label1, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
+    ui_GPS_latitude_label = lv_label_create(ui_GPS_Screen);
+    lv_obj_set_width(ui_GPS_latitude_label, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_GPS_latitude_label, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_GPS_latitude_label, 3);
+    lv_obj_set_y(ui_GPS_latitude_label, 42);
+    lv_label_set_text(ui_GPS_latitude_label, "Latitude:");
+    lv_obj_set_style_text_color(ui_GPS_latitude_label, lv_color_hex(0x808080), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_opa(ui_GPS_latitude_label, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_GPS_latitude_label, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_GPS_Latitude_label = lv_label_create(ui_GPS_Screen);
-    lv_obj_set_width(ui_GPS_Latitude_label, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_GPS_Latitude_label, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_GPS_Latitude_label, -3);
-    lv_obj_set_y(ui_GPS_Latitude_label, 42);
-    lv_obj_set_align(ui_GPS_Latitude_label, LV_ALIGN_TOP_RIGHT);
-    lv_label_set_text(ui_GPS_Latitude_label, "47°34.006'N");
-    lv_obj_set_style_text_color(ui_GPS_Latitude_label, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_opa(ui_GPS_Latitude_label, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_GPS_Latitude_label, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
+    ui_GPS_latitude_value = lv_label_create(ui_GPS_Screen);
+    lv_obj_set_width(ui_GPS_latitude_value, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_GPS_latitude_value, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_GPS_latitude_value, -3);
+    lv_obj_set_y(ui_GPS_latitude_value, 42);
+    lv_obj_set_align(ui_GPS_latitude_value, LV_ALIGN_TOP_RIGHT);
+    lv_label_set_text(ui_GPS_latitude_value, "47°34.006'N");
+    lv_obj_set_style_text_color(ui_GPS_latitude_value, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_opa(ui_GPS_latitude_value, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_GPS_latitude_value, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_GPS_Label2 = lv_label_create(ui_GPS_Screen);
-    lv_obj_set_width(ui_GPS_Label2, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_GPS_Label2, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_GPS_Label2, 3);
-    lv_obj_set_y(ui_GPS_Label2, 56);
-    lv_label_set_text(ui_GPS_Label2, "Longitude:");
-    lv_obj_set_style_text_color(ui_GPS_Label2, lv_color_hex(0x808080), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_opa(ui_GPS_Label2, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_GPS_Label2, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
+    ui_GPS_longitude_label = lv_label_create(ui_GPS_Screen);
+    lv_obj_set_width(ui_GPS_longitude_label, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_GPS_longitude_label, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_GPS_longitude_label, 3);
+    lv_obj_set_y(ui_GPS_longitude_label, 56);
+    lv_label_set_text(ui_GPS_longitude_label, "Longitude:");
+    lv_obj_set_style_text_color(ui_GPS_longitude_label, lv_color_hex(0x808080), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_opa(ui_GPS_longitude_label, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_GPS_longitude_label, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_GPS_Longitude_label = lv_label_create(ui_GPS_Screen);
-    lv_obj_set_width(ui_GPS_Longitude_label, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_GPS_Longitude_label, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_GPS_Longitude_label, -3);
-    lv_obj_set_y(ui_GPS_Longitude_label, 56);
-    lv_obj_set_align(ui_GPS_Longitude_label, LV_ALIGN_TOP_RIGHT);
-    lv_label_set_text(ui_GPS_Longitude_label, "14°3.453'E");
-    lv_obj_set_style_text_color(ui_GPS_Longitude_label, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_opa(ui_GPS_Longitude_label, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_GPS_Longitude_label, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
+    ui_GPS_longitude_value = lv_label_create(ui_GPS_Screen);
+    lv_obj_set_width(ui_GPS_longitude_value, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_GPS_longitude_value, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_GPS_longitude_value, -3);
+    lv_obj_set_y(ui_GPS_longitude_value, 56);
+    lv_obj_set_align(ui_GPS_longitude_value, LV_ALIGN_TOP_RIGHT);
+    lv_label_set_text(ui_GPS_longitude_value, "14°3.453'E");
+    lv_obj_set_style_text_color(ui_GPS_longitude_value, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_opa(ui_GPS_longitude_value, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_GPS_longitude_value, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_GPS_Label3 = lv_label_create(ui_GPS_Screen);
-    lv_obj_set_width(ui_GPS_Label3, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_GPS_Label3, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_GPS_Label3, 3);
-    lv_obj_set_y(ui_GPS_Label3, 70);
-    lv_label_set_text(ui_GPS_Label3, "Last fix:");
-    lv_obj_set_style_text_color(ui_GPS_Label3, lv_color_hex(0x808080), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_opa(ui_GPS_Label3, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_GPS_Label3, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
+    ui_GPS_lastfix_label = lv_label_create(ui_GPS_Screen);
+    lv_obj_set_width(ui_GPS_lastfix_label, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_GPS_lastfix_label, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_GPS_lastfix_label, 3);
+    lv_obj_set_y(ui_GPS_lastfix_label, 70);
+    lv_label_set_text(ui_GPS_lastfix_label, "Last fix:");
+    lv_obj_set_style_text_color(ui_GPS_lastfix_label, lv_color_hex(0x808080), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_opa(ui_GPS_lastfix_label, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_GPS_lastfix_label, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_GPS_LastFix_label = lv_label_create(ui_GPS_Screen);
-    lv_obj_set_width(ui_GPS_LastFix_label, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_GPS_LastFix_label, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_GPS_LastFix_label, -3);
-    lv_obj_set_y(ui_GPS_LastFix_label, 70);
-    lv_obj_set_align(ui_GPS_LastFix_label, LV_ALIGN_TOP_RIGHT);
-    lv_label_set_text(ui_GPS_LastFix_label, "15:56:23");
-    lv_obj_set_style_text_color(ui_GPS_LastFix_label, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_opa(ui_GPS_LastFix_label, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_GPS_LastFix_label, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
-
-    ui_GPS_Label10 = lv_label_create(ui_GPS_Screen);
-    lv_obj_set_width(ui_GPS_Label10, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_GPS_Label10, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_GPS_Label10, 3);
-    lv_obj_set_y(ui_GPS_Label10, 84);
-    lv_label_set_text(ui_GPS_Label10, "Altitude:");
-    lv_obj_set_style_text_color(ui_GPS_Label10, lv_color_hex(0x808080), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_opa(ui_GPS_Label10, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_GPS_Label10, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
+    ui_GPS_lastfix_value = lv_label_create(ui_GPS_Screen);
+    lv_obj_set_width(ui_GPS_lastfix_value, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_GPS_lastfix_value, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_GPS_lastfix_value, -3);
+    lv_obj_set_y(ui_GPS_lastfix_value, 70);
+    lv_obj_set_align(ui_GPS_lastfix_value, LV_ALIGN_TOP_RIGHT);
+    lv_label_set_text(ui_GPS_lastfix_value, "15:56:23");
+    lv_obj_set_style_text_color(ui_GPS_lastfix_value, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_opa(ui_GPS_lastfix_value, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_GPS_lastfix_value, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_GPS_altitude_label = lv_label_create(ui_GPS_Screen);
     lv_obj_set_width(ui_GPS_altitude_label, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_GPS_altitude_label, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_GPS_altitude_label, -3);
+    lv_obj_set_x(ui_GPS_altitude_label, 3);
     lv_obj_set_y(ui_GPS_altitude_label, 84);
-    lv_obj_set_align(ui_GPS_altitude_label, LV_ALIGN_TOP_RIGHT);
-    lv_label_set_text(ui_GPS_altitude_label, "123m");
-    lv_obj_set_style_text_color(ui_GPS_altitude_label, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_label_set_text(ui_GPS_altitude_label, "Altitude:");
+    lv_obj_set_style_text_color(ui_GPS_altitude_label, lv_color_hex(0x808080), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_GPS_altitude_label, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_GPS_altitude_label, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_GPS_Label11 = lv_label_create(ui_GPS_Screen);
-    lv_obj_set_width(ui_GPS_Label11, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_GPS_Label11, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_GPS_Label11, 3);
-    lv_obj_set_y(ui_GPS_Label11, 98);
-    lv_label_set_text(ui_GPS_Label11, "Satellites:");
-    lv_obj_set_style_text_color(ui_GPS_Label11, lv_color_hex(0x808080), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_opa(ui_GPS_Label11, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_GPS_Label11, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
+    ui_GPS_altitude_value = lv_label_create(ui_GPS_Screen);
+    lv_obj_set_width(ui_GPS_altitude_value, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_GPS_altitude_value, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_GPS_altitude_value, -3);
+    lv_obj_set_y(ui_GPS_altitude_value, 84);
+    lv_obj_set_align(ui_GPS_altitude_value, LV_ALIGN_TOP_RIGHT);
+    lv_label_set_text(ui_GPS_altitude_value, "123m");
+    lv_obj_set_style_text_color(ui_GPS_altitude_value, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_opa(ui_GPS_altitude_value, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_GPS_altitude_value, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_GPS_altitude_label1 = lv_label_create(ui_GPS_Screen);
-    lv_obj_set_width(ui_GPS_altitude_label1, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_GPS_altitude_label1, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_GPS_altitude_label1, -3);
-    lv_obj_set_y(ui_GPS_altitude_label1, 98);
-    lv_obj_set_align(ui_GPS_altitude_label1, LV_ALIGN_TOP_RIGHT);
-    lv_label_set_text(ui_GPS_altitude_label1, "5/6");
-    lv_obj_set_style_text_color(ui_GPS_altitude_label1, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_opa(ui_GPS_altitude_label1, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_GPS_altitude_label1, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
+    ui_GPS_satellites_label = lv_label_create(ui_GPS_Screen);
+    lv_obj_set_width(ui_GPS_satellites_label, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_GPS_satellites_label, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_GPS_satellites_label, 3);
+    lv_obj_set_y(ui_GPS_satellites_label, 98);
+    lv_label_set_text(ui_GPS_satellites_label, "Satellites:");
+    lv_obj_set_style_text_color(ui_GPS_satellites_label, lv_color_hex(0x808080), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_opa(ui_GPS_satellites_label, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_GPS_satellites_label, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    ui_GPS_satellites_value = lv_label_create(ui_GPS_Screen);
+    lv_obj_set_width(ui_GPS_satellites_value, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_GPS_satellites_value, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_GPS_satellites_value, -3);
+    lv_obj_set_y(ui_GPS_satellites_value, 98);
+    lv_obj_set_align(ui_GPS_satellites_value, LV_ALIGN_TOP_RIGHT);
+    lv_label_set_text(ui_GPS_satellites_value, "5/6");
+    lv_obj_set_style_text_color(ui_GPS_satellites_value, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_opa(ui_GPS_satellites_value, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_GPS_satellites_value, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_GPS_bar_down = lv_obj_create(ui_GPS_Screen);
     lv_obj_set_width(ui_GPS_bar_down, 128);
@@ -593,139 +593,139 @@ void ui_WIFI_screen_init(void)
     lv_obj_set_style_bg_opa(ui_WIFI_bar_up, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_border_side(ui_WIFI_bar_up, LV_BORDER_SIDE_NONE, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_WIFI_Status_label = lv_label_create(ui_WIFI);
-    lv_obj_set_width(ui_WIFI_Status_label, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_WIFI_Status_label, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_WIFI_Status_label, 3);
-    lv_obj_set_y(ui_WIFI_Status_label, 28);
-    lv_label_set_text(ui_WIFI_Status_label, "Status:");
-    lv_obj_set_style_text_color(ui_WIFI_Status_label, lv_color_hex(0x808080), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_opa(ui_WIFI_Status_label, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_WIFI_Status_label, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
+    ui_WIFI_status_label = lv_label_create(ui_WIFI);
+    lv_obj_set_width(ui_WIFI_status_label, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_WIFI_status_label, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_WIFI_status_label, 3);
+    lv_obj_set_y(ui_WIFI_status_label, 28);
+    lv_label_set_text(ui_WIFI_status_label, "Status:");
+    lv_obj_set_style_text_color(ui_WIFI_status_label, lv_color_hex(0x808080), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_opa(ui_WIFI_status_label, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_WIFI_status_label, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_WIFI_Status_Panel = lv_obj_create(ui_WIFI);
-    lv_obj_set_width(ui_WIFI_Status_Panel, 77);
-    lv_obj_set_height(ui_WIFI_Status_Panel, 14);
-    lv_obj_set_x(ui_WIFI_Status_Panel, 21);
-    lv_obj_set_y(ui_WIFI_Status_Panel, -30);
-    lv_obj_set_align(ui_WIFI_Status_Panel, LV_ALIGN_CENTER);
-    lv_obj_clear_flag(ui_WIFI_Status_Panel, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
-    lv_obj_set_style_radius(ui_WIFI_Status_Panel, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_color(ui_WIFI_Status_Panel, lv_color_hex(0x2563EB), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_opa(ui_WIFI_Status_Panel, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_border_side(ui_WIFI_Status_Panel, LV_BORDER_SIDE_NONE, LV_PART_MAIN | LV_STATE_DEFAULT);
+    ui_WIFI_Status_panel = lv_obj_create(ui_WIFI);
+    lv_obj_set_width(ui_WIFI_Status_panel, 77);
+    lv_obj_set_height(ui_WIFI_Status_panel, 14);
+    lv_obj_set_x(ui_WIFI_Status_panel, 21);
+    lv_obj_set_y(ui_WIFI_Status_panel, -30);
+    lv_obj_set_align(ui_WIFI_Status_panel, LV_ALIGN_CENTER);
+    lv_obj_clear_flag(ui_WIFI_Status_panel, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    lv_obj_set_style_radius(ui_WIFI_Status_panel, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_color(ui_WIFI_Status_panel, lv_color_hex(0x2563EB), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_opa(ui_WIFI_Status_panel, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_border_side(ui_WIFI_Status_panel, LV_BORDER_SIDE_NONE, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_WIFI_Status_Label = lv_label_create(ui_WIFI);
-    lv_obj_set_width(ui_WIFI_Status_Label, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_WIFI_Status_Label, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_WIFI_Status_Label, 21);
-    lv_obj_set_y(ui_WIFI_Status_Label, -29);
-    lv_obj_set_align(ui_WIFI_Status_Label, LV_ALIGN_CENTER);
-    lv_label_set_text(ui_WIFI_Status_Label, "REGISTERED");
-    lv_obj_set_style_text_color(ui_WIFI_Status_Label, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_opa(ui_WIFI_Status_Label, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_align(ui_WIFI_Status_Label, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_WIFI_Status_Label, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
+    ui_WIFI_status_value = lv_label_create(ui_WIFI);
+    lv_obj_set_width(ui_WIFI_status_value, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_WIFI_status_value, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_WIFI_status_value, 21);
+    lv_obj_set_y(ui_WIFI_status_value, -29);
+    lv_obj_set_align(ui_WIFI_status_value, LV_ALIGN_CENTER);
+    lv_label_set_text(ui_WIFI_status_value, "REGISTERED");
+    lv_obj_set_style_text_color(ui_WIFI_status_value, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_opa(ui_WIFI_status_value, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_align(ui_WIFI_status_value, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_WIFI_status_value, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_WIFI_Mode_Label = lv_label_create(ui_WIFI);
-    lv_obj_set_width(ui_WIFI_Mode_Label, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_WIFI_Mode_Label, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_WIFI_Mode_Label, 3);
-    lv_obj_set_y(ui_WIFI_Mode_Label, 47);
-    lv_label_set_text(ui_WIFI_Mode_Label, "Mode:");
-    lv_obj_set_style_text_color(ui_WIFI_Mode_Label, lv_color_hex(0x808080), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_opa(ui_WIFI_Mode_Label, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_WIFI_Mode_Label, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
+    ui_WIFI_mode_label = lv_label_create(ui_WIFI);
+    lv_obj_set_width(ui_WIFI_mode_label, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_WIFI_mode_label, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_WIFI_mode_label, 3);
+    lv_obj_set_y(ui_WIFI_mode_label, 47);
+    lv_label_set_text(ui_WIFI_mode_label, "Mode:");
+    lv_obj_set_style_text_color(ui_WIFI_mode_label, lv_color_hex(0x808080), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_opa(ui_WIFI_mode_label, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_WIFI_mode_label, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_WIFI_Mode_Value = lv_label_create(ui_WIFI);
-    lv_obj_set_width(ui_WIFI_Mode_Value, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_WIFI_Mode_Value, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_WIFI_Mode_Value, 3);
-    lv_obj_set_y(ui_WIFI_Mode_Value, 62);
-    lv_label_set_text(ui_WIFI_Mode_Value, "ACCESS POINT");
-    lv_obj_set_style_text_color(ui_WIFI_Mode_Value, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_opa(ui_WIFI_Mode_Value, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_WIFI_Mode_Value, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
+    ui_WIFI_mode_value = lv_label_create(ui_WIFI);
+    lv_obj_set_width(ui_WIFI_mode_value, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_WIFI_mode_value, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_WIFI_mode_value, 3);
+    lv_obj_set_y(ui_WIFI_mode_value, 62);
+    lv_label_set_text(ui_WIFI_mode_value, "ACCESS POINT");
+    lv_obj_set_style_text_color(ui_WIFI_mode_value, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_opa(ui_WIFI_mode_value, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_WIFI_mode_value, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_WIFI_SSID_label = lv_label_create(ui_WIFI);
-    lv_obj_set_width(ui_WIFI_SSID_label, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_WIFI_SSID_label, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_WIFI_SSID_label, 3);
-    lv_obj_set_y(ui_WIFI_SSID_label, 79);
-    lv_label_set_text(ui_WIFI_SSID_label, "SSID:");
-    lv_obj_set_style_text_color(ui_WIFI_SSID_label, lv_color_hex(0x808080), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_opa(ui_WIFI_SSID_label, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_WIFI_SSID_label, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
+    ui_WIFI_ssid_label = lv_label_create(ui_WIFI);
+    lv_obj_set_width(ui_WIFI_ssid_label, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_WIFI_ssid_label, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_WIFI_ssid_label, 3);
+    lv_obj_set_y(ui_WIFI_ssid_label, 79);
+    lv_label_set_text(ui_WIFI_ssid_label, "SSID:");
+    lv_obj_set_style_text_color(ui_WIFI_ssid_label, lv_color_hex(0x808080), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_opa(ui_WIFI_ssid_label, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_WIFI_ssid_label, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_WIFI_SSID__Value = lv_label_create(ui_WIFI);
-    lv_obj_set_width(ui_WIFI_SSID__Value, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_WIFI_SSID__Value, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_WIFI_SSID__Value, 3);
-    lv_obj_set_y(ui_WIFI_SSID__Value, 95);
-    lv_label_set_text(ui_WIFI_SSID__Value, "qwerty123456789012");
-    lv_obj_set_style_text_color(ui_WIFI_SSID__Value, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_opa(ui_WIFI_SSID__Value, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_WIFI_SSID__Value, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
+    ui_WIFI_ssid__value = lv_label_create(ui_WIFI);
+    lv_obj_set_width(ui_WIFI_ssid__value, LV_SIZE_CONTENT);   /// 1
+    lv_obj_set_height(ui_WIFI_ssid__value, LV_SIZE_CONTENT);    /// 1
+    lv_obj_set_x(ui_WIFI_ssid__value, 3);
+    lv_obj_set_y(ui_WIFI_ssid__value, 95);
+    lv_label_set_text(ui_WIFI_ssid__value, "qwerty123456789012");
+    lv_obj_set_style_text_color(ui_WIFI_ssid__value, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_opa(ui_WIFI_ssid__value, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_WIFI_ssid__value, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_WIFI_NO_Signal = lv_img_create(ui_WIFI);
-    lv_img_set_src(ui_WIFI_NO_Signal, &ui_img_signal_0_png);
-    lv_obj_set_width(ui_WIFI_NO_Signal, LV_SIZE_CONTENT);   /// 40
-    lv_obj_set_height(ui_WIFI_NO_Signal, LV_SIZE_CONTENT);    /// 16
-    lv_obj_set_x(ui_WIFI_NO_Signal, 39);
-    lv_obj_set_y(ui_WIFI_NO_Signal, 18);
-    lv_obj_set_align(ui_WIFI_NO_Signal, LV_ALIGN_CENTER);
-    lv_obj_add_flag(ui_WIFI_NO_Signal, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
-    lv_obj_clear_flag(ui_WIFI_NO_Signal, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    ui_WIFI_no_signal = lv_img_create(ui_WIFI);
+    lv_img_set_src(ui_WIFI_no_signal, &ui_img_signal_0_png);
+    lv_obj_set_width(ui_WIFI_no_signal, LV_SIZE_CONTENT);   /// 40
+    lv_obj_set_height(ui_WIFI_no_signal, LV_SIZE_CONTENT);    /// 16
+    lv_obj_set_x(ui_WIFI_no_signal, 39);
+    lv_obj_set_y(ui_WIFI_no_signal, 18);
+    lv_obj_set_align(ui_WIFI_no_signal, LV_ALIGN_CENTER);
+    lv_obj_add_flag(ui_WIFI_no_signal, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
+    lv_obj_clear_flag(ui_WIFI_no_signal, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
 
-    ui_WIFI_Signal1 = lv_img_create(ui_WIFI);
-    lv_img_set_src(ui_WIFI_Signal1, &ui_img_signal_1_png);
-    lv_obj_set_width(ui_WIFI_Signal1, LV_SIZE_CONTENT);   /// 40
-    lv_obj_set_height(ui_WIFI_Signal1, LV_SIZE_CONTENT);    /// 15
-    lv_obj_set_x(ui_WIFI_Signal1, 39);
-    lv_obj_set_y(ui_WIFI_Signal1, 18);
-    lv_obj_set_align(ui_WIFI_Signal1, LV_ALIGN_CENTER);
-    lv_obj_add_flag(ui_WIFI_Signal1, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
-    lv_obj_clear_flag(ui_WIFI_Signal1, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    ui_WIFI_signal1 = lv_img_create(ui_WIFI);
+    lv_img_set_src(ui_WIFI_signal1, &ui_img_signal_1_png);
+    lv_obj_set_width(ui_WIFI_signal1, LV_SIZE_CONTENT);   /// 40
+    lv_obj_set_height(ui_WIFI_signal1, LV_SIZE_CONTENT);    /// 15
+    lv_obj_set_x(ui_WIFI_signal1, 39);
+    lv_obj_set_y(ui_WIFI_signal1, 18);
+    lv_obj_set_align(ui_WIFI_signal1, LV_ALIGN_CENTER);
+    lv_obj_add_flag(ui_WIFI_signal1, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
+    lv_obj_clear_flag(ui_WIFI_signal1, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
 
-    ui_WIFI_Signal2 = lv_img_create(ui_WIFI);
-    lv_img_set_src(ui_WIFI_Signal2, &ui_img_signal_2_png);
-    lv_obj_set_width(ui_WIFI_Signal2, LV_SIZE_CONTENT);   /// 40
-    lv_obj_set_height(ui_WIFI_Signal2, LV_SIZE_CONTENT);    /// 15
-    lv_obj_set_x(ui_WIFI_Signal2, 39);
-    lv_obj_set_y(ui_WIFI_Signal2, 18);
-    lv_obj_set_align(ui_WIFI_Signal2, LV_ALIGN_CENTER);
-    lv_obj_add_flag(ui_WIFI_Signal2, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
-    lv_obj_clear_flag(ui_WIFI_Signal2, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    ui_WIFI_signal2 = lv_img_create(ui_WIFI);
+    lv_img_set_src(ui_WIFI_signal2, &ui_img_signal_2_png);
+    lv_obj_set_width(ui_WIFI_signal2, LV_SIZE_CONTENT);   /// 40
+    lv_obj_set_height(ui_WIFI_signal2, LV_SIZE_CONTENT);    /// 15
+    lv_obj_set_x(ui_WIFI_signal2, 39);
+    lv_obj_set_y(ui_WIFI_signal2, 18);
+    lv_obj_set_align(ui_WIFI_signal2, LV_ALIGN_CENTER);
+    lv_obj_add_flag(ui_WIFI_signal2, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
+    lv_obj_clear_flag(ui_WIFI_signal2, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
 
-    ui_WIFI_Signal3 = lv_img_create(ui_WIFI);
-    lv_img_set_src(ui_WIFI_Signal3, &ui_img_signal_3_png);
-    lv_obj_set_width(ui_WIFI_Signal3, LV_SIZE_CONTENT);   /// 40
-    lv_obj_set_height(ui_WIFI_Signal3, LV_SIZE_CONTENT);    /// 15
-    lv_obj_set_x(ui_WIFI_Signal3, 39);
-    lv_obj_set_y(ui_WIFI_Signal3, 18);
-    lv_obj_set_align(ui_WIFI_Signal3, LV_ALIGN_CENTER);
-    lv_obj_add_flag(ui_WIFI_Signal3, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
-    lv_obj_clear_flag(ui_WIFI_Signal3, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    ui_WIFI_signal3 = lv_img_create(ui_WIFI);
+    lv_img_set_src(ui_WIFI_signal3, &ui_img_signal_3_png);
+    lv_obj_set_width(ui_WIFI_signal3, LV_SIZE_CONTENT);   /// 40
+    lv_obj_set_height(ui_WIFI_signal3, LV_SIZE_CONTENT);    /// 15
+    lv_obj_set_x(ui_WIFI_signal3, 39);
+    lv_obj_set_y(ui_WIFI_signal3, 18);
+    lv_obj_set_align(ui_WIFI_signal3, LV_ALIGN_CENTER);
+    lv_obj_add_flag(ui_WIFI_signal3, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
+    lv_obj_clear_flag(ui_WIFI_signal3, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
 
-    ui_WIFI_Signal4 = lv_img_create(ui_WIFI);
-    lv_img_set_src(ui_WIFI_Signal4, &ui_img_signal_4_png);
-    lv_obj_set_width(ui_WIFI_Signal4, LV_SIZE_CONTENT);   /// 40
-    lv_obj_set_height(ui_WIFI_Signal4, LV_SIZE_CONTENT);    /// 15
-    lv_obj_set_x(ui_WIFI_Signal4, 39);
-    lv_obj_set_y(ui_WIFI_Signal4, 18);
-    lv_obj_set_align(ui_WIFI_Signal4, LV_ALIGN_CENTER);
-    lv_obj_add_flag(ui_WIFI_Signal4, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
-    lv_obj_clear_flag(ui_WIFI_Signal4, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    ui_WIFI_signal4 = lv_img_create(ui_WIFI);
+    lv_img_set_src(ui_WIFI_signal4, &ui_img_signal_4_png);
+    lv_obj_set_width(ui_WIFI_signal4, LV_SIZE_CONTENT);   /// 40
+    lv_obj_set_height(ui_WIFI_signal4, LV_SIZE_CONTENT);    /// 15
+    lv_obj_set_x(ui_WIFI_signal4, 39);
+    lv_obj_set_y(ui_WIFI_signal4, 18);
+    lv_obj_set_align(ui_WIFI_signal4, LV_ALIGN_CENTER);
+    lv_obj_add_flag(ui_WIFI_signal4, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
+    lv_obj_clear_flag(ui_WIFI_signal4, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
 
-    ui_WIFI_Signal5 = lv_img_create(ui_WIFI);
-    lv_img_set_src(ui_WIFI_Signal5, &ui_img_signal_5_png);
-    lv_obj_set_width(ui_WIFI_Signal5, LV_SIZE_CONTENT);   /// 40
-    lv_obj_set_height(ui_WIFI_Signal5, LV_SIZE_CONTENT);    /// 16
-    lv_obj_set_x(ui_WIFI_Signal5, 39);
-    lv_obj_set_y(ui_WIFI_Signal5, 18);
-    lv_obj_set_align(ui_WIFI_Signal5, LV_ALIGN_CENTER);
-    lv_obj_add_flag(ui_WIFI_Signal5, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
-    lv_obj_clear_flag(ui_WIFI_Signal5, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    ui_WIFI_signal5 = lv_img_create(ui_WIFI);
+    lv_img_set_src(ui_WIFI_signal5, &ui_img_signal_5_png);
+    lv_obj_set_width(ui_WIFI_signal5, LV_SIZE_CONTENT);   /// 40
+    lv_obj_set_height(ui_WIFI_signal5, LV_SIZE_CONTENT);    /// 16
+    lv_obj_set_x(ui_WIFI_signal5, 39);
+    lv_obj_set_y(ui_WIFI_signal5, 18);
+    lv_obj_set_align(ui_WIFI_signal5, LV_ALIGN_CENTER);
+    lv_obj_add_flag(ui_WIFI_signal5, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
+    lv_obj_clear_flag(ui_WIFI_signal5, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
 
     ui_WIFI_bar_down = lv_obj_create(ui_WIFI);
     lv_obj_set_width(ui_WIFI_bar_down, 128);

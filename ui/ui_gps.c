@@ -24,14 +24,14 @@ typedef struct myGpsData {
 
 static void default_lcd()
 {
-    lv_label_set_text(ui_GPS_Label12,"NOT FIXED");
-    lv_obj_set_style_bg_color(ui_GPS_Panel3, lv_color_hex(0xf3e32a), LV_PART_MAIN | LV_STATE_DEFAULT );
-    lv_obj_set_style_border_color(ui_GPS_Panel3, lv_color_hex(0xf3e32a), LV_PART_MAIN | LV_STATE_DEFAULT );
-    lv_label_set_text(ui_GPS_Latitude_label,"--");
-    lv_label_set_text(ui_GPS_Longitude_label, "--");
-    lv_label_set_text(ui_GPS_altitude_label, "--");
-    lv_label_set_text_fmt(ui_GPS_LastFix_label, "--");
-    lv_label_set_text(ui_GPS_altitude_label1, "0/0");
+    lv_label_set_text(ui_GPS_status_value,"NOT FIXED");
+    lv_obj_set_style_bg_color(ui_GPS_status_panel, lv_color_hex(0xf3e32a), LV_PART_MAIN | LV_STATE_DEFAULT );
+    lv_obj_set_style_border_color(ui_GPS_status_panel, lv_color_hex(0xf3e32a), LV_PART_MAIN | LV_STATE_DEFAULT );
+    lv_label_set_text(ui_GPS_latitude_value,"--");
+    lv_label_set_text(ui_GPS_longitude_value, "--");
+    lv_label_set_text(ui_GPS_altitude_value, "--");
+    lv_label_set_text_fmt(ui_GPS_lastfix_value, "--");
+    lv_label_set_text(ui_GPS_satellites_value, "0/0");
 }
 
 // This gets called once for each new sentence.
@@ -51,26 +51,26 @@ static int update_lcd(struct gps_data_t *gpsdata)
         int track;
         char *s;
 
-        lv_label_set_text(ui_GPS_Label12,"FIXED");
-        lv_obj_set_style_bg_color(ui_GPS_Panel3, lv_color_hex(0x11F308), LV_PART_MAIN | LV_STATE_DEFAULT );
-        lv_obj_set_style_border_color(ui_GPS_Panel3, lv_color_hex(0x11F308), LV_PART_MAIN | LV_STATE_DEFAULT );
+        lv_label_set_text(ui_GPS_status_value,"FIXED");
+        lv_obj_set_style_bg_color(ui_GPS_status_panel, lv_color_hex(0x11F308), LV_PART_MAIN | LV_STATE_DEFAULT );
+        lv_obj_set_style_border_color(ui_GPS_status_panel, lv_color_hex(0x11F308), LV_PART_MAIN | LV_STATE_DEFAULT );
 
         s = deg_to_str(deg_type, gpsdata->fix.latitude);
         snprintf(tmpbuf, sizeof(tmpbuf) - 1, "%s %c", s, (gpsdata->fix.latitude < 0) ? 'S' : 'N');
-        lv_label_set_text(ui_GPS_Latitude_label, tmpbuf);
+        lv_label_set_text(ui_GPS_latitude_value, tmpbuf);
         LV_LOG_INFO("Lat: %s",tmpbuf);
         s = deg_to_str(deg_type, gpsdata->fix.longitude);
         snprintf(tmpbuf, sizeof(tmpbuf) - 1, "%s %c", s,(gpsdata->fix.longitude < 0) ? 'W' : 'E');
-        lv_label_set_text(ui_GPS_Longitude_label, tmpbuf);
+        lv_label_set_text(ui_GPS_longitude_value, tmpbuf);
         LV_LOG_INFO("Long: %s",tmpbuf);
 
         //floatToStr(tmpbuf, gpsdata->fix.altMSL, 1);
         snprintf(tmpbuf, sizeof(tmpbuf) - 1, "%.1f", gpsdata->fix.altMSL);
-        lv_label_set_text(ui_GPS_altitude_label, tmpbuf);
+        lv_label_set_text(ui_GPS_altitude_value, tmpbuf);
         LV_LOG_INFO("%f %s",gpsdata->fix.altMSL, tmpbuf);
 
         struct tm tm = *localtime(&gpsdata->fix.time.tv_sec);
-        lv_label_set_text_fmt(ui_GPS_LastFix_label, "%02d:%02d:%02d", tm.tm_hour + (tm.tm_isdst==1 ? 1:0), tm.tm_min, tm.tm_sec);
+        lv_label_set_text_fmt(ui_GPS_lastfix_value, "%02d:%02d:%02d", tm.tm_hour + (tm.tm_isdst==1 ? 1:0), tm.tm_min, tm.tm_sec);
         LV_LOG_INFO("%02d:%02d:%02d", tm.tm_hour + (tm.tm_isdst==1 ? 1:0), tm.tm_min, tm.tm_sec);
 
         int i; int _used = 0;
@@ -85,7 +85,7 @@ static int update_lcd(struct gps_data_t *gpsdata)
           }
       }
         snprintf(tmpbuf, sizeof(tmpbuf) - 1, "%d/%d", gpsdata->satellites_visible, _used /* gpsdata->satellites_used*/);
-        lv_label_set_text(ui_GPS_altitude_label1, tmpbuf);
+        lv_label_set_text(ui_GPS_satellites_value, tmpbuf);
         LV_LOG_INFO("Seen/Used: %d/%d(%d)",gpsdata->satellites_visible, gpsdata->satellites_used, _used);
 
         result = 0;
