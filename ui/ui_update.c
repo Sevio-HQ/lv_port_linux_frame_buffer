@@ -38,15 +38,17 @@ int ui_gsm_update();
 void ui_gsm_init();
 
 typedef enum eUiMenuIndex {
-    UI_NONE, 
-    UI_HOME, 
-    UI_VPNSTATUS, 
-    UI_WANCONFIG, 
-    UI_LANCONFIG, 
-    UI_WLANCONFIG, 
-    UI_GPSCONFIG,
+    UI_NONE,
+    UI_HOME,
+    UI_VPNSTATUS,
+    UI_WANCONFIG,
+    UI_LANCONFIG,
+    UI_WLANCONFIG,
     UI_GSMCONFIG,
+    UI_GPSCONFIG,
+	UI_WIFICONFIG,
 	UI_IOCONFIG,
+	UI_PORTSCONFIG,
     MAX_UI_MENU
 } tUiMenuIndex;
 
