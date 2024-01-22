@@ -640,7 +640,7 @@ void ui_WLANIPCONFIG_screen_init(void)
     lv_obj_set_width(ui_WLANIPCONFIG_PageLabel, 50);
     lv_obj_set_height(ui_WLANIPCONFIG_PageLabel, 13);
     lv_obj_set_x(ui_WLANIPCONFIG_PageLabel, 29);
-    lv_obj_set_y(ui_WLANIPCONFIG_PageLabel, 4);
+    lv_obj_set_y(ui_WLANIPCONFIG_PageLabel, 7);
     lv_label_set_text(ui_WLANIPCONFIG_PageLabel, "Wi-Fi");
     lv_obj_set_style_text_color(ui_WLANIPCONFIG_PageLabel, lv_color_hex(0xB4B2B4), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_WLANIPCONFIG_PageLabel, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
