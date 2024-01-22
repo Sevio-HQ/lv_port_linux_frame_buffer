@@ -12,14 +12,14 @@ extern "C" {
 
 #include "lvgl/lvgl.h"
 
-extern lv_obj_t * ui_Home;
-extern lv_obj_t * ui_Home_Logo;
-extern lv_obj_t * ui_Home_servicetag;
-extern lv_obj_t * ui_Home_temperature_value;
-extern lv_obj_t * ui_Home_temperature_label;
-extern lv_obj_t * ui_Home_temperature_degree_label;
-extern lv_obj_t * ui_Home_uptime_value;
-extern lv_obj_t * ui_Home_datetime_value;
+extern lv_obj_t * ui_HOME;
+extern lv_obj_t * ui_HOME_Logo;
+extern lv_obj_t * ui_HOME_servicetag;
+extern lv_obj_t * ui_HOME_temperature_value;
+extern lv_obj_t * ui_HOME_temperature_label;
+extern lv_obj_t * ui_HOME_temperature_degree_label;
+extern lv_obj_t * ui_HOME_uptime_value;
+extern lv_obj_t * ui_HOME_datetime_value;
 extern lv_obj_t * ui_VPNSTATUS;
 extern lv_obj_t * ui_VPNSTATUS_logo;
 extern lv_obj_t * ui_VPNSTATUS_status_image;
