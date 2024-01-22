@@ -210,24 +210,24 @@ int getModem()
 void showLevel(tSigLevel _lvl)
 {
     switch(_lvl) {
-        case SIG_LEVEL_1: lv_obj_clear_flag(ui_MOBILE_Signal1, LV_OBJ_FLAG_HIDDEN); break;
-        case SIG_LEVEL_2: lv_obj_clear_flag(ui_MOBILE_Signal2, LV_OBJ_FLAG_HIDDEN); break;
-        case SIG_LEVEL_3: lv_obj_clear_flag(ui_MOBILE_Signal3, LV_OBJ_FLAG_HIDDEN); break;
-        case SIG_LEVEL_4: lv_obj_clear_flag(ui_MOBILE_Signal4, LV_OBJ_FLAG_HIDDEN); break;
-        case SIG_LEVEL_5: lv_obj_clear_flag(ui_MOBILE_Signal5, LV_OBJ_FLAG_HIDDEN); break;
-        case NO_SIG_LEVEL: lv_obj_clear_flag(ui_MOBILE_NO_Signal, LV_OBJ_FLAG_HIDDEN); break;
+        case SIG_LEVEL_1: lv_obj_clear_flag(ui_MOBILE_signal1, LV_OBJ_FLAG_HIDDEN); break;
+        case SIG_LEVEL_2: lv_obj_clear_flag(ui_MOBILE_signal2, LV_OBJ_FLAG_HIDDEN); break;
+        case SIG_LEVEL_3: lv_obj_clear_flag(ui_MOBILE_signal3, LV_OBJ_FLAG_HIDDEN); break;
+        case SIG_LEVEL_4: lv_obj_clear_flag(ui_MOBILE_signal4, LV_OBJ_FLAG_HIDDEN); break;
+        case SIG_LEVEL_5: lv_obj_clear_flag(ui_MOBILE_signal5, LV_OBJ_FLAG_HIDDEN); break;
+        case NO_SIG_LEVEL: lv_obj_clear_flag(ui_MOBILE_no_signal, LV_OBJ_FLAG_HIDDEN); break;
     }
 }
 
 void hideLevel(tSigLevel _lvl)
 {
     switch(_lvl) {
-        case SIG_LEVEL_1: lv_obj_add_flag(ui_MOBILE_Signal1, LV_OBJ_FLAG_HIDDEN); break;
-        case SIG_LEVEL_2: lv_obj_add_flag(ui_MOBILE_Signal2, LV_OBJ_FLAG_HIDDEN); break;
-        case SIG_LEVEL_3: lv_obj_add_flag(ui_MOBILE_Signal3, LV_OBJ_FLAG_HIDDEN); break;
-        case SIG_LEVEL_4: lv_obj_add_flag(ui_MOBILE_Signal4, LV_OBJ_FLAG_HIDDEN); break;
-        case SIG_LEVEL_5: lv_obj_add_flag(ui_MOBILE_Signal5, LV_OBJ_FLAG_HIDDEN); break;
-        case NO_SIG_LEVEL: lv_obj_add_flag(ui_MOBILE_NO_Signal, LV_OBJ_FLAG_HIDDEN); break;
+        case SIG_LEVEL_1: lv_obj_add_flag(ui_MOBILE_signal1, LV_OBJ_FLAG_HIDDEN); break;
+        case SIG_LEVEL_2: lv_obj_add_flag(ui_MOBILE_signal2, LV_OBJ_FLAG_HIDDEN); break;
+        case SIG_LEVEL_3: lv_obj_add_flag(ui_MOBILE_signal3, LV_OBJ_FLAG_HIDDEN); break;
+        case SIG_LEVEL_4: lv_obj_add_flag(ui_MOBILE_signal4, LV_OBJ_FLAG_HIDDEN); break;
+        case SIG_LEVEL_5: lv_obj_add_flag(ui_MOBILE_signal5, LV_OBJ_FLAG_HIDDEN); break;
+        case NO_SIG_LEVEL: lv_obj_add_flag(ui_MOBILE_no_signal, LV_OBJ_FLAG_HIDDEN); break;
     }
 }
 
@@ -241,16 +241,16 @@ void setSigLevel(tSigLevel newLevel)
 
 int ui_gsm_update_ui()
 {
-    lv_label_set_text(ui_MOBILE_operator_Value, _operator);
-    lv_label_set_text(ui_MOBILE_APN__Value, _apn);
+    lv_label_set_text(ui_MOBILE_operator_value, _operator);
+    lv_label_set_text(ui_MOBILE_apn_value, _apn);
     if(wwan_up) {
-        lv_label_set_text(ui_MobileStatus_Label4, "REGISTERED");
-        lv_obj_set_style_bg_color(ui_MobileStatus_Panel, lv_color_hex(0x11F308), LV_PART_MAIN | LV_STATE_DEFAULT);
-        lv_obj_set_style_border_color(ui_MobileStatus_Panel, lv_color_hex(0x11F308), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_label_set_text(ui_MOBILE_status_value, "REGISTERED");
+        lv_obj_set_style_bg_color(ui_MOBILE_status_panel, lv_color_hex(0x11F308), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(ui_MOBILE_status_panel, lv_color_hex(0x11F308), LV_PART_MAIN | LV_STATE_DEFAULT);
     } else {
-        lv_label_set_text(ui_MobileStatus_Label4, "NOT REGIST.");
-        lv_obj_set_style_bg_color(ui_MobileStatus_Panel, lv_color_hex(0xf3e32a), LV_PART_MAIN | LV_STATE_DEFAULT);
-        lv_obj_set_style_border_color(ui_MobileStatus_Panel, lv_color_hex(0xf3e32a), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_label_set_text(ui_MOBILE_status_value, "NOT REGIST.");
+        lv_obj_set_style_bg_color(ui_MOBILE_status_panel, lv_color_hex(0xf3e32a), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_obj_set_style_border_color(ui_MOBILE_status_panel, lv_color_hex(0xf3e32a), LV_PART_MAIN | LV_STATE_DEFAULT);
     }
     return wwan_up;
 }
@@ -273,10 +273,10 @@ int ui_gsm_update()
 
 void ui_gsm_init()
 {
-    lv_obj_add_flag(ui_MOBILE_Signal1, LV_OBJ_FLAG_HIDDEN);
-    lv_obj_add_flag(ui_MOBILE_Signal2, LV_OBJ_FLAG_HIDDEN);
-    lv_obj_add_flag(ui_MOBILE_Signal3, LV_OBJ_FLAG_HIDDEN);
-    lv_obj_add_flag(ui_MOBILE_Signal4, LV_OBJ_FLAG_HIDDEN);
-    lv_obj_add_flag(ui_MOBILE_Signal5, LV_OBJ_FLAG_HIDDEN);
-    lv_obj_add_flag(ui_MOBILE_NO_Signal, LV_OBJ_FLAG_HIDDEN);
+    lv_obj_add_flag(ui_MOBILE_signal1, LV_OBJ_FLAG_HIDDEN);
+    lv_obj_add_flag(ui_MOBILE_signal2, LV_OBJ_FLAG_HIDDEN);
+    lv_obj_add_flag(ui_MOBILE_signal3, LV_OBJ_FLAG_HIDDEN);
+    lv_obj_add_flag(ui_MOBILE_signal4, LV_OBJ_FLAG_HIDDEN);
+    lv_obj_add_flag(ui_MOBILE_signal5, LV_OBJ_FLAG_HIDDEN);
+    lv_obj_add_flag(ui_MOBILE_no_signal, LV_OBJ_FLAG_HIDDEN);
 }
