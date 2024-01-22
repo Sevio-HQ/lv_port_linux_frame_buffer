@@ -46,6 +46,7 @@ typedef enum eUiMenuIndex {
     UI_WLANCONFIG, 
     UI_GPSCONFIG,
     UI_GSMCONFIG,
+	UI_IOCONFIG,
     MAX_UI_MENU
 } tUiMenuIndex;
 
@@ -75,6 +76,7 @@ void uiMenu_init()
     uiMenuMap[UI_WLANCONFIG] = ui_WLANIPCONFIG;
     uiMenuMap[UI_GPSCONFIG] = ui_GPS_Screen;
     uiMenuMap[UI_GSMCONFIG] = ui_MOBILE;
+	uiMenuMap[UI_IOCONFIG] = ui_IO;
 
     uiMenu[UI_HOME].left = UI_HOME;
     uiMenu[UI_HOME].down = UI_VPNSTATUS;
@@ -103,8 +105,12 @@ void uiMenu_init()
 
     uiMenu[UI_GSMCONFIG].left = UI_GPSCONFIG;
     uiMenu[UI_GSMCONFIG].down = UI_NONE;
-    uiMenu[UI_GSMCONFIG].rigth = UI_NONE;
+    uiMenu[UI_GSMCONFIG].rigth = UI_IOCONFIG;
     uiMenu[UI_GSMCONFIG].refresh = ui_gsm_update_ui;
+
+    uiMenu[UI_IOCONFIG].left = UI_LANCONFIG;
+    uiMenu[UI_IOCONFIG].down = UI_NONE;
+    uiMenu[UI_IOCONFIG].rigth = UI_NONE;
 
 }
 
