@@ -76,9 +76,9 @@ void uiMenu_init()
     uiMenuMap[UI_WANCONFIG] = ui_WANIPCONFIG;
     uiMenuMap[UI_LANCONFIG] = ui_LANIPCONFIG;
     uiMenuMap[UI_WLANCONFIG] = ui_WLANIPCONFIG;
+    uiMenuMap[UI_WIFICONFIG] = ui_WIFI;	
 	uiMenuMap[UI_GSMCONFIG] = ui_MOBILE;
     uiMenuMap[UI_GPSCONFIG] = ui_GPS_Screen;
-    uiMenuMap[UI_WIFICONFIG] = ui_WIFI;
 	uiMenuMap[UI_IOCONFIG] = ui_IO;
 	uiMenuMap[UI_PORTSCONFIG] = ui_PORTS;
 
@@ -91,20 +91,20 @@ void uiMenu_init()
     uiMenu[UI_VPNSTATUS].rigth = UI_WANCONFIG;
 
     uiMenu[UI_WANCONFIG].left = UI_VPNSTATUS;
-    uiMenu[UI_WANCONFIG].down = UI_NONE;
-    uiMenu[UI_WANCONFIG].rigth = UI_LANCONFIG;
+    uiMenu[UI_WANCONFIG].down = UI_LANCONFIG;
+    uiMenu[UI_WANCONFIG].rigth = UI_WIFICONFIG;
 
-    uiMenu[UI_LANCONFIG].left = UI_WANCONFIG;
-    uiMenu[UI_LANCONFIG].down = UI_NONE;
+    uiMenu[UI_LANCONFIG].left = UI_VPNSTATUS;
+    uiMenu[UI_LANCONFIG].down = UI_WLANCONFIG;
     uiMenu[UI_LANCONFIG].rigth = UI_WIFICONFIG;
 
-    uiMenu[UI_WIFICONFIG].left = UI_LANCONFIG;
-    uiMenu[UI_WIFICONFIG].down = UI_WLANCONFIG;
-    uiMenu[UI_WIFICONFIG].rigth = UI_GSMCONFIG;
+    uiMenu[UI_WLANCONFIG].left = UI_VPNSTATUS;
+    uiMenu[UI_WLANCONFIG].down = UI_WANCONFIG;
+    uiMenu[UI_WLANCONFIG].rigth = UI_WIFICONFIG;
 
-    uiMenu[UI_WLANCONFIG].left = UI_LANCONFIG;
-    uiMenu[UI_WLANCONFIG].down = UI_WIFICONFIG;
-    uiMenu[UI_WLANCONFIG].rigth = UI_GSMCONFIG;
+    uiMenu[UI_WIFICONFIG].left = UI_WANCONFIG;
+    uiMenu[UI_WIFICONFIG].down = UI_NONE;
+    uiMenu[UI_WIFICONFIG].rigth = UI_GSMCONFIG;
 
     uiMenu[UI_GSMCONFIG].left = UI_WIFICONFIG;
     uiMenu[UI_GSMCONFIG].down = UI_GPSCONFIG;
