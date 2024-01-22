@@ -30,11 +30,15 @@ include $(LVGL_DIR)/lv_drivers/lv_drivers.mk
 
 UI_GEN_SRC = \
     $(LVGL_DIR)/squareline/ui.c \
-    $(LVGL_DIR)/squareline/ui_img_wifi_img2_png.c \
-    $(LVGL_DIR)/squareline/ui_img_wifi_img_png.c \
-    $(LVGL_DIR)/squareline/ui_img_eth_img_png.c \
-    $(LVGL_DIR)/squareline/ui_img_frecce_d_r_png.c \
     $(LVGL_DIR)/squareline/ui_img_logo_png.c \
+	$(LVGL_DIR)/squareline/ui_img_network_png.c \
+	$(LVGL_DIR)/squareline/ui_img_row_d_png.c \
+	$(LVGL_DIR)/squareline/ui_img_row_l_png.c \
+	$(LVGL_DIR)/squareline/ui_img_row_r_png.c \
+	$(LVGL_DIR)/squareline/ui_img_sel_on_png.c \
+	$(LVGL_DIR)/squareline/ui_img_status_fail_png.c \
+	$(LVGL_DIR)/squareline/ui_img_status_pass_png.c \
+	$(LVGL_DIR)/squareline/ui_img_status_tree_png.c \
     $(LVGL_DIR)/squareline/ui_img_vpn_png.c \
     $(LVGL_DIR)/squareline/ui_helpers.c \
     $(LVGL_DIR)/squareline/ui_comp.c \
@@ -48,15 +52,6 @@ UI_GEN_SRC = \
     $(LVGL_DIR)/squareline2/ui_img_4_png.c \
     $(LVGL_DIR)/squareline2/ui_img_5_png.c \
     $(LVGL_DIR)/squareline2/ui_img_nosignal_png.c \
-    $(LVGL_DIR)/squareline/ui_img_status_tree_png.c \
-    $(LVGL_DIR)/squareline/ui_img_status_pass_png.c \
-    $(LVGL_DIR)/squareline/ui_img_status_fail_png.c \
-    $(LVGL_DIR)/squareline/ui_img_row_r_png.c \
-    $(LVGL_DIR)/squareline/ui_img_row_l_png.c \
-    $(LVGL_DIR)/squareline/ui_img_row_d_png.c \
-    $(LVGL_DIR)/squareline/ui_img_sel_on_png.c \
-    $(LVGL_DIR)/squareline/ui_img_port_png.c \
-    $(LVGL_DIR)/squareline/ui_img_network_png.c \
     $(LVGL_DIR)/squareline/ui_font_dejavusans.c \
     $(LVGL_DIR)/squareline/ui_font_arialbd.c
 
