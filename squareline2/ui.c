@@ -67,7 +67,6 @@ lv_obj_t * ui_WIFI_Signal4;
 lv_obj_t * ui_WIFI_Signal5;
 lv_obj_t * ui_WIFI_BarDown;
 lv_obj_t * ui_WIFI_RowLeft;
-lv_obj_t * ui_WIFI_RowDown;
 lv_obj_t * ui_WIFI_RowRight;
 lv_obj_t * ui_WIFI_Image17;
 lv_obj_t * ui_IO;
@@ -107,6 +106,7 @@ lv_obj_t * ui_PORTS_Speed_Value;
 lv_obj_t * ui_PORTS_BarDown;
 lv_obj_t * ui_PORTS_RowLeft;
 lv_obj_t * ui_PORTS_RowDown;
+lv_obj_t * ui_PORTS_RowRight;
 
 ///////////////////// TEST LVGL SETTINGS ////////////////////
 #if LV_COLOR_DEPTH != 16
@@ -738,15 +738,6 @@ void ui_WIFI_screen_init(void)
     lv_obj_add_flag(ui_WIFI_RowLeft, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
     lv_obj_clear_flag(ui_WIFI_RowLeft, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
 
-    ui_WIFI_RowDown = lv_img_create(ui_WIFI);
-    lv_img_set_src(ui_WIFI_RowDown, &ui_img_row_d_png);
-    lv_obj_set_width(ui_WIFI_RowDown, LV_SIZE_CONTENT);   /// 11
-    lv_obj_set_height(ui_WIFI_RowDown, LV_SIZE_CONTENT);    /// 11
-    lv_obj_set_x(ui_WIFI_RowDown, 59);
-    lv_obj_set_y(ui_WIFI_RowDown, 115);
-    lv_obj_add_flag(ui_WIFI_RowDown, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
-    lv_obj_clear_flag(ui_WIFI_RowDown, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
-
     ui_WIFI_RowRight = lv_img_create(ui_WIFI);
     lv_img_set_src(ui_WIFI_RowRight, &ui_img_row_r_png);
     lv_obj_set_width(ui_WIFI_RowRight, LV_SIZE_CONTENT);   /// 11
@@ -1167,6 +1158,15 @@ void ui_PORTS_screen_init(void)
     lv_obj_set_y(ui_PORTS_RowDown, 115);
     lv_obj_add_flag(ui_PORTS_RowDown, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
     lv_obj_clear_flag(ui_PORTS_RowDown, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+
+    ui_PORTS_RowRight = lv_img_create(ui_PORTS);
+    lv_img_set_src(ui_PORTS_RowRight, &ui_img_row_r_png);
+    lv_obj_set_width(ui_PORTS_RowRight, LV_SIZE_CONTENT);   /// 11
+    lv_obj_set_height(ui_PORTS_RowRight, LV_SIZE_CONTENT);    /// 11
+    lv_obj_set_x(ui_PORTS_RowRight, 113);
+    lv_obj_set_y(ui_PORTS_RowRight, 115);
+    lv_obj_add_flag(ui_PORTS_RowRight, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
+    lv_obj_clear_flag(ui_PORTS_RowRight, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
 
 }
 

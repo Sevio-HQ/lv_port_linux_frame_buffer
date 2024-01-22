@@ -82,8 +82,8 @@ void uiMenu_init()
 	uiMenuMap[UI_IOCONFIG] = ui_IO;
 	uiMenuMap[UI_PORTSCONFIG] = ui_PORTS;
 
-    uiMenu[UI_HOME].left = UI_VPNSTATUS;
-    uiMenu[UI_HOME].down = UI_VPNSTATUS;
+    uiMenu[UI_HOME].left = UI_PORTSCONFIG;
+    uiMenu[UI_HOME].down = UI_NONE;
     uiMenu[UI_HOME].rigth = UI_VPNSTATUS;
 
     uiMenu[UI_VPNSTATUS].left = UI_HOME;
@@ -122,7 +122,7 @@ void uiMenu_init()
 
     uiMenu[UI_PORTSCONFIG].left = UI_IOCONFIG;
     uiMenu[UI_PORTSCONFIG].down = UI_NONE;
-    uiMenu[UI_PORTSCONFIG].rigth = UI_NONE;
+    uiMenu[UI_PORTSCONFIG].rigth = UI_HOME;
 }
 
 lv_obj_t * uiMenu_getCurrent()

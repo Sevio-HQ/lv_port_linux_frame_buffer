@@ -72,7 +72,6 @@ extern lv_obj_t * ui_WIFI_Signal4;
 extern lv_obj_t * ui_WIFI_Signal5;
 extern lv_obj_t * ui_WIFI_BarDown;
 extern lv_obj_t * ui_WIFI_RowLeft;
-extern lv_obj_t * ui_WIFI_RowDown;
 extern lv_obj_t * ui_WIFI_RowRight;
 extern lv_obj_t * ui_WIFI_Image17;
 extern lv_obj_t * ui_IO;
@@ -112,6 +111,7 @@ extern lv_obj_t * ui_PORTS_Speed_Value;
 extern lv_obj_t * ui_PORTS_BarDown;
 extern lv_obj_t * ui_PORTS_RowLeft;
 extern lv_obj_t * ui_PORTS_RowDown;
+extern lv_obj_t * ui_PORTS_RowRight;
 
 
 LV_IMG_DECLARE(ui_img_sim_png);    // assets\sim.png
