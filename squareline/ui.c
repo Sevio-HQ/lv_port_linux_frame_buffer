@@ -42,7 +42,7 @@ lv_obj_t * ui_WANIPCONFIG_DHCP_Label;
 lv_obj_t * ui_WANIPCONFIG_DHCP_OFF;
 lv_obj_t * ui_WANIPCONFIG_DHCP_ON;
 lv_obj_t * ui_WANIPCONFIG_IP_Label;
-lv_obj_t * ui_WANIPCONFIG_Label2;
+lv_obj_t * ui_WANIPCONFIG_IpValue;
 lv_obj_t * ui_WANIPCONFIG_Gateway_Label;
 lv_obj_t * ui_WANIPCONFIG_Label3;
 lv_obj_t * ui_WANIPCONFIG_BarDown;
@@ -443,15 +443,15 @@ void ui_WANIPCONFIG_screen_init(void)
     lv_obj_set_style_text_opa(ui_WANIPCONFIG_IP_Label, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_WANIPCONFIG_IP_Label, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_WANIPCONFIG_Label2 = lv_label_create(ui_WANIPCONFIG);
-    lv_obj_set_width(ui_WANIPCONFIG_Label2, 132);
-    lv_obj_set_height(ui_WANIPCONFIG_Label2, 15);
-    lv_obj_set_x(ui_WANIPCONFIG_Label2, 3);
-    lv_obj_set_y(ui_WANIPCONFIG_Label2, 62);
-    lv_label_set_text(ui_WANIPCONFIG_Label2, "255.255.255.255/24");
-    lv_obj_set_style_text_color(ui_WANIPCONFIG_Label2, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_opa(ui_WANIPCONFIG_Label2, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_WANIPCONFIG_Label2, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
+    ui_WANIPCONFIG_IpValue = lv_label_create(ui_WANIPCONFIG);
+    lv_obj_set_width(ui_WANIPCONFIG_IpValue, 132);
+    lv_obj_set_height(ui_WANIPCONFIG_IpValue, 15);
+    lv_obj_set_x(ui_WANIPCONFIG_IpValue, 3);
+    lv_obj_set_y(ui_WANIPCONFIG_IpValue, 62);
+    lv_label_set_text(ui_WANIPCONFIG_IpValue, "255.255.255.255/24");
+    lv_obj_set_style_text_color(ui_WANIPCONFIG_IpValue, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_opa(ui_WANIPCONFIG_IpValue, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_WANIPCONFIG_IpValue, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_WANIPCONFIG_Gateway_Label = lv_label_create(ui_WANIPCONFIG);
     lv_obj_set_width(ui_WANIPCONFIG_Gateway_Label, LV_SIZE_CONTENT);   /// 1
