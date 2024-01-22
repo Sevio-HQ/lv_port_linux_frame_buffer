@@ -801,7 +801,7 @@ void ui_IO_screen_init(void)
     ui_IO_di1_label = lv_label_create(ui_IO);
     lv_obj_set_width(ui_IO_di1_label, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_IO_di1_label, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_IO_di1_label, 3);
+    lv_obj_set_x(ui_IO_di1_label, 2);
     lv_obj_set_y(ui_IO_di1_label, 28);
     lv_label_set_text(ui_IO_di1_label, "DI1");
     lv_obj_set_style_text_color(ui_IO_di1_label, lv_color_hex(0x808080), LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -835,7 +835,7 @@ void ui_IO_screen_init(void)
     ui_IO_di2_label = lv_label_create(ui_IO);
     lv_obj_set_width(ui_IO_di2_label, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_IO_di2_label, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_IO_di2_label, 3);
+    lv_obj_set_x(ui_IO_di2_label, 2);
     lv_obj_set_y(ui_IO_di2_label, 50);
     lv_label_set_text(ui_IO_di2_label, "DI2");
     lv_obj_set_style_text_color(ui_IO_di2_label, lv_color_hex(0x808080), LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -869,7 +869,7 @@ void ui_IO_screen_init(void)
     ui_IO_do1_label = lv_label_create(ui_IO);
     lv_obj_set_width(ui_IO_do1_label, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_IO_do1_label, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_IO_do1_label, 3);
+    lv_obj_set_x(ui_IO_do1_label, 2);
     lv_obj_set_y(ui_IO_do1_label, 72);
     lv_label_set_text(ui_IO_do1_label, "DO1");
     lv_obj_set_style_text_color(ui_IO_do1_label, lv_color_hex(0x808080), LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -903,7 +903,7 @@ void ui_IO_screen_init(void)
     ui_IO_do2_label = lv_label_create(ui_IO);
     lv_obj_set_width(ui_IO_do2_label, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_IO_do2_label, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_IO_do2_label, 3);
+    lv_obj_set_x(ui_IO_do2_label, 2);
     lv_obj_set_y(ui_IO_do2_label, 94);
     lv_label_set_text(ui_IO_do2_label, "DO2");
     lv_obj_set_style_text_color(ui_IO_do2_label, lv_color_hex(0x808080), LV_PART_MAIN | LV_STATE_DEFAULT);
