@@ -35,6 +35,7 @@ UI_GEN_SRC = \
 	$(LVGL_DIR)/squareline/ui_img_row_d_png.c \
 	$(LVGL_DIR)/squareline/ui_img_row_l_png.c \
 	$(LVGL_DIR)/squareline/ui_img_row_r_png.c \
+	$(LVGL_DIR)/squareline/ui_img_sel_off_png.c \
 	$(LVGL_DIR)/squareline/ui_img_sel_on_png.c \
 	$(LVGL_DIR)/squareline/ui_img_status_fail_png.c \
 	$(LVGL_DIR)/squareline/ui_img_status_pass_png.c \
