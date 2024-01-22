@@ -1,0 +1,16 @@
+{
+  "codename": "arialbd",
+  "ttf_path": "\\assets\\fonts\\ARIALNB.TTF",
+  "bin_path": "\\assets\\fonts\\ui_font_arialbd.bin",
+  "c_path": "\\assets\\fonts\\ui_font_arialbd.c",
+  "cfg_path": "\\assets\\fonts\\ui_font_arialbd.fcfg",
+  "size": 16,
+  "bpp": 2,
+  "letters": 0,
+  "ranges": [
+    "0x20-0x7f"
+  ],
+  "symbols": "",
+  "customparams": "--no-compress --no-prefilter",
+  "uploaded": false
+}
