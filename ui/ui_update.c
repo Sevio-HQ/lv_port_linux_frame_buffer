@@ -312,22 +312,22 @@ void updateWanConfig(bool _ifup, const char* _ip, unsigned int _mask, const char
 {
     //lv_label_set_text(ui_WANIPCONFIG_Label2,"IP:  192.168.134.27/24");
     //lv_label_set_text(ui_WANIPCONFIG_Label3,"GW:  192.168.1.254");
-    lv_label_set_text_fmt(ui_WANIPCONFIG_IP_Value, "IP:  %s/%d", _ip, _mask);
-    lv_label_set_text_fmt(ui_WANIPCONFIG_Label3, "GW:  %s", _gw);
+    lv_label_set_text_fmt(ui_WANIPCONFIG_ip_value, "IP:  %s/%d", _ip, _mask);
+    lv_label_set_text_fmt(ui_WANIPCONFIG_gateway_value, "GW:  %s", _gw);
 }
 
 void updateLanConfig(bool _ifup, const char* _ip, unsigned int _mask, const char* _gw)
 {
     //lv_label_set_text(ui_WANIPCONFIG_Label10,"IP:  192.168.134.27/24");
-    lv_label_set_text_fmt(ui_WANIPCONFIG_Label10, "IP:  %s/%d", _ip, _mask);
+    lv_label_set_text_fmt(ui_LANIPCONFIG_ip_value, "IP:  %s/%d", _ip, _mask);
 }
 
 void updateWlanConfig(bool _ifup, const char* _ip, unsigned int _mask, const char* _gw)
 {
     //lv_label_set_text(ui_WANIPCONFIG_Label6,"IP:  192.168.134.27/24");
     //lv_label_set_text(ui_WANIPCONFIG_Label7,"GW:  192.168.1.254");
-    lv_label_set_text_fmt(ui_WANIPCONFIG_Label6, "IP:  %s/%d", _ip, _mask);
-    lv_label_set_text_fmt(ui_WANIPCONFIG_Label7, "GW:  %s", _gw);
+    lv_label_set_text_fmt(ui_WLANIPCONFIG_ip_value, "IP:  %s/%d", _ip, _mask);
+    lv_label_set_text_fmt(ui_WLANIPCONFIG_gateway_value, "GW:  %s", _gw);
 }
 
 void updateWwanConfig(bool _ifup, const char* _ip, unsigned int _mask, const char* _gw)
