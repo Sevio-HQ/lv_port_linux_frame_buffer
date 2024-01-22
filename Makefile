@@ -51,9 +51,6 @@ UI_GEN_SRC = \
     $(LVGL_DIR)/squareline2/ui_img_signal_3_png.c \
     $(LVGL_DIR)/squareline2/ui_img_signal_4_png.c \
     $(LVGL_DIR)/squareline2/ui_img_signal_5_png.c \
-    
-	
-
     $(LVGL_DIR)/squareline/ui_font_dejavusans.c \
     $(LVGL_DIR)/squareline/ui_font_arialbd.c
 
