@@ -47,8 +47,19 @@ UI_GEN_SRC = \
     $(LVGL_DIR)/squareline2/ui_img_3_png.c \
     $(LVGL_DIR)/squareline2/ui_img_4_png.c \
     $(LVGL_DIR)/squareline2/ui_img_5_png.c \
-    $(LVGL_DIR)/squareline2/ui_img_nosignal_png.c 
-    
+    $(LVGL_DIR)/squareline2/ui_img_nosignal_png.c \
+    $(LVGL_DIR)/squareline/ui_img_status_tree_png.c \
+    $(LVGL_DIR)/squareline/ui_img_status_pass_png.c \
+    $(LVGL_DIR)/squareline/ui_img_status_fail_png.c \
+    $(LVGL_DIR)/squareline/ui_img_row_r_png.c \
+    $(LVGL_DIR)/squareline/ui_img_row_l_png.c \
+    $(LVGL_DIR)/squareline/ui_img_row_d_png.c \
+    $(LVGL_DIR)/squareline/ui_img_sel_on_png.c \
+    $(LVGL_DIR)/squareline/ui_img_port_png.c \
+    $(LVGL_DIR)/squareline/ui_img_network_png.c \
+    $(LVGL_DIR)/squareline/ui_font_dejavusans.c \
+    $(LVGL_DIR)/squareline/ui_font_arialbd.c
+
 UI_SRC = $(LVGL_DIR)/ui/ui_update.c  $(LVGL_DIR)/ui/ubus.c $(LVGL_DIR)/ui/ui_gps.c $(LVGL_DIR)/ui/ui_gsm.c $(LVGL_DIR)/ui/gpsdclient.c
 CSRCS +=$(LVGL_DIR)/mouse_cursor_icon.c $(UI_GEN_SRC) $(UI_SRC)
 OBJEXT ?= .o
@@ -64,16 +75,16 @@ OBJS = $(AOBJS) $(COBJS)
 ## MAINOBJ -> OBJFILES
 
 all: cenv default
-	
+
 
 %.o: %.c
 	@$(CC)  $(CFLAGS) $(INCLUDE_FLAGS) $(DEFINE_FLAGS) -c $< -o $@
 	@echo "CC $<"
-    
-default: $(AOBJS) $(COBJS) $(MAINOBJ)
-	$(CC) -o $(BIN) $(MAINOBJ) $(AOBJS) $(COBJS) $(LDFLAGS) $(LIB_FLAGS) 
 
-clean: 
+default: $(AOBJS) $(COBJS) $(MAINOBJ)
+	$(CC) -o $(BIN) $(MAINOBJ) $(AOBJS) $(COBJS) $(LDFLAGS) $(LIB_FLAGS)
+
+clean:
 	rm -f $(BIN) $(AOBJS) $(COBJS) $(MAINOBJ)
 
 cenv:
