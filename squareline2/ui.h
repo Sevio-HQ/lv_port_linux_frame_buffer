@@ -54,13 +54,29 @@ extern lv_obj_t * ui_GPS_BarDown;
 extern lv_obj_t * ui_GPS_RowLeft;
 extern lv_obj_t * ui_GPS_RowDown;
 extern lv_obj_t * ui_GPS_RowRight;
+extern lv_obj_t * ui_WIFI;
+extern lv_obj_t * ui_WIFI_PageLabel;
+extern lv_obj_t * ui_WIFI_BarUp;
+extern lv_obj_t * ui_WIFI_BarDown;
+extern lv_obj_t * ui_WIFI_RowLeft;
+extern lv_obj_t * ui_WIFI_RowDown;
+extern lv_obj_t * ui_WIFI_RowRight;
+extern lv_obj_t * ui_WIFI_Image17;
 extern lv_obj_t * ui_IO;
 extern lv_obj_t * ui_IO_PageLabel;
 extern lv_obj_t * ui_IO_BarUp;
 extern lv_obj_t * ui_IO_BarDown;
 extern lv_obj_t * ui_IO_RowLeft;
-extern lv_obj_t * ui_IO_RowDown;
 extern lv_obj_t * ui_IO_RowRight;
+extern lv_obj_t * ui_IO_Image15;
+extern lv_obj_t * ui_PORTS;
+extern lv_obj_t * ui_PORTS_PageLabel;
+extern lv_obj_t * ui_PORTS_BarUp;
+extern lv_obj_t * ui_PORTS_BarDown;
+extern lv_obj_t * ui_PORTS_RowLeft;
+extern lv_obj_t * ui_PORTS_RowDown;
+extern lv_obj_t * ui_IO_RowRight1;
+extern lv_obj_t * ui_PORTS_Image16;
 
 
 LV_IMG_DECLARE(ui_img_sim_png);    // assets\sim.png
@@ -74,6 +90,9 @@ LV_IMG_DECLARE(ui_img_row_l_png);    // assets\row_l.png
 LV_IMG_DECLARE(ui_img_row_d_png);    // assets\row_d.png
 LV_IMG_DECLARE(ui_img_row_r_png);    // assets\row_r.png
 LV_IMG_DECLARE(ui_img_gnss_png);    // assets\gnss.png
+LV_IMG_DECLARE(ui_img_wifi_png);    // assets\wifi.png
+LV_IMG_DECLARE(ui_img_io_png);    // assets\io.png
+LV_IMG_DECLARE(ui_img_port_png);    // assets\port.png
 
 
 LV_FONT_DECLARE(ui_font_arialbd);

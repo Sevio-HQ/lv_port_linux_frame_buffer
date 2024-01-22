@@ -49,13 +49,29 @@ lv_obj_t * ui_GPS_BarDown;
 lv_obj_t * ui_GPS_RowLeft;
 lv_obj_t * ui_GPS_RowDown;
 lv_obj_t * ui_GPS_RowRight;
+lv_obj_t * ui_WIFI;
+lv_obj_t * ui_WIFI_PageLabel;
+lv_obj_t * ui_WIFI_BarUp;
+lv_obj_t * ui_WIFI_BarDown;
+lv_obj_t * ui_WIFI_RowLeft;
+lv_obj_t * ui_WIFI_RowDown;
+lv_obj_t * ui_WIFI_RowRight;
+lv_obj_t * ui_WIFI_Image17;
 lv_obj_t * ui_IO;
 lv_obj_t * ui_IO_PageLabel;
 lv_obj_t * ui_IO_BarUp;
 lv_obj_t * ui_IO_BarDown;
 lv_obj_t * ui_IO_RowLeft;
-lv_obj_t * ui_IO_RowDown;
 lv_obj_t * ui_IO_RowRight;
+lv_obj_t * ui_IO_Image15;
+lv_obj_t * ui_PORTS;
+lv_obj_t * ui_PORTS_PageLabel;
+lv_obj_t * ui_PORTS_BarUp;
+lv_obj_t * ui_PORTS_BarDown;
+lv_obj_t * ui_PORTS_RowLeft;
+lv_obj_t * ui_PORTS_RowDown;
+lv_obj_t * ui_IO_RowRight1;
+lv_obj_t * ui_PORTS_Image16;
 
 ///////////////////// TEST LVGL SETTINGS ////////////////////
 #if LV_COLOR_DEPTH != 16
@@ -502,10 +518,90 @@ void ui_GPS_Screen_screen_init(void)
     lv_obj_clear_flag(ui_GPS_RowRight, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
 
 }
+void ui_WIFI_screen_init(void)
+{
+    ui_WIFI = lv_obj_create(NULL);
+    lv_obj_clear_flag(ui_WIFI, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+
+    ui_WIFI_PageLabel = lv_label_create(ui_WIFI);
+    lv_obj_set_width(ui_WIFI_PageLabel, 102);
+    lv_obj_set_height(ui_WIFI_PageLabel, 18);
+    lv_obj_set_x(ui_WIFI_PageLabel, 29);
+    lv_obj_set_y(ui_WIFI_PageLabel, 4);
+    lv_label_set_text(ui_WIFI_PageLabel, "Wi-Fi");
+    lv_obj_set_style_text_color(ui_WIFI_PageLabel, lv_color_hex(0xB4B2B4), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_opa(ui_WIFI_PageLabel, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_align(ui_WIFI_PageLabel, LV_TEXT_ALIGN_LEFT, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_WIFI_PageLabel, &ui_font_arialbd, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    ui_WIFI_BarUp = lv_obj_create(ui_WIFI);
+    lv_obj_set_width(ui_WIFI_BarUp, 120);
+    lv_obj_set_height(ui_WIFI_BarUp, 1);
+    lv_obj_set_x(ui_WIFI_BarUp, 0);
+    lv_obj_set_y(ui_WIFI_BarUp, -43);
+    lv_obj_set_align(ui_WIFI_BarUp, LV_ALIGN_CENTER);
+    lv_obj_clear_flag(ui_WIFI_BarUp, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    lv_obj_set_style_radius(ui_WIFI_BarUp, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_color(ui_WIFI_BarUp, lv_color_hex(0xB4B2B4), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_opa(ui_WIFI_BarUp, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_border_side(ui_WIFI_BarUp, LV_BORDER_SIDE_NONE, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    ui_WIFI_BarDown = lv_obj_create(ui_WIFI);
+    lv_obj_set_width(ui_WIFI_BarDown, 128);
+    lv_obj_set_height(ui_WIFI_BarDown, 16);
+    lv_obj_set_x(ui_WIFI_BarDown, 0);
+    lv_obj_set_y(ui_WIFI_BarDown, 56);
+    lv_obj_set_align(ui_WIFI_BarDown, LV_ALIGN_CENTER);
+    lv_obj_clear_flag(ui_WIFI_BarDown, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    lv_obj_set_style_radius(ui_WIFI_BarDown, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_color(ui_WIFI_BarDown, lv_color_hex(0x525552), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_opa(ui_WIFI_BarDown, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_border_side(ui_WIFI_BarDown, LV_BORDER_SIDE_NONE, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    ui_WIFI_RowLeft = lv_img_create(ui_WIFI);
+    lv_img_set_src(ui_WIFI_RowLeft, &ui_img_row_l_png);
+    lv_obj_set_width(ui_WIFI_RowLeft, LV_SIZE_CONTENT);   /// 11
+    lv_obj_set_height(ui_WIFI_RowLeft, LV_SIZE_CONTENT);    /// 11
+    lv_obj_set_x(ui_WIFI_RowLeft, 3);
+    lv_obj_set_y(ui_WIFI_RowLeft, 115);
+    lv_obj_add_flag(ui_WIFI_RowLeft, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
+    lv_obj_clear_flag(ui_WIFI_RowLeft, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+
+    ui_WIFI_RowDown = lv_img_create(ui_WIFI);
+    lv_img_set_src(ui_WIFI_RowDown, &ui_img_row_d_png);
+    lv_obj_set_width(ui_WIFI_RowDown, LV_SIZE_CONTENT);   /// 11
+    lv_obj_set_height(ui_WIFI_RowDown, LV_SIZE_CONTENT);    /// 11
+    lv_obj_set_x(ui_WIFI_RowDown, 59);
+    lv_obj_set_y(ui_WIFI_RowDown, 115);
+    lv_obj_add_flag(ui_WIFI_RowDown, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
+    lv_obj_clear_flag(ui_WIFI_RowDown, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+
+    ui_WIFI_RowRight = lv_img_create(ui_WIFI);
+    lv_img_set_src(ui_WIFI_RowRight, &ui_img_row_r_png);
+    lv_obj_set_width(ui_WIFI_RowRight, LV_SIZE_CONTENT);   /// 11
+    lv_obj_set_height(ui_WIFI_RowRight, LV_SIZE_CONTENT);    /// 11
+    lv_obj_set_x(ui_WIFI_RowRight, 113);
+    lv_obj_set_y(ui_WIFI_RowRight, 115);
+    lv_obj_add_flag(ui_WIFI_RowRight, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
+    lv_obj_clear_flag(ui_WIFI_RowRight, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+
+    ui_WIFI_Image17 = lv_img_create(ui_WIFI);
+    lv_img_set_src(ui_WIFI_Image17, &ui_img_wifi_png);
+    lv_obj_set_width(ui_WIFI_Image17, LV_SIZE_CONTENT);   /// 21
+    lv_obj_set_height(ui_WIFI_Image17, LV_SIZE_CONTENT);    /// 16
+    lv_obj_set_x(ui_WIFI_Image17, -48);
+    lv_obj_set_y(ui_WIFI_Image17, -53);
+    lv_obj_set_align(ui_WIFI_Image17, LV_ALIGN_CENTER);
+    lv_obj_add_flag(ui_WIFI_Image17, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
+    lv_obj_clear_flag(ui_WIFI_Image17, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+
+}
 void ui_IO_screen_init(void)
 {
     ui_IO = lv_obj_create(NULL);
     lv_obj_clear_flag(ui_IO, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    lv_obj_set_style_bg_color(ui_IO, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_opa(ui_IO, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_IO_PageLabel = lv_label_create(ui_IO);
     lv_obj_set_width(ui_IO_PageLabel, 102);
@@ -551,15 +647,6 @@ void ui_IO_screen_init(void)
     lv_obj_add_flag(ui_IO_RowLeft, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
     lv_obj_clear_flag(ui_IO_RowLeft, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
 
-    ui_IO_RowDown = lv_img_create(ui_IO);
-    lv_img_set_src(ui_IO_RowDown, &ui_img_row_d_png);
-    lv_obj_set_width(ui_IO_RowDown, LV_SIZE_CONTENT);   /// 11
-    lv_obj_set_height(ui_IO_RowDown, LV_SIZE_CONTENT);    /// 11
-    lv_obj_set_x(ui_IO_RowDown, 59);
-    lv_obj_set_y(ui_IO_RowDown, 115);
-    lv_obj_add_flag(ui_IO_RowDown, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
-    lv_obj_clear_flag(ui_IO_RowDown, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
-
     ui_IO_RowRight = lv_img_create(ui_IO);
     lv_img_set_src(ui_IO_RowRight, &ui_img_row_r_png);
     lv_obj_set_width(ui_IO_RowRight, LV_SIZE_CONTENT);   /// 11
@@ -568,6 +655,94 @@ void ui_IO_screen_init(void)
     lv_obj_set_y(ui_IO_RowRight, 115);
     lv_obj_add_flag(ui_IO_RowRight, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
     lv_obj_clear_flag(ui_IO_RowRight, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+
+    ui_IO_Image15 = lv_img_create(ui_IO);
+    lv_img_set_src(ui_IO_Image15, &ui_img_io_png);
+    lv_obj_set_width(ui_IO_Image15, LV_SIZE_CONTENT);   /// 19
+    lv_obj_set_height(ui_IO_Image15, LV_SIZE_CONTENT);    /// 16
+    lv_obj_set_x(ui_IO_Image15, -48);
+    lv_obj_set_y(ui_IO_Image15, -53);
+    lv_obj_set_align(ui_IO_Image15, LV_ALIGN_CENTER);
+    lv_obj_add_flag(ui_IO_Image15, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
+    lv_obj_clear_flag(ui_IO_Image15, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+
+}
+void ui_PORTS_screen_init(void)
+{
+    ui_PORTS = lv_obj_create(NULL);
+    lv_obj_clear_flag(ui_PORTS, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+
+    ui_PORTS_PageLabel = lv_label_create(ui_PORTS);
+    lv_obj_set_width(ui_PORTS_PageLabel, 102);
+    lv_obj_set_height(ui_PORTS_PageLabel, 18);
+    lv_obj_set_x(ui_PORTS_PageLabel, 29);
+    lv_obj_set_y(ui_PORTS_PageLabel, 4);
+    lv_label_set_text(ui_PORTS_PageLabel, "PORT XXX");
+    lv_obj_set_style_text_color(ui_PORTS_PageLabel, lv_color_hex(0xB4B2B4), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_opa(ui_PORTS_PageLabel, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_align(ui_PORTS_PageLabel, LV_TEXT_ALIGN_LEFT, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_font(ui_PORTS_PageLabel, &ui_font_arialbd, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    ui_PORTS_BarUp = lv_obj_create(ui_PORTS);
+    lv_obj_set_width(ui_PORTS_BarUp, 120);
+    lv_obj_set_height(ui_PORTS_BarUp, 1);
+    lv_obj_set_x(ui_PORTS_BarUp, 0);
+    lv_obj_set_y(ui_PORTS_BarUp, -43);
+    lv_obj_set_align(ui_PORTS_BarUp, LV_ALIGN_CENTER);
+    lv_obj_clear_flag(ui_PORTS_BarUp, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    lv_obj_set_style_radius(ui_PORTS_BarUp, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_color(ui_PORTS_BarUp, lv_color_hex(0xB4B2B4), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_opa(ui_PORTS_BarUp, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_border_side(ui_PORTS_BarUp, LV_BORDER_SIDE_NONE, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    ui_PORTS_BarDown = lv_obj_create(ui_PORTS);
+    lv_obj_set_width(ui_PORTS_BarDown, 128);
+    lv_obj_set_height(ui_PORTS_BarDown, 16);
+    lv_obj_set_x(ui_PORTS_BarDown, 0);
+    lv_obj_set_y(ui_PORTS_BarDown, 56);
+    lv_obj_set_align(ui_PORTS_BarDown, LV_ALIGN_CENTER);
+    lv_obj_clear_flag(ui_PORTS_BarDown, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    lv_obj_set_style_radius(ui_PORTS_BarDown, 0, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_color(ui_PORTS_BarDown, lv_color_hex(0x525552), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_bg_opa(ui_PORTS_BarDown, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_border_side(ui_PORTS_BarDown, LV_BORDER_SIDE_NONE, LV_PART_MAIN | LV_STATE_DEFAULT);
+
+    ui_PORTS_RowLeft = lv_img_create(ui_PORTS);
+    lv_img_set_src(ui_PORTS_RowLeft, &ui_img_row_l_png);
+    lv_obj_set_width(ui_PORTS_RowLeft, LV_SIZE_CONTENT);   /// 11
+    lv_obj_set_height(ui_PORTS_RowLeft, LV_SIZE_CONTENT);    /// 11
+    lv_obj_set_x(ui_PORTS_RowLeft, 3);
+    lv_obj_set_y(ui_PORTS_RowLeft, 115);
+    lv_obj_add_flag(ui_PORTS_RowLeft, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
+    lv_obj_clear_flag(ui_PORTS_RowLeft, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+
+    ui_PORTS_RowDown = lv_img_create(ui_PORTS);
+    lv_img_set_src(ui_PORTS_RowDown, &ui_img_row_d_png);
+    lv_obj_set_width(ui_PORTS_RowDown, LV_SIZE_CONTENT);   /// 11
+    lv_obj_set_height(ui_PORTS_RowDown, LV_SIZE_CONTENT);    /// 11
+    lv_obj_set_x(ui_PORTS_RowDown, 59);
+    lv_obj_set_y(ui_PORTS_RowDown, 115);
+    lv_obj_add_flag(ui_PORTS_RowDown, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
+    lv_obj_clear_flag(ui_PORTS_RowDown, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+
+    ui_IO_RowRight1 = lv_img_create(ui_PORTS);
+    lv_img_set_src(ui_IO_RowRight1, &ui_img_row_r_png);
+    lv_obj_set_width(ui_IO_RowRight1, LV_SIZE_CONTENT);   /// 11
+    lv_obj_set_height(ui_IO_RowRight1, LV_SIZE_CONTENT);    /// 11
+    lv_obj_set_x(ui_IO_RowRight1, 113);
+    lv_obj_set_y(ui_IO_RowRight1, 115);
+    lv_obj_add_flag(ui_IO_RowRight1, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
+    lv_obj_clear_flag(ui_IO_RowRight1, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+
+    ui_PORTS_Image16 = lv_img_create(ui_PORTS);
+    lv_img_set_src(ui_PORTS_Image16, &ui_img_port_png);
+    lv_obj_set_width(ui_PORTS_Image16, LV_SIZE_CONTENT);   /// 21
+    lv_obj_set_height(ui_PORTS_Image16, LV_SIZE_CONTENT);    /// 16
+    lv_obj_set_x(ui_PORTS_Image16, -48);
+    lv_obj_set_y(ui_PORTS_Image16, -53);
+    lv_obj_set_align(ui_PORTS_Image16, LV_ALIGN_CENTER);
+    lv_obj_add_flag(ui_PORTS_Image16, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
+    lv_obj_clear_flag(ui_PORTS_Image16, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
 
 }
 
@@ -579,6 +754,8 @@ void ui2_init(void)
     lv_disp_set_theme(dispp, theme);
     ui_MOBILE_screen_init();
     ui_GPS_Screen_screen_init();
+    ui_WIFI_screen_init();
     ui_IO_screen_init();
+    ui_PORTS_screen_init();
     lv_disp_load_scr(ui_MOBILE);
 }

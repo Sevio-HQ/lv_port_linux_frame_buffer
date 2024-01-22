@@ -43,14 +43,17 @@ UI_GEN_SRC = \
     $(LVGL_DIR)/squareline/ui_helpers.c \
     $(LVGL_DIR)/squareline/ui_comp.c \
     $(LVGL_DIR)/squareline2/ui2.c \
-    $(LVGL_DIR)/squareline2/ui_img_gnss_png.c \
-    $(LVGL_DIR)/squareline2/ui_img_sim_png.c \
 	$(LVGL_DIR)/squareline2/ui_img_signal_0_png.c \
     $(LVGL_DIR)/squareline2/ui_img_signal_1_png.c \
     $(LVGL_DIR)/squareline2/ui_img_signal_2_png.c \
     $(LVGL_DIR)/squareline2/ui_img_signal_3_png.c \
     $(LVGL_DIR)/squareline2/ui_img_signal_4_png.c \
     $(LVGL_DIR)/squareline2/ui_img_signal_5_png.c \
+    $(LVGL_DIR)/squareline2/ui_img_sim_png.c \
+    $(LVGL_DIR)/squareline2/ui_img_gnss_png.c \
+	$(LVGL_DIR)/squareline2/ui_img_io_png.c \
+	$(LVGL_DIR)/squareline2/ui_img_port_png.c \
+	$(LVGL_DIR)/squareline2/ui_wifi_png.c \
     $(LVGL_DIR)/squareline/ui_font_dejavusans.c \
     $(LVGL_DIR)/squareline/ui_font_arialbd.c
 

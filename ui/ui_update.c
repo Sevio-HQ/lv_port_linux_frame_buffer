@@ -74,44 +74,53 @@ void uiMenu_init()
     uiMenuMap[UI_WANCONFIG] = ui_WANIPCONFIG;
     uiMenuMap[UI_LANCONFIG] = ui_LANIPCONFIG;
     uiMenuMap[UI_WLANCONFIG] = ui_WLANIPCONFIG;
+	uiMenuMap[UI_GSMCONFIG] = ui_MOBILE;
     uiMenuMap[UI_GPSCONFIG] = ui_GPS_Screen;
-    uiMenuMap[UI_GSMCONFIG] = ui_MOBILE;
+    uiMenuMap[UI_WIFICONFIG] = ui_WIFI;
 	uiMenuMap[UI_IOCONFIG] = ui_IO;
+	uiMenuMap[UI_PORTSCONFIG] = ui_PORTS;
 
-    uiMenu[UI_HOME].left = UI_HOME;
+    uiMenu[UI_HOME].left = UI_VPNSTATUS;
     uiMenu[UI_HOME].down = UI_VPNSTATUS;
     uiMenu[UI_HOME].rigth = UI_VPNSTATUS;
 
     uiMenu[UI_VPNSTATUS].left = UI_HOME;
-    uiMenu[UI_VPNSTATUS].down = UI_WANCONFIG;
+    uiMenu[UI_VPNSTATUS].down = UI_NONE;
     uiMenu[UI_VPNSTATUS].rigth = UI_WANCONFIG;
 
     uiMenu[UI_WANCONFIG].left = UI_VPNSTATUS;
-    uiMenu[UI_WANCONFIG].down = UI_LANCONFIG;
+    uiMenu[UI_WANCONFIG].down = UI_NONE;
     uiMenu[UI_WANCONFIG].rigth = UI_LANCONFIG;
 
     uiMenu[UI_LANCONFIG].left = UI_WANCONFIG;
-    uiMenu[UI_LANCONFIG].down = UI_WLANCONFIG;
-    uiMenu[UI_LANCONFIG].rigth = UI_WLANCONFIG;
+    uiMenu[UI_LANCONFIG].down = UI_NONE;
+    uiMenu[UI_LANCONFIG].rigth = UI_WIFICONFIG;
+
+    uiMenu[UI_WIFICONFIG].left = UI_LANCONFIG;
+    uiMenu[UI_WIFICONFIG].down = UI_WLANCONFIG;
+    uiMenu[UI_WIFICONFIG].rigth = UI_GSMCONFIG;
 
     uiMenu[UI_WLANCONFIG].left = UI_LANCONFIG;
-    uiMenu[UI_WLANCONFIG].down = UI_GPSCONFIG;
-    uiMenu[UI_WLANCONFIG].rigth = UI_GPSCONFIG;
+    uiMenu[UI_WLANCONFIG].down = UI_WIFICONFIG;
+    uiMenu[UI_WLANCONFIG].rigth = UI_GSMCONFIG;
 
-    uiMenu[UI_GPSCONFIG].left = UI_WLANCONFIG;
-    uiMenu[UI_GPSCONFIG].down = UI_GSMCONFIG;
-    uiMenu[UI_GPSCONFIG].rigth = UI_GSMCONFIG;
-    uiMenu[UI_GPSCONFIG].refresh = refreshGPS_ui;
-
-    uiMenu[UI_GSMCONFIG].left = UI_GPSCONFIG;
-    uiMenu[UI_GSMCONFIG].down = UI_NONE;
+    uiMenu[UI_GSMCONFIG].left = UI_WIFICONFIG;
+    uiMenu[UI_GSMCONFIG].down = UI_GPSCONFIG;
     uiMenu[UI_GSMCONFIG].rigth = UI_IOCONFIG;
     uiMenu[UI_GSMCONFIG].refresh = ui_gsm_update_ui;
 
-    uiMenu[UI_IOCONFIG].left = UI_LANCONFIG;
-    uiMenu[UI_IOCONFIG].down = UI_NONE;
-    uiMenu[UI_IOCONFIG].rigth = UI_NONE;
+    uiMenu[UI_GPSCONFIG].left = UI_WIFICONFIG;
+    uiMenu[UI_GPSCONFIG].down = UI_GSMCONFIG;
+    uiMenu[UI_GPSCONFIG].rigth = UI_IOCONFIG;
+    uiMenu[UI_GPSCONFIG].refresh = refreshGPS_ui;
 
+    uiMenu[UI_IOCONFIG].left = UI_GSMCONFIG;
+    uiMenu[UI_IOCONFIG].down = UI_NONE;
+    uiMenu[UI_IOCONFIG].rigth = UI_PORTSCONFIG;
+
+    uiMenu[UI_PORTSCONFIG].left = UI_IOCONFIG;
+    uiMenu[UI_PORTSCONFIG].down = UI_NONE;
+    uiMenu[UI_PORTSCONFIG].rigth = UI_NONE;
 }
 
 lv_obj_t * uiMenu_getCurrent()
