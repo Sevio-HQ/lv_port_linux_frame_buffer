@@ -13,6 +13,7 @@ extern "C" {
 #include "lvgl/lvgl.h"
 
 extern lv_obj_t * ui_MOBILE;
+extern lv_obj_t * ui_MOBILE_Logo;
 extern lv_obj_t * ui_MOBILE_PageLabel;
 extern lv_obj_t * ui_MOBILE_BarUp;
 extern lv_obj_t * ui_MOBILE_Status_label;
@@ -32,9 +33,9 @@ extern lv_obj_t * ui_MOBILE_BarDown;
 extern lv_obj_t * ui_MOBILE_RowLeft;
 extern lv_obj_t * ui_MOBILE_RowDown;
 extern lv_obj_t * ui_MOBILE_RowRight;
-extern lv_obj_t * ui_MOBILE_Image13;
 extern lv_obj_t * ui_GPS_Screen;
-extern lv_obj_t * ui_GPS_label;
+extern lv_obj_t * ui_GPS_PageLabel;
+extern lv_obj_t * ui_GPS_BarUp;
 extern lv_obj_t * ui_GPS_Panel3;
 extern lv_obj_t * ui_GPSLabel9;
 extern lv_obj_t * ui_GPS_Label12;
@@ -43,14 +44,19 @@ extern lv_obj_t * ui_GPSLabel2;
 extern lv_obj_t * ui_GPS_Label3;
 extern lv_obj_t * ui_GPS_Label10;
 extern lv_obj_t * ui_GPS_Label11;
-extern lv_obj_t * ui_GPS_Screen_Image3;
 extern lv_obj_t * ui_GPS_Latitude_label;
 extern lv_obj_t * ui_GPS_Longitude_label;
 extern lv_obj_t * ui_GPS_LastFix_label;
 extern lv_obj_t * ui_GPS_altitude_label;
 extern lv_obj_t * ui_GPS_altitude_label1;
+extern lv_obj_t * ui_GPS_BarDown;
+extern lv_obj_t * ui_GPS_RowLeft;
+extern lv_obj_t * ui_GPS_RowDown;
+extern lv_obj_t * ui_GPS_RowRight;
+extern lv_obj_t * ui_GPS_Screen_Image14;
 
 
+LV_IMG_DECLARE(ui_img_sim_png);    // assets\sim.png
 LV_IMG_DECLARE(ui_img_signal_0_png);    // assets\signal_0.png
 LV_IMG_DECLARE(ui_img_signal_1_png);    // assets\signal_1.png
 LV_IMG_DECLARE(ui_img_signal_2_png);    // assets\signal_2.png
@@ -60,8 +66,7 @@ LV_IMG_DECLARE(ui_img_signal_5_png);    // assets\signal_5.png
 LV_IMG_DECLARE(ui_img_row_l_png);    // assets\row_l.png
 LV_IMG_DECLARE(ui_img_row_d_png);    // assets\row_d.png
 LV_IMG_DECLARE(ui_img_row_r_png);    // assets\row_r.png
-LV_IMG_DECLARE(ui_img_sim_png);    // assets\sim.png
-LV_IMG_DECLARE(ui_img_gps_png);    // assets\gps.png
+LV_IMG_DECLARE(ui_img_gnss_png);    // assets\gnss.png
 
 
 LV_FONT_DECLARE(ui_font_arialbd);

@@ -43,7 +43,7 @@ UI_GEN_SRC = \
     $(LVGL_DIR)/squareline/ui_helpers.c \
     $(LVGL_DIR)/squareline/ui_comp.c \
     $(LVGL_DIR)/squareline2/ui2.c \
-    $(LVGL_DIR)/squareline2/ui_img_gps_png.c \
+    $(LVGL_DIR)/squareline2/ui_img_gnss_png.c \
     $(LVGL_DIR)/squareline2/ui_img_sim_png.c \
 	$(LVGL_DIR)/squareline2/ui_img_signal_0_png.c \
     $(LVGL_DIR)/squareline2/ui_img_signal_1_png.c \
