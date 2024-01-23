@@ -13,6 +13,7 @@ extern "C" {
 #include "lvgl/lvgl.h"
 
 extern lv_obj_t * ui_MOBILE;
+extern lv_obj_t * ui_MOBILE_logo;
 extern lv_obj_t * ui_MOBILE_page_label;
 extern lv_obj_t * ui_MOBILE_bar_up;
 extern lv_obj_t * ui_MOBILE_status_label;
@@ -32,7 +33,6 @@ extern lv_obj_t * ui_MOBILE_bar_down;
 extern lv_obj_t * ui_MOBILE_page_left;
 extern lv_obj_t * ui_MOBILE_page_down;
 extern lv_obj_t * ui_MOBILE_page_right;
-extern lv_obj_t * ui_MOBILE_Image1;
 extern lv_obj_t * ui_GPS;
 extern lv_obj_t * ui_GPS_logo;
 extern lv_obj_t * ui_GPS_page_label;
@@ -55,10 +55,11 @@ extern lv_obj_t * ui_GPS_page_left;
 extern lv_obj_t * ui_GPS_page_down;
 extern lv_obj_t * ui_GPS_page_right;
 extern lv_obj_t * ui_WIFI;
+extern lv_obj_t * ui_WIFI_logo;
 extern lv_obj_t * ui_WIFI_page_label;
 extern lv_obj_t * ui_WIFI_bar_up;
 extern lv_obj_t * ui_WIFI_status_label;
-extern lv_obj_t * ui_WIFI_Status_panel;
+extern lv_obj_t * ui_WIFI_status_panel;
 extern lv_obj_t * ui_WIFI_status_value;
 extern lv_obj_t * ui_WIFI_mode_label;
 extern lv_obj_t * ui_WIFI_mode_value;
@@ -73,7 +74,6 @@ extern lv_obj_t * ui_WIFI_signal5;
 extern lv_obj_t * ui_WIFI_bar_down;
 extern lv_obj_t * ui_WIFI_page_left;
 extern lv_obj_t * ui_WIFI_page_right;
-extern lv_obj_t * ui_WIFI_Image1;
 extern lv_obj_t * ui_IO;
 extern lv_obj_t * ui_IO_logo;
 extern lv_obj_t * ui_IO_page_label;
@@ -104,7 +104,7 @@ extern lv_obj_t * ui_PORTS_link_label;
 extern lv_obj_t * ui_PORTS_link_panel;
 extern lv_obj_t * ui_PORTS_link_value;
 extern lv_obj_t * ui_PORTS_negotiation_label;
-extern lv_obj_t * ui_PORTS_negotiation_Panel;
+extern lv_obj_t * ui_PORTS_negotiation_panel;
 extern lv_obj_t * ui_PORTS_negotiation_value;
 extern lv_obj_t * ui_PORTS_speed_label;
 extern lv_obj_t * ui_PORTS_speed_value;
@@ -114,6 +114,7 @@ extern lv_obj_t * ui_PORTS_page_down;
 extern lv_obj_t * ui_PORTS_page_right;
 
 
+LV_IMG_DECLARE(ui_img_sim_png);    // assets\sim.png
 LV_IMG_DECLARE(ui_img_no_signal_png);    // assets\no_signal.png
 LV_IMG_DECLARE(ui_img_signal_1_png);    // assets\signal_1.png
 LV_IMG_DECLARE(ui_img_signal_2_png);    // assets\signal_2.png
@@ -123,7 +124,6 @@ LV_IMG_DECLARE(ui_img_signal_5_png);    // assets\signal_5.png
 LV_IMG_DECLARE(ui_img_row_l_png);    // assets\row_l.png
 LV_IMG_DECLARE(ui_img_row_d_png);    // assets\row_d.png
 LV_IMG_DECLARE(ui_img_row_r_png);    // assets\row_r.png
-LV_IMG_DECLARE(ui_img_sim_png);    // assets\sim.png
 LV_IMG_DECLARE(ui_img_gnss_png);    // assets\gnss.png
 LV_IMG_DECLARE(ui_img_wifi_png);    // assets\wifi.png
 LV_IMG_DECLARE(ui_img_io_png);    // assets\io.png
