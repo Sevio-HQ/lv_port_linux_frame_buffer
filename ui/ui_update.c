@@ -383,7 +383,7 @@ static void timer_min_cb(lv_timer_t * timer)
         //readBoardValues();   
         readTempValues();
         //lv_label_set_text_fmt(ui_boardStatusLabel, "%sV / %sA / %s°C", voltage, current, _temp);
-        lv_label_set_text_fmt(ui_HOME_temperature_value, "%s °C", _temp);
+        lv_label_set_text_fmt(ui_HOME_temperature_value, "%s  °C", _temp);
         lv_obj_invalidate(timer->user_data);
     }
     
