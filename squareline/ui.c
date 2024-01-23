@@ -11,8 +11,6 @@ lv_obj_t * ui_HOME;
 lv_obj_t * ui_HOME_Logo;
 lv_obj_t * ui_HOME_servicetag;
 lv_obj_t * ui_HOME_temperature_value;
-lv_obj_t * ui_HOME_temperature_label;
-lv_obj_t * ui_HOME_temperature_degree_label;
 lv_obj_t * ui_HOME_uptime_value;
 lv_obj_t * ui_HOME_datetime_value;
 lv_obj_t * ui_VPNSTATUS;
@@ -125,34 +123,13 @@ void ui_HOME_screen_init(void)
     ui_HOME_temperature_value = lv_label_create(ui_HOME);
     lv_obj_set_width(ui_HOME_temperature_value, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_HOME_temperature_value, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_HOME_temperature_value, 45);
+    lv_obj_set_x(ui_HOME_temperature_value, 2);
     lv_obj_set_y(ui_HOME_temperature_value, 60);
-    lv_label_set_text(ui_HOME_temperature_value, "23.4");
+    lv_obj_set_align(ui_HOME_temperature_value, LV_ALIGN_TOP_MID);
+    lv_label_set_text(ui_HOME_temperature_value, "23.4 °C");
     lv_obj_set_style_text_color(ui_HOME_temperature_value, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_HOME_temperature_value, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_HOME_temperature_value, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
-
-    ui_HOME_temperature_label = lv_label_create(ui_HOME);
-    lv_obj_set_width(ui_HOME_temperature_label, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_HOME_temperature_label, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_HOME_temperature_label, -45);
-    lv_obj_set_y(ui_HOME_temperature_label, 60);
-    lv_obj_set_align(ui_HOME_temperature_label, LV_ALIGN_TOP_RIGHT);
-    lv_label_set_text(ui_HOME_temperature_label, "  C");
-    lv_obj_set_style_text_color(ui_HOME_temperature_label, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_opa(ui_HOME_temperature_label, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_HOME_temperature_label, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
-
-    ui_HOME_temperature_degree_label = lv_label_create(ui_HOME);
-    lv_obj_set_width(ui_HOME_temperature_degree_label, LV_SIZE_CONTENT);   /// 1
-    lv_obj_set_height(ui_HOME_temperature_degree_label, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_HOME_temperature_degree_label, -53);
-    lv_obj_set_y(ui_HOME_temperature_degree_label, 57);
-    lv_obj_set_align(ui_HOME_temperature_degree_label, LV_ALIGN_TOP_RIGHT);
-    lv_label_set_text(ui_HOME_temperature_degree_label, "°");
-    lv_obj_set_style_text_color(ui_HOME_temperature_degree_label, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_opa(ui_HOME_temperature_degree_label, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_text_font(ui_HOME_temperature_degree_label, &lv_font_montserrat_10, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_HOME_uptime_value = lv_label_create(ui_HOME);
     lv_obj_set_width(ui_HOME_uptime_value, LV_SIZE_CONTENT);   /// 1

@@ -1,7 +1,7 @@
 /*******************************************************************************
  * Size: 11 px
  * Bpp: 2
- * Opts: --bpp 2 --size 11 --font C:\Users\Stefano Bandi\Documents\GitHub\lv_port_linux_frame_buffer\sevio_ui_01\assets\fonts\DejaVuSans.ttf -o C:\Users\Stefano Bandi\Documents\GitHub\lv_port_linux_frame_buffer\sevio_ui_01\assets\fonts\ui_font_dejavusans.c --format lvgl -r 0x20-0x7f --no-compress --no-prefilter
+ * Opts: --bpp 2 --size 11 --font C:\Users\Stefano Bandi\Documents\GitHub\lv_port_linux_frame_buffer\sevio_ui_01\assets\fonts\DejaVuSans.ttf -o C:\Users\Stefano Bandi\Documents\GitHub\lv_port_linux_frame_buffer\sevio_ui_01\assets\fonts\ui_font_dejavusans.c --format lvgl -r 0x20-0x7f --symbols ° --no-compress --no-prefilter
  ******************************************************************************/
 
 #include "ui.h"
@@ -383,7 +383,10 @@ static LV_ATTRIBUTE_LARGE_CONST const uint8_t glyph_bitmap[] = {
     0xc0, 0x30, 0xc, 0x1d, 0x0,
 
     /* U+007E "~" */
-    0x0, 0x0, 0x7e, 0x8, 0x81, 0xf4, 0x0, 0x0
+    0x0, 0x0, 0x7e, 0x8, 0x81, 0xf4, 0x0, 0x0,
+
+    /* U+00B0 "°" */
+    0x28, 0x85, 0x85, 0x68
 };
 
 
@@ -487,7 +490,8 @@ static const lv_font_fmt_txt_glyph_dsc_t glyph_dsc[] = {
     {.bitmap_index = 1038, .adv_w = 112, .box_w = 5, .box_h = 10, .ofs_x = 1, .ofs_y = -2},
     {.bitmap_index = 1051, .adv_w = 59, .box_w = 2, .box_h = 11, .ofs_x = 1, .ofs_y = -3},
     {.bitmap_index = 1057, .adv_w = 112, .box_w = 5, .box_h = 10, .ofs_x = 1, .ofs_y = -2},
-    {.bitmap_index = 1070, .adv_w = 147, .box_w = 8, .box_h = 4, .ofs_x = 1, .ofs_y = 2}
+    {.bitmap_index = 1070, .adv_w = 147, .box_w = 8, .box_h = 4, .ofs_x = 1, .ofs_y = 2},
+    {.bitmap_index = 1078, .adv_w = 88, .box_w = 4, .box_h = 4, .ofs_x = 1, .ofs_y = 4}
 };
 
 /*---------------------
@@ -501,6 +505,10 @@ static const lv_font_fmt_txt_cmap_t cmaps[] =
 {
     {
         .range_start = 32, .range_length = 95, .glyph_id_start = 1,
+        .unicode_list = NULL, .glyph_id_ofs_list = NULL, .list_length = 0, .type = LV_FONT_FMT_TXT_CMAP_FORMAT0_TINY
+    },
+    {
+        .range_start = 176, .range_length = 1, .glyph_id_start = 96,
         .unicode_list = NULL, .glyph_id_ofs_list = NULL, .list_length = 0, .type = LV_FONT_FMT_TXT_CMAP_FORMAT0_TINY
     }
 };
@@ -523,7 +531,7 @@ static lv_font_fmt_txt_dsc_t font_dsc = {
     .cmaps = cmaps,
     .kern_dsc = NULL,
     .kern_scale = 0,
-    .cmap_num = 1,
+    .cmap_num = 2,
     .bpp = 2,
     .kern_classes = 0,
     .bitmap_format = 0,
