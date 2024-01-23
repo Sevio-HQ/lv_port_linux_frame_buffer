@@ -50,7 +50,6 @@ lv_obj_t * ui_GPS_page_left;
 lv_obj_t * ui_GPS_page_down;
 lv_obj_t * ui_GPS_page_right;
 lv_obj_t * ui_WIFI;
-lv_obj_t * ui_WIFI_logo;
 lv_obj_t * ui_WIFI_page_label;
 lv_obj_t * ui_WIFI_bar_up;
 lv_obj_t * ui_WIFI_status_label;
@@ -69,6 +68,7 @@ lv_obj_t * ui_WIFI_signal5;
 lv_obj_t * ui_WIFI_bar_down;
 lv_obj_t * ui_WIFI_page_left;
 lv_obj_t * ui_WIFI_page_right;
+lv_obj_t * ui_WIFI_Image1;
 lv_obj_t * ui_IO;
 lv_obj_t * ui_IO_logo;
 lv_obj_t * ui_IO_page_label;
@@ -558,16 +558,6 @@ void ui_WIFI_screen_init(void)
     lv_obj_set_style_bg_color(ui_WIFI, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_opa(ui_WIFI, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_WIFI_logo = lv_img_create(ui_WIFI);
-    lv_img_set_src(ui_WIFI_logo, &ui_img_wifi_png);
-    lv_obj_set_width(ui_WIFI_logo, LV_SIZE_CONTENT);   /// 21
-    lv_obj_set_height(ui_WIFI_logo, LV_SIZE_CONTENT);    /// 16
-    lv_obj_set_x(ui_WIFI_logo, -48);
-    lv_obj_set_y(ui_WIFI_logo, -53);
-    lv_obj_set_align(ui_WIFI_logo, LV_ALIGN_CENTER);
-    lv_obj_add_flag(ui_WIFI_logo, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
-    lv_obj_clear_flag(ui_WIFI_logo, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
-
     ui_WIFI_page_label = lv_label_create(ui_WIFI);
     lv_obj_set_width(ui_WIFI_page_label, 102);
     lv_obj_set_height(ui_WIFI_page_label, 18);
@@ -753,6 +743,16 @@ void ui_WIFI_screen_init(void)
     lv_obj_set_y(ui_WIFI_page_right, 115);
     lv_obj_add_flag(ui_WIFI_page_right, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
     lv_obj_clear_flag(ui_WIFI_page_right, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+
+    ui_WIFI_Image1 = lv_img_create(ui_WIFI);
+    lv_img_set_src(ui_WIFI_Image1, &ui_img_wifi_png);
+    lv_obj_set_width(ui_WIFI_Image1, LV_SIZE_CONTENT);   /// 17
+    lv_obj_set_height(ui_WIFI_Image1, LV_SIZE_CONTENT);    /// 14
+    lv_obj_set_x(ui_WIFI_Image1, -49);
+    lv_obj_set_y(ui_WIFI_Image1, -53);
+    lv_obj_set_align(ui_WIFI_Image1, LV_ALIGN_CENTER);
+    lv_obj_add_flag(ui_WIFI_Image1, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
+    lv_obj_clear_flag(ui_WIFI_Image1, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
 
 }
 void ui_IO_screen_init(void)
