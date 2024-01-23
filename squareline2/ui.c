@@ -27,7 +27,7 @@ lv_obj_t * ui_MOBILE_bar_down;
 lv_obj_t * ui_MOBILE_page_left;
 lv_obj_t * ui_MOBILE_page_down;
 lv_obj_t * ui_MOBILE_page_right;
-lv_obj_t * ui_MOBILE_Image3;
+lv_obj_t * ui_MOBILE_Image1;
 lv_obj_t * ui_GPS;
 lv_obj_t * ui_GPS_logo;
 lv_obj_t * ui_GPS_page_label;
@@ -323,15 +323,15 @@ void ui_MOBILE_screen_init(void)
     lv_obj_add_flag(ui_MOBILE_page_right, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
     lv_obj_clear_flag(ui_MOBILE_page_right, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
 
-    ui_MOBILE_Image3 = lv_img_create(ui_MOBILE);
-    lv_img_set_src(ui_MOBILE_Image3, &ui_img_sim2_png);
-    lv_obj_set_width(ui_MOBILE_Image3, LV_SIZE_CONTENT);   /// 21
-    lv_obj_set_height(ui_MOBILE_Image3, LV_SIZE_CONTENT);    /// 13
-    lv_obj_set_x(ui_MOBILE_Image3, -50);
-    lv_obj_set_y(ui_MOBILE_Image3, -53);
-    lv_obj_set_align(ui_MOBILE_Image3, LV_ALIGN_CENTER);
-    lv_obj_add_flag(ui_MOBILE_Image3, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
-    lv_obj_clear_flag(ui_MOBILE_Image3, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+    ui_MOBILE_Image1 = lv_img_create(ui_MOBILE);
+    lv_img_set_src(ui_MOBILE_Image1, &ui_img_sim_png);
+    lv_obj_set_width(ui_MOBILE_Image1, LV_SIZE_CONTENT);   /// 21
+    lv_obj_set_height(ui_MOBILE_Image1, LV_SIZE_CONTENT);    /// 13
+    lv_obj_set_x(ui_MOBILE_Image1, -50);
+    lv_obj_set_y(ui_MOBILE_Image1, -53);
+    lv_obj_set_align(ui_MOBILE_Image1, LV_ALIGN_CENTER);
+    lv_obj_add_flag(ui_MOBILE_Image1, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
+    lv_obj_clear_flag(ui_MOBILE_Image1, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
 
 }
 void ui_GPS_screen_init(void)

@@ -32,7 +32,7 @@ extern lv_obj_t * ui_MOBILE_bar_down;
 extern lv_obj_t * ui_MOBILE_page_left;
 extern lv_obj_t * ui_MOBILE_page_down;
 extern lv_obj_t * ui_MOBILE_page_right;
-extern lv_obj_t * ui_MOBILE_Image3;
+extern lv_obj_t * ui_MOBILE_Image1;
 extern lv_obj_t * ui_GPS;
 extern lv_obj_t * ui_GPS_logo;
 extern lv_obj_t * ui_GPS_page_label;
@@ -123,7 +123,7 @@ LV_IMG_DECLARE(ui_img_signal_5_png);    // assets\signal_5.png
 LV_IMG_DECLARE(ui_img_row_l_png);    // assets\row_l.png
 LV_IMG_DECLARE(ui_img_row_d_png);    // assets\row_d.png
 LV_IMG_DECLARE(ui_img_row_r_png);    // assets\row_r.png
-LV_IMG_DECLARE(ui_img_sim2_png);    // assets\sim2.png
+LV_IMG_DECLARE(ui_img_sim_png);    // assets\sim.png
 LV_IMG_DECLARE(ui_img_gnss_png);    // assets\gnss.png
 LV_IMG_DECLARE(ui_img_wifi_png);    // assets\wifi.png
 LV_IMG_DECLARE(ui_img_io_png);    // assets\io.png
