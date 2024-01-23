@@ -8,7 +8,6 @@
 
 ///////////////////// VARIABLES ////////////////////
 lv_obj_t * ui_MOBILE;
-lv_obj_t * ui_MOBILE_logo;
 lv_obj_t * ui_MOBILE_page_label;
 lv_obj_t * ui_MOBILE_bar_up;
 lv_obj_t * ui_MOBILE_status_label;
@@ -28,6 +27,7 @@ lv_obj_t * ui_MOBILE_bar_down;
 lv_obj_t * ui_MOBILE_page_left;
 lv_obj_t * ui_MOBILE_page_down;
 lv_obj_t * ui_MOBILE_page_right;
+lv_obj_t * ui_MOBILE_Image3;
 lv_obj_t * ui_GPS;
 lv_obj_t * ui_GPS_logo;
 lv_obj_t * ui_GPS_page_label;
@@ -128,16 +128,6 @@ void ui_MOBILE_screen_init(void)
     lv_obj_set_style_bg_color(ui_MOBILE, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_bg_opa(ui_MOBILE, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_MOBILE_logo = lv_img_create(ui_MOBILE);
-    lv_img_set_src(ui_MOBILE_logo, &ui_img_sim_png);
-    lv_obj_set_width(ui_MOBILE_logo, LV_SIZE_CONTENT);   /// 21
-    lv_obj_set_height(ui_MOBILE_logo, LV_SIZE_CONTENT);    /// 13
-    lv_obj_set_x(ui_MOBILE_logo, -49);
-    lv_obj_set_y(ui_MOBILE_logo, -53);
-    lv_obj_set_align(ui_MOBILE_logo, LV_ALIGN_CENTER);
-    lv_obj_add_flag(ui_MOBILE_logo, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
-    lv_obj_clear_flag(ui_MOBILE_logo, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
-
     ui_MOBILE_page_label = lv_label_create(ui_MOBILE);
     lv_obj_set_width(ui_MOBILE_page_label, 102);
     lv_obj_set_height(ui_MOBILE_page_label, 18);
@@ -235,7 +225,7 @@ void ui_MOBILE_screen_init(void)
     lv_obj_set_style_text_font(ui_MOBILE_apn_value, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_MOBILE_no_signal = lv_img_create(ui_MOBILE);
-    lv_img_set_src(ui_MOBILE_no_signal, &ui_img_signal_0_png);
+    lv_img_set_src(ui_MOBILE_no_signal, &ui_img_no_signal_png);
     lv_obj_set_width(ui_MOBILE_no_signal, LV_SIZE_CONTENT);   /// 40
     lv_obj_set_height(ui_MOBILE_no_signal, LV_SIZE_CONTENT);    /// 16
     lv_obj_set_x(ui_MOBILE_no_signal, 39);
@@ -332,6 +322,16 @@ void ui_MOBILE_screen_init(void)
     lv_obj_set_y(ui_MOBILE_page_right, 115);
     lv_obj_add_flag(ui_MOBILE_page_right, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
     lv_obj_clear_flag(ui_MOBILE_page_right, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
+
+    ui_MOBILE_Image3 = lv_img_create(ui_MOBILE);
+    lv_img_set_src(ui_MOBILE_Image3, &ui_img_sim2_png);
+    lv_obj_set_width(ui_MOBILE_Image3, LV_SIZE_CONTENT);   /// 21
+    lv_obj_set_height(ui_MOBILE_Image3, LV_SIZE_CONTENT);    /// 13
+    lv_obj_set_x(ui_MOBILE_Image3, -50);
+    lv_obj_set_y(ui_MOBILE_Image3, -53);
+    lv_obj_set_align(ui_MOBILE_Image3, LV_ALIGN_CENTER);
+    lv_obj_add_flag(ui_MOBILE_Image3, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
+    lv_obj_clear_flag(ui_MOBILE_Image3, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
 
 }
 void ui_GPS_screen_init(void)
@@ -665,7 +665,7 @@ void ui_WIFI_screen_init(void)
     lv_obj_set_style_text_font(ui_WIFI_ssid__value, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
 
     ui_WIFI_no_signal = lv_img_create(ui_WIFI);
-    lv_img_set_src(ui_WIFI_no_signal, &ui_img_signal_0_png);
+    lv_img_set_src(ui_WIFI_no_signal, &ui_img_no_signal_png);
     lv_obj_set_width(ui_WIFI_no_signal, LV_SIZE_CONTENT);   /// 40
     lv_obj_set_height(ui_WIFI_no_signal, LV_SIZE_CONTENT);    /// 16
     lv_obj_set_x(ui_WIFI_no_signal, 39);
@@ -980,11 +980,11 @@ void ui_PORTS_screen_init(void)
     lv_obj_clear_flag(ui_PORTS_logo, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
 
     ui_PORTS_page_label = lv_label_create(ui_PORTS);
-    lv_obj_set_width(ui_PORTS_page_label, 102);
+    lv_obj_set_width(ui_PORTS_page_label, 88);
     lv_obj_set_height(ui_PORTS_page_label, 18);
-    lv_obj_set_x(ui_PORTS_page_label, 29);
+    lv_obj_set_x(ui_PORTS_page_label, 31);
     lv_obj_set_y(ui_PORTS_page_label, 4);
-    lv_label_set_text(ui_PORTS_page_label, "PORT XXX");
+    lv_label_set_text(ui_PORTS_page_label, "WAN PORT");
     lv_obj_set_style_text_color(ui_PORTS_page_label, lv_color_hex(0xB4B2B4), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_PORTS_page_label, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_align(ui_PORTS_page_label, LV_TEXT_ALIGN_LEFT, LV_PART_MAIN | LV_STATE_DEFAULT);

@@ -13,7 +13,6 @@ extern "C" {
 #include "lvgl/lvgl.h"
 
 extern lv_obj_t * ui_MOBILE;
-extern lv_obj_t * ui_MOBILE_logo;
 extern lv_obj_t * ui_MOBILE_page_label;
 extern lv_obj_t * ui_MOBILE_bar_up;
 extern lv_obj_t * ui_MOBILE_status_label;
@@ -33,6 +32,7 @@ extern lv_obj_t * ui_MOBILE_bar_down;
 extern lv_obj_t * ui_MOBILE_page_left;
 extern lv_obj_t * ui_MOBILE_page_down;
 extern lv_obj_t * ui_MOBILE_page_right;
+extern lv_obj_t * ui_MOBILE_Image3;
 extern lv_obj_t * ui_GPS;
 extern lv_obj_t * ui_GPS_logo;
 extern lv_obj_t * ui_GPS_page_label;
@@ -114,8 +114,7 @@ extern lv_obj_t * ui_PORTS_page_down;
 extern lv_obj_t * ui_PORTS_page_right;
 
 
-LV_IMG_DECLARE(ui_img_sim_png);    // assets\sim.png
-LV_IMG_DECLARE(ui_img_signal_0_png);    // assets\signal_0.png
+LV_IMG_DECLARE(ui_img_no_signal_png);    // assets\no_signal.png
 LV_IMG_DECLARE(ui_img_signal_1_png);    // assets\signal_1.png
 LV_IMG_DECLARE(ui_img_signal_2_png);    // assets\signal_2.png
 LV_IMG_DECLARE(ui_img_signal_3_png);    // assets\signal_3.png
@@ -124,6 +123,7 @@ LV_IMG_DECLARE(ui_img_signal_5_png);    // assets\signal_5.png
 LV_IMG_DECLARE(ui_img_row_l_png);    // assets\row_l.png
 LV_IMG_DECLARE(ui_img_row_d_png);    // assets\row_d.png
 LV_IMG_DECLARE(ui_img_row_r_png);    // assets\row_r.png
+LV_IMG_DECLARE(ui_img_sim2_png);    // assets\sim2.png
 LV_IMG_DECLARE(ui_img_gnss_png);    // assets\gnss.png
 LV_IMG_DECLARE(ui_img_wifi_png);    // assets\wifi.png
 LV_IMG_DECLARE(ui_img_io_png);    // assets\io.png
@@ -134,7 +134,7 @@ LV_FONT_DECLARE(ui_font_arialbd);
 LV_FONT_DECLARE(ui_font_dejavusans);
 
 
-void ui_init(void);
+void ui2_init(void);
 
 #ifdef __cplusplus
 } /*extern "C"*/
