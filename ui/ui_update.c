@@ -403,6 +403,7 @@ static void timer_min_cb(lv_timer_t * timer)
         // go to home Menu
         goToHomeMenu();
         printf("Timer expired goto Home Menu\r\n");
+        resetScreenSaverTimer();
     }else{
         incScreenSaverTimer();
     }
