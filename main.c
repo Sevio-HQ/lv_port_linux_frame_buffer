@@ -100,6 +100,8 @@ void kbdev_read(lv_indev_drv_t * drv, lv_indev_data_t * data)
         LV_LOG_INFO("%s: in.type:%d drv.type:%d code:%d", __FILE__, in.type, drv->type, in.code);
         if(in.type == EV_KEY) {
             if(drv->type == LV_INDEV_TYPE_KEYPAD) {
+                // if any key is pressed reset timer to go in home menu
+                resetScreenSaverTimer();
                 switch(in.code) {
                     case BTN_2:
                     case KEY_LEFT:

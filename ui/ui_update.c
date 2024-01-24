@@ -170,6 +170,12 @@ void uiMenu_load()
     startUiRefresh();
 }
 
+void goToHomeMenu()
+{
+    menuIndex = UI_HOME;
+    uiMenu_load();
+}
+
 void floatToStr(uint8_t *out, float x,int decimalPoint)
 {
     uint16_t absval = fabs(x);
@@ -337,6 +343,24 @@ void updateWwanConfig(bool _ifup, const char* _ip, unsigned int _mask, const cha
     else wwan_up = false;
 }
 
+
+static int screenSaverTimer = 0;
+const int TIMER_EXPIRED_VALUE = 5;
+void resetScreenSaverTimer()
+{
+    screenSaverTimer = 0;
+}
+
+void incScreenSaverTimer()
+{
+    screenSaverTimer++;
+}
+
+bool isScreenSaverrTimerExp()
+{
+    return (screenSaverTimer == TIMER_EXPIRED_VALUE);
+}
+
 static int count = 0;
 
 static void timer_sec_cb(lv_timer_t * timer)
@@ -374,6 +398,15 @@ static void timer_sec_cb(lv_timer_t * timer)
 
 static void timer_min_cb(lv_timer_t * timer)
 {
+    if (isScreenSaverrTimerExp())
+    {
+        // go to home Menu
+        goToHomeMenu();
+        printf("Timer expired goto Home Menu\r\n");
+    }else{
+        incScreenSaverTimer();
+    }
+
     if ((menuIndex == UI_HOME)||(_ui_updater_init))
     {
         printLocalTime();

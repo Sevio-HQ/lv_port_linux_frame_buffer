@@ -15,4 +15,6 @@ void uiMenu_down();
 
 void uiMenu_load();
 
+void resetScreenSaverTimer();
+
 #endif
