@@ -134,7 +134,7 @@ LV_FONT_DECLARE( ui_font_arialbd);
 LV_FONT_DECLARE( ui_font_dejavusans);
 
 
-void ui_init(void);
+void ui2_init(void);
 
 #ifdef __cplusplus
 } /*extern "C"*/

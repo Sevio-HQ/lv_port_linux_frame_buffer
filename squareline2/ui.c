@@ -1168,7 +1168,7 @@ lv_obj_clear_flag( ui_PORTS_page_right, LV_OBJ_FLAG_SCROLLABLE );    /// Flags
 
 }
 
-void ui_init( void )
+void ui2_init( void )
 {LV_EVENT_GET_COMP_CHILD = lv_event_register_id();
 
 lv_disp_t *dispp = lv_disp_get_default();
