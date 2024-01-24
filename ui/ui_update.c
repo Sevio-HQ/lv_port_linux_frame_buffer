@@ -68,6 +68,13 @@ tUiMenuIndex menuIndex = UI_HOME;
 
 void getGpsData();
 bool gpsDataInit();
+bool isGpsGsmPresent(void);
+
+void updateUiMenuNoGpsGsm(void)
+{
+    uiMenu[UI_PORTSCONFIG].rigth = UI_HOME;
+    uiMenu[UI_HOME].left = UI_PORTSCONFIG;
+}
 
 void uiMenu_init()
 {
@@ -123,6 +130,8 @@ void uiMenu_init()
     uiMenu[UI_GPSCONFIG].down = UI_GSMCONFIG;
     uiMenu[UI_GPSCONFIG].rigth = UI_HOME;
     uiMenu[UI_GPSCONFIG].refresh = refreshGPS_ui;
+
+    if (!gpsDataInit())  updateUiMenuNoGpsGsm();
 }
 
 lv_obj_t * uiMenu_getCurrent()

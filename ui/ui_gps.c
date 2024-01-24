@@ -3,6 +3,7 @@
 #include "lvgl/lvgl.h"
 #include "ui2.h"
 #include "time.h"
+#include "ui_update.h"
 
 static struct gps_data_t gpsdata;
 static struct fixsource_t source;
@@ -21,6 +22,13 @@ typedef struct myGpsData {
     double  alt;
     int     nr_sat;
 }tMyGpsData;
+
+gpsGsmPresence = 0;
+
+bool isGpsGsmPresent()
+{
+    return (gpsGsmPresence != 0);
+}
 
 static void default_lcd()
 {
@@ -106,7 +114,11 @@ bool gpsDataInit()
     if (gps_open(source.server, source.port, &gpsdata) != 0) {
         LV_LOG_ERROR("Cannot open gps source\n");
         default_lcd();
+        gpsGsmPresence = 0;
+        updateUiMenuNoGpsGsm();
         return false;
+    }else{
+        gpsGsmPresence = 1;
     }
 
     /* Here's where updates go. */
