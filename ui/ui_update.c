@@ -20,6 +20,7 @@
 #define ADC_CH_CURRENT  5
 #define MAX_FLOAT_STR_SIZE 5
 #define PERIODIC_TIMER_UPDATE 5
+#define MAX_NUM_PORTS 5
 
 uint8_t _temp[MAX_FLOAT_STR_SIZE]="0.0";
 uint8_t  voltage[MAX_FLOAT_STR_SIZE]="0.0";
@@ -65,6 +66,7 @@ typedef struct sUiMenu {
 tUiMenu uiMenu[MAX_UI_MENU] = { };
 lv_obj_t *  uiMenuMap[MAX_UI_MENU] = { };
 tUiMenuIndex menuIndex = UI_HOME;
+tUiMenuIndex prev_menuIndex = UI_NONE;
 
 void getGpsData();
 bool gpsDataInit();
@@ -74,6 +76,29 @@ void updateUiMenuNoGpsGsm(void)
 {
     uiMenu[UI_PORTSCONFIG].rigth = UI_HOME;
     uiMenu[UI_HOME].left = UI_PORTSCONFIG;
+}
+
+static int ports_index = 0;
+const char* PORTS_LABEL[] = {"WAN", "LAN1", "LAN2", "LAN3", "LAN4", "LAN5"};
+
+int ui_ports_refresh_ui()
+{
+    if ((prev_menuIndex != UI_PORTSCONFIG) && (menuIndex == UI_PORTSCONFIG))
+    {
+        // enter in the Prots config menu. Reset to first port
+        ports_index = 0;
+    }else if (((prev_menuIndex == UI_PORTSCONFIG) && (menuIndex == UI_PORTSCONFIG)))
+    {
+        if (ports_index < MAX_NUM_PORTS)
+            ports_index++;
+        else    
+            ports_index = 0;
+    }
+    lv_label_set_text(ui_PORTS_page_label, PORTS_LABEL[ports_index]);
+    // update ports status and data
+    // TODO
+    
+    return 0;
 }
 
 void uiMenu_init()
@@ -118,8 +143,9 @@ void uiMenu_init()
     uiMenu[UI_IOCONFIG].rigth = UI_PORTSCONFIG;
 
     uiMenu[UI_PORTSCONFIG].left = UI_IOCONFIG;
-    uiMenu[UI_PORTSCONFIG].down = UI_NONE;
+    uiMenu[UI_PORTSCONFIG].down = UI_PORTSCONFIG;
     uiMenu[UI_PORTSCONFIG].rigth = UI_GSMCONFIG;
+    uiMenu[UI_PORTSCONFIG].refresh = ui_ports_refresh_ui;
 	
     uiMenu[UI_GSMCONFIG].left = UI_PORTSCONFIG;
     uiMenu[UI_GSMCONFIG].down = UI_GPSCONFIG;
@@ -150,6 +176,7 @@ void timer_refresh_cb()
 void uiMenu_right()
 {
     if (uiMenu[menuIndex].rigth != UI_NONE){
+        prev_menuIndex = menuIndex;
         menuIndex = uiMenu[menuIndex].rigth;
     }
 }
@@ -157,6 +184,7 @@ void uiMenu_right()
 void uiMenu_left()
 {
     if (uiMenu[menuIndex].left != UI_NONE){
+        prev_menuIndex = menuIndex;
         menuIndex = uiMenu[menuIndex].left;
     }
 }
@@ -164,6 +192,7 @@ void uiMenu_left()
 void uiMenu_down()
 {
     if (uiMenu[menuIndex].down != UI_NONE){
+        prev_menuIndex = menuIndex;
         menuIndex = uiMenu[menuIndex].down;
     }
 }
