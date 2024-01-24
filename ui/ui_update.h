@@ -1,20 +1,20 @@
 #ifndef UI_UPDATE_H
 #define UI_UPDATE_H
 
-void ui_updater_init();
+void ui_updater_init(void);
 
-void uiMenu_init();
+void uiMenu_init(void);
 
 lv_obj_t * uiMenu_getCurrent();
 
-void uiMenu_right();
+void uiMenu_right(void);
 
-void uiMenu_left();
+void uiMenu_left(void);
 
-void uiMenu_down();
+void uiMenu_down(void);
 
-void uiMenu_load();
+void uiMenu_load(void);
 
-void resetScreenSaverTimer();
+void resetScreenSaverTimer(void);
 
 #endif
