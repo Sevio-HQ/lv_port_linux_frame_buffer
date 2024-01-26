@@ -119,6 +119,63 @@ static bool ubus_interface_status(const char* name)
 	return true;
 }
 
+static const struct blobmsg_policy iwinfo_policy[] = {
+	[IWINFO_SSID] = {.name = "ssid", .type = BLOBMSG_TYPE_STRING},
+	[IWINFO_BSSID] = {.name = "bssid", .type = BLOBMSG_TYPE_STRING},
+	[IWINFO_MODE] = {.name = "mode", .type = BLOBMSG_TYPE_STRING},
+	[IWINFO_CH] = {.name = "channel", .type = BLOBMSG_TYPE_INT32},
+};
+
+
+/*** generic result callback: just copies msg to last_result_msg ***/
+
+static void ubus_network_device_result_cb	__attribute__((unused)) struct ubus_request* req,
+						   					__attribute__((unused)) int type,
+						   					struct blob_attr* msg)
+{
+	if (!msg) {
+		return;
+	}
+	
+	static const struct blobmsg_policy policy = { "up", BLOBMSG_TYPE_STRING };
+	struct blob_attr *cur;
+
+	blobmsg_parse(&policy, 1, &cur, blob_data(msg), blob_len(msg));
+	if (cur)
+		
+		bool deviceStatusUp = (strcmp(blobmsg_get_string(cur), "up") == 0);
+		*req->priv = deviceStatusUp;
+		printf("Received status up:%s %d", blobmsg_get_string(cur), deviceStatusUp);
+	}
+}
+
+static bool ubus_network_device_status(const char* name, void* priv)
+{
+	uint32_t id;
+	int ret;
+
+	char idstr[32];
+
+	ret = snprintf(idstr, sizeof(idstr), "network.device status '{ "name" : ""%s"" }' ", name);
+	if (ret <= 0 || (unsigned int)ret >= sizeof(idstr)) { // error or truncated
+		return false;
+	}
+
+	ret = ubus_lookup_id(ctx, netowrk.device, &id);
+	if (ret) {
+		return false;
+	}
+
+	ret = ubus_invoke(ctx, id, idstr, NULL, ubus_network_device_result_cb, priv,
+					  UBUS_TIMEOUT);
+	if (ret < 0) {
+		return false;
+	}
+
+	// client needs to free(last_result_msg);
+	return true;
+}
+
 /*
  * checks interface is up and default route goes thru it
  *
@@ -303,13 +360,40 @@ int updateInterfaceStatus(const char* iface, ubus_gui_update_handler_t cb )
     #endif
 }
 
-#else
+int updateVpnStatus(ubus_gui_update_vpnstatus_handler_t cb )
+{
+	bool eth0_up = false, wlan0_up = false, wwan0_up = false;
+	ubus_network_device_status("eth0", (void*)&eth0_up);
+	ubus_network_device_status("wlan0", (void*)&wlan0_up);
+	ubus_network_device_status("wwan0", (void*)&wwan0_up);
 
+	bool _uplink = eth0_up | wlan0_up | wwan0_up;
+	cb(_uplink, randomState(), randomState(), randomState(), randomState());
+	return 0;
+}
+
+#else
+#include "stdlib.h"
+#include "stdio.h"
 #include "ubus.h"
+
 // Stub functions
 
 int updateInterfaceStatus(const char* iface, ubus_gui_update_handler_t cb )
 {
+	return 0;
+}
+
+bool randomState()
+{
+	int num = rand();
+	if (num < RAND_MAX/2) return false;
+	return true;
+}
+
+int updateVpnStatus(ubus_gui_update_vpnstatus_handler_t cb )
+{
+	cb(randomState(), randomState(), randomState(), randomState(), randomState());
 	return 0;
 }
 

@@ -97,7 +97,7 @@ int ui_ports_refresh_ui()
     lv_label_set_text(ui_PORTS_page_label, PORTS_LABEL[ports_index]);
     // update ports status and data
     // TODO
-    
+
     return 0;
 }
 
@@ -381,6 +381,50 @@ void updateWwanConfig(bool _ifup, const char* _ip, unsigned int _mask, const cha
     else wwan_up = false;
 }
 
+void updateVpnStatusUI(bool _uplink, bool _ipAddr, bool _gw, bool _internet, bool _vpnPorts)
+{
+    printf("_uplink:%d, _ipAddr:%d, _gw:%d, _internet:%d, _vpnPorts:%d\r\n", _uplink, _ipAddr, _gw, _internet, _vpnPorts);
+    if (_uplink) 
+    {
+        lv_obj_clear_flag(ui_VPNSTATUS_uplink_pass, LV_OBJ_FLAG_HIDDEN);
+        lv_obj_add_flag(ui_VPNSTATUS_uplink_fail, LV_OBJ_FLAG_HIDDEN); 
+    }else{
+        lv_obj_add_flag(ui_VPNSTATUS_uplink_pass, LV_OBJ_FLAG_HIDDEN);
+        lv_obj_clear_flag(ui_VPNSTATUS_uplink_fail, LV_OBJ_FLAG_HIDDEN); 
+    }
+    if (_ipAddr) 
+    {
+        lv_obj_clear_flag(ui_VPNSTATUS_ip_pass, LV_OBJ_FLAG_HIDDEN);
+        lv_obj_add_flag(ui_VPNSTATUS_ip_fail, LV_OBJ_FLAG_HIDDEN); 
+    }else{
+        lv_obj_add_flag(ui_VPNSTATUS_ip_pass, LV_OBJ_FLAG_HIDDEN);
+        lv_obj_clear_flag(ui_VPNSTATUS_ip_fail, LV_OBJ_FLAG_HIDDEN); 
+    }
+    if (_gw) 
+    {
+        lv_obj_clear_flag(ui_VPNSTATUS_gateway_pass, LV_OBJ_FLAG_HIDDEN);
+        lv_obj_add_flag(ui_VPNSTATUS_gateway_fail, LV_OBJ_FLAG_HIDDEN); 
+    }else{
+        lv_obj_add_flag(ui_VPNSTATUS_gateway_pass, LV_OBJ_FLAG_HIDDEN);
+        lv_obj_clear_flag(ui_VPNSTATUS_gateway_fail, LV_OBJ_FLAG_HIDDEN); 
+    }
+    if (_internet) 
+    {
+        lv_obj_clear_flag(ui_VPNSTATUS_internet_pass, LV_OBJ_FLAG_HIDDEN);
+        lv_obj_add_flag(ui_VPNSTATUS_internet_fail, LV_OBJ_FLAG_HIDDEN); 
+    }else{
+        lv_obj_add_flag(ui_VPNSTATUS_internet_pass, LV_OBJ_FLAG_HIDDEN);
+        lv_obj_clear_flag(ui_VPNSTATUS_internet_fail, LV_OBJ_FLAG_HIDDEN); 
+    }
+    if (_vpnPorts) 
+    {
+        lv_obj_clear_flag(ui_VPNSTATUS_vpn_pass, LV_OBJ_FLAG_HIDDEN);
+        lv_obj_add_flag(ui_VPNSTATUS_vpn_fail, LV_OBJ_FLAG_HIDDEN); 
+    }else{
+        lv_obj_add_flag(ui_VPNSTATUS_vpn_pass, LV_OBJ_FLAG_HIDDEN);
+        lv_obj_clear_flag(ui_VPNSTATUS_vpn_fail, LV_OBJ_FLAG_HIDDEN); 
+    }
+}
 
 static int screenSaverTimer = 0;
 const int TIMER_EXPIRED_VALUE = 5;
@@ -405,6 +449,7 @@ static void timer_sec_cb(lv_timer_t * timer)
 {
     if ((++count > PERIODIC_TIMER_UPDATE)||(_ui_updater_init))
     {
+        printf("Periodic update menuIndex:%d init:%d\r\n", menuIndex, _ui_updater_init);
         if ((menuIndex == UI_WANCONFIG)||(_ui_updater_init))
         {
             updateInterfaceStatus("wan", updateWanConfig);
@@ -415,10 +460,10 @@ static void timer_sec_cb(lv_timer_t * timer)
             updateInterfaceStatus("lan", updateLanConfig);
         }
 
-        if ((menuIndex == UI_VPNSTATUS)||(_ui_updater_init))
-        {
-            updateInterfaceStatus("ovpn0", NULL);
-        }
+        // if ((menuIndex == UI_VPNSTATUS)||(_ui_updater_init))
+        // {
+        //     updateInterfaceStatus("ovpn0", NULL);
+        // }
 
         if ((menuIndex == UI_WLANCONFIG)||(_ui_updater_init))
         {
@@ -428,6 +473,11 @@ static void timer_sec_cb(lv_timer_t * timer)
         if ((menuIndex == UI_GSMCONFIG)||(_ui_updater_init))
         {
             updateInterfaceStatus("wwan", updateWwanConfig);
+        }
+
+        if ((menuIndex == UI_VPNSTATUS)||(_ui_updater_init))
+        {
+            updateVpnStatus(updateVpnStatusUI);
         }
         count = 0;
     }
@@ -496,5 +546,7 @@ static void timer_startup_cb(lv_timer_t * timer)
 void ui_updater_init()
 {
     lv_timer_t * startUpTimer = lv_timer_create(timer_startup_cb, TIMER_STARTUP, lv_scr_act());
+    if (startUpTimer == NULL)
+        printf("Failed to create startup timer\r\n");
 }
 
