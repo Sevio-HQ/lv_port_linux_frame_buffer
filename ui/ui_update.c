@@ -393,35 +393,60 @@ int readTempValues()
         float temp = (float)atoi(buf) / 1000.0;
    
         floatToStr(_temp, temp,1);
-        LV_LOG_INFO("fd:%d buf:%s temp: %f(%s)", fd, buf, temp, _temp);
+        LV_LOG_INFO("temp: %f(%s)", temp, _temp);
     }
     close(fd);
     return 0;
 }
 
-void updateWanConfig(bool _ifup, const char* _ip, unsigned int _mask, const char* _gw)
+void updateWanConfig(bool _ifup, const char* _ip, unsigned int _mask, const char* _gw, bool dhcp)
 {
     //lv_label_set_text(ui_WANIPCONFIG_Label2,"IP:  192.168.134.27/24");
     //lv_label_set_text(ui_WANIPCONFIG_Label3,"GW:  192.168.1.254");
     lv_label_set_text_fmt(ui_WANIPCONFIG_ip_value, "%s/%d", _ip, _mask);
     lv_label_set_text_fmt(ui_WANIPCONFIG_gateway_value, "%s", _gw);
+    if (dhcp) 
+    {
+        lv_obj_clear_flag(ui_WANIPCONFIG_dhcp_on, LV_OBJ_FLAG_HIDDEN); 
+        lv_obj_add_flag(ui_WANIPCONFIG_dhcp_off, LV_OBJ_FLAG_HIDDEN); 
+    }else{
+        lv_obj_clear_flag(ui_WANIPCONFIG_dhcp_off, LV_OBJ_FLAG_HIDDEN); 
+        lv_obj_add_flag(ui_WANIPCONFIG_dhcp_on, LV_OBJ_FLAG_HIDDEN); 
+    }
+    
 }
 
-void updateLanConfig(bool _ifup, const char* _ip, unsigned int _mask, const char* _gw)
+void updateLanConfig(bool _ifup, const char* _ip, unsigned int _mask, const char* _gw, bool dhcp)
 {
     //lv_label_set_text(ui_WANIPCONFIG_Label10,"IP:  192.168.134.27/24");
     lv_label_set_text_fmt(ui_LANIPCONFIG_ip_value, "%s/%d", _ip, _mask);
+    if (dhcp) 
+    {
+        lv_obj_clear_flag(ui_WANIPCONFIG_dhcp_on, LV_OBJ_FLAG_HIDDEN); 
+        lv_obj_add_flag(ui_WANIPCONFIG_dhcp_off, LV_OBJ_FLAG_HIDDEN); 
+    }else{
+        lv_obj_clear_flag(ui_WANIPCONFIG_dhcp_off, LV_OBJ_FLAG_HIDDEN); 
+        lv_obj_add_flag(ui_WANIPCONFIG_dhcp_on, LV_OBJ_FLAG_HIDDEN); 
+    }
 }
 
-void updateWlanConfig(bool _ifup, const char* _ip, unsigned int _mask, const char* _gw)
+void updateWlanConfig(bool _ifup, const char* _ip, unsigned int _mask, const char* _gw, bool dhcp)
 {
     //lv_label_set_text(ui_WANIPCONFIG_Label6,"IP:  192.168.134.27/24");
     //lv_label_set_text(ui_WANIPCONFIG_Label7,"GW:  192.168.1.254");
     lv_label_set_text_fmt(ui_WLANIPCONFIG_ip_value, "%s/%d", _ip, _mask);
     lv_label_set_text_fmt(ui_WLANIPCONFIG_gateway_value, "%s", _gw);
+    if (dhcp) 
+    {
+        lv_obj_clear_flag(ui_WLANIPCONFIG_dhcp_on, LV_OBJ_FLAG_HIDDEN); 
+        lv_obj_add_flag(ui_WLANIPCONFIG_dhcp_off, LV_OBJ_FLAG_HIDDEN); 
+    }else{
+        lv_obj_clear_flag(ui_WLANIPCONFIG_dhcp_off, LV_OBJ_FLAG_HIDDEN); 
+        lv_obj_add_flag(ui_WLANIPCONFIG_dhcp_on, LV_OBJ_FLAG_HIDDEN); 
+    }
 }
 
-void updateWwanConfig(bool _ifup, const char* _ip, unsigned int _mask, const char* _gw)
+void updateWwanConfig(bool _ifup, const char* _ip, unsigned int _mask, const char* _gw, bool dhcp)
 {
     LV_LOG_INFO("WWAN ip:%s", _ip);
     if (strlen(_ip) > 0) wwan_up = true;
@@ -430,7 +455,7 @@ void updateWwanConfig(bool _ifup, const char* _ip, unsigned int _mask, const cha
 
 void updateVpnStatusUI(bool _uplink, bool _ipAddr, bool _gw, bool _internet, bool _vpnPorts)
 {
-    printf("_uplink:%d, _ipAddr:%d, _gw:%d, _internet:%d, _vpnPorts:%d\r\n", _uplink, _ipAddr, _gw, _internet, _vpnPorts);
+    LV_LOG_INFO("_uplink:%d, _ipAddr:%d, _gw:%d, _internet:%d, _vpnPorts:%d", _uplink, _ipAddr, _gw, _internet, _vpnPorts);
     if (_uplink) 
     {
         lv_obj_clear_flag(ui_VPNSTATUS_uplink_pass, LV_OBJ_FLAG_HIDDEN);
@@ -559,12 +584,12 @@ static void timer_sec_cb(lv_timer_t * timer)
         //printf("Periodic update menuIndex:%d init:%d\r\n", menuIndex, _ui_updater_init);
         if ((menuIndex == UI_WANCONFIG)||(_ui_updater_init))
         {
-            updateInterfaceStatus("wan", updateWanConfig);
+            updateInterfaceStatusCb("wan", updateWanConfig);
         }
 
         if ((menuIndex == UI_LANCONFIG)||(_ui_updater_init))
         {
-            updateInterfaceStatus("lan", updateLanConfig);
+            updateInterfaceStatusCb("lan", updateLanConfig);
         }
 
         if ((menuIndex == UI_WIFICONFIG )||(_ui_updater_init))
@@ -574,12 +599,12 @@ static void timer_sec_cb(lv_timer_t * timer)
 
         if ((menuIndex == UI_WLANCONFIG)||(_ui_updater_init))
         {
-            updateInterfaceStatus("wlan", updateWlanConfig);
+            updateInterfaceStatusCb("wlan", updateWlanConfig);
         }
 
         if ((menuIndex == UI_GSMCONFIG)||(_ui_updater_init))
         {
-            updateInterfaceStatus("wwan", updateWwanConfig);
+            updateInterfaceStatusCb("wwan", updateWwanConfig);
         }
 
         if ((menuIndex == UI_VPNSTATUS)||(_ui_updater_init))
@@ -599,7 +624,7 @@ static void timer_min_cb(lv_timer_t * timer)
     {
         // go to home Menu
         goToHomeMenu();
-        printf("Timer expired goto Home Menu\r\n");
+        LV_LOG_INFO("Timer expired goto Home Menu");
         resetScreenSaverTimer();
     }else{
         incScreenSaverTimer();

@@ -23,7 +23,7 @@ typedef struct myGpsData {
     int     nr_sat;
 }tMyGpsData;
 
-gpsGsmPresence = 0;
+static int gpsGsmPresence = 0;
 
 bool isGpsGsmPresent()
 {
@@ -112,7 +112,7 @@ bool gpsDataInit()
     
     /* Open the stream to gpsd. */
     if (gps_open(source.server, source.port, &gpsdata) != 0) {
-        LV_LOG_ERROR("Cannot open gps source\n");
+        LV_LOG_ERROR("Cannot open gps source");
         default_lcd();
         gpsGsmPresence = 0;
         updateUiMenuNoGpsGsm();

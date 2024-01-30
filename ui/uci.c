@@ -1,4 +1,4 @@
-#include <arpa/inet.h>
+#include "lvgl/lvgl.h"
 #include <stddef.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -39,7 +39,7 @@ int uci_config_getServiceTag(char* _serviceTag)
 		    str = uci_lookup_option_string(uci, s, "service_tag");
 			if (str != NULL) {
 				strcpy(_serviceTag, str);
-                printf("Service Tag: %s\r\n", _serviceTag);
+                LV_LOG_INFO("Service Tag: %s", _serviceTag);
 			}
         }
     }
@@ -71,11 +71,9 @@ int uci_config_getWifiMode(char* _mode, bool* _hidden, char* _ssid)
 		    str = uci_lookup_option_string(uci, s, "mode");
 			if (str != NULL) {
 				strcpy(_mode, str);
-                printf("WifiMode: %s\r\n", _mode);
 			}
 
             val = uci_lookup_option_int(uci, s, "hidden");
-            printf("hidden: %d\r\n", val);
             if (val == 0) 
             {
                 *_hidden = false;
@@ -85,9 +83,10 @@ int uci_config_getWifiMode(char* _mode, bool* _hidden, char* _ssid)
 		    str = uci_lookup_option_string(uci, s, "ssid");
 			if (str != NULL) {
 				strcpy(_ssid, str);
-                printf("SSID: %s\r\n", _ssid);
 			}
+			LV_LOG_INFO("Wifi SSID:%s mode:%s hidden:%d", _ssid, _mode, *_hidden);
         }
+
     }
 }
 
@@ -116,7 +115,7 @@ int uci_config_isWifiDisabled(bool* _wifiDis)
 		if (strcmp(s->type, "wifi-iface") == 0) {
 
             val = uci_lookup_option_int(uci, s, "disabled");
-            printf("WiFi disabled: %d\r\n", val);
+            LV_LOG_INFO("WiFi disabled: %d", val);
             if (val == 0) 
             {
                 *_wifiDis = false;
