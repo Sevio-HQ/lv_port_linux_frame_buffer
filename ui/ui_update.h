@@ -17,4 +17,6 @@ void uiMenu_load(void);
 
 void resetScreenSaverTimer(void);
 
+void updateUiMenuNoGpsGsm(void);
+
 #endif

@@ -14,9 +14,12 @@
 #include <pthread.h>
 #include <time.h>
 #include <sys/time.h>
+#include "stdlib.h"
+#include "stdio.h"
 #include "ui.h"
 #include "ui2.h"
 #include "ui_update.h"
+#include "ubus.h"
 #if USE_EVDEV != 0 
 #ifdef EMULINUX
 #else
@@ -136,10 +139,22 @@ void kbdev_read(lv_indev_drv_t * drv, lv_indev_data_t * data)
     #endif
 }
 
+#include <signal.h>
+
+static bool keepRunning = true;
+
+void intHandler(int) {
+    keepRunning = false;
+}
+
 int main(int argc, char **argv)
 {
     (void)argc; /*Unused*/
     (void)argv; /*Unused*/
+
+    struct sigaction act;
+    act.sa_handler = intHandler;
+    sigaction(SIGINT, &act, NULL);
 
     /*LittlevGL init*/
     lv_init();
@@ -153,17 +168,25 @@ int main(int argc, char **argv)
     ui_init ();
     ui2_init ();
     uiMenu_init();
+
+	int ret = ubus_init();
+	if (!ret) {
+		goto exit;
+	}
+
     ui_updater_init();
 
     uiMenu_load();
 
     /*Handle LitlevGL tasks (tickless mode)*/
-    while(1) {
+    while(keepRunning) {
         lv_timer_handler();
         usleep(5000);
     }
+exit:
+	ubus_finish();
 
-    return 0;
+    return ret ? EXIT_SUCCESS : EXIT_FAILURE;
 }
 
 

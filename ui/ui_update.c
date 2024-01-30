@@ -15,12 +15,15 @@
 #define TIMER_1MIN  60000
 #define TIMER_1SEC  60*10
 #define TIMER_UPDATE  1*10
-#define TIMER_STARTUP  60*100
+#define TIMER_STARTUP  10*100 //60*100
 #define ADC_CH_VOLTAGE  4
 #define ADC_CH_CURRENT  5
 #define MAX_FLOAT_STR_SIZE 5
 #define PERIODIC_TIMER_UPDATE 5
 #define MAX_NUM_PORTS 5
+#define MAX_SERVICE_TAG_LEN 16
+#define WIFI_MODE_MAX_LEN 4
+#define SSID_MAX_LEN 32
 
 uint8_t _temp[MAX_FLOAT_STR_SIZE]="0.0";
 uint8_t  voltage[MAX_FLOAT_STR_SIZE]="0.0";
@@ -101,6 +104,44 @@ int ui_ports_refresh_ui()
     return 0;
 }
 
+int uci_config_isWifiDisabled(bool* _wifiDis);
+
+int ui_wifi_config_refresh()
+{
+    bool _wifiDis = false;
+
+    uci_config_isWifiDisabled(&_wifiDis);
+    if (!_wifiDis)
+    {
+        uiMenu[UI_WANCONFIG].rigth = UI_WIFICONFIG;
+        uiMenu[UI_LANCONFIG].rigth = UI_WIFICONFIG;
+        uiMenu[UI_WLANCONFIG].rigth = UI_WIFICONFIG;
+        uiMenu[UI_IOCONFIG].left = UI_WIFICONFIG;
+    }else{
+        uiMenu[UI_WANCONFIG].rigth = UI_IOCONFIG;
+        uiMenu[UI_LANCONFIG].rigth = UI_IOCONFIG;
+        uiMenu[UI_WLANCONFIG].rigth = UI_IOCONFIG;
+        uiMenu[UI_IOCONFIG].left = UI_WANCONFIG;
+    }
+}
+
+int ui_io_config_refresh()
+{
+    ui_wifi_config_refresh();
+}
+int ui_wlan_config_refresh()
+{
+    ui_wifi_config_refresh();
+}
+int ui_lan_config_refresh()
+{
+    ui_wifi_config_refresh();
+}
+int ui_wan_config_refresh()
+{
+    ui_wifi_config_refresh();
+}
+
 void uiMenu_init()
 {
     uiMenuMap[UI_HOME] = ui_HOME;
@@ -125,22 +166,28 @@ void uiMenu_init()
     uiMenu[UI_WANCONFIG].left = UI_VPNSTATUS;
     uiMenu[UI_WANCONFIG].down = UI_LANCONFIG;
     uiMenu[UI_WANCONFIG].rigth = UI_WIFICONFIG;
+    uiMenu[UI_WANCONFIG].refresh = ui_wan_config_refresh;
 
     uiMenu[UI_LANCONFIG].left = UI_VPNSTATUS;
     uiMenu[UI_LANCONFIG].down = UI_WLANCONFIG;
     uiMenu[UI_LANCONFIG].rigth = UI_WIFICONFIG;
+    uiMenu[UI_LANCONFIG].refresh = ui_lan_config_refresh;
+
 
     uiMenu[UI_WLANCONFIG].left = UI_VPNSTATUS;
     uiMenu[UI_WLANCONFIG].down = UI_WANCONFIG;
     uiMenu[UI_WLANCONFIG].rigth = UI_WIFICONFIG;
+    uiMenu[UI_WLANCONFIG].refresh = ui_wlan_config_refresh;
 
     uiMenu[UI_WIFICONFIG].left = UI_WANCONFIG;
     uiMenu[UI_WIFICONFIG].down = UI_NONE;
     uiMenu[UI_WIFICONFIG].rigth = UI_IOCONFIG;
+    uiMenu[UI_WIFICONFIG].refresh = ui_wifi_config_refresh;
 
     uiMenu[UI_IOCONFIG].left = UI_WIFICONFIG;
     uiMenu[UI_IOCONFIG].down = UI_NONE;
     uiMenu[UI_IOCONFIG].rigth = UI_PORTSCONFIG;
+    uiMenu[UI_IOCONFIG].refresh = ui_io_config_refresh;
 
     uiMenu[UI_PORTSCONFIG].left = UI_IOCONFIG;
     uiMenu[UI_PORTSCONFIG].down = UI_PORTSCONFIG;
@@ -426,6 +473,66 @@ void updateVpnStatusUI(bool _uplink, bool _ipAddr, bool _gw, bool _internet, boo
     }
 }
 
+int uci_config_getWifiMode(char* _mode, bool* _hidden, char* _ssid);
+
+void clearWifiSignalImg()
+{
+    lv_obj_add_flag(ui_WIFI_no_signal, LV_OBJ_FLAG_HIDDEN);
+    lv_obj_add_flag(ui_WIFI_signal1, LV_OBJ_FLAG_HIDDEN);
+    lv_obj_add_flag(ui_WIFI_signal2, LV_OBJ_FLAG_HIDDEN);
+    lv_obj_add_flag(ui_WIFI_signal3, LV_OBJ_FLAG_HIDDEN);
+    lv_obj_add_flag(ui_WIFI_signal4, LV_OBJ_FLAG_HIDDEN);
+    lv_obj_add_flag(ui_WIFI_signal5, LV_OBJ_FLAG_HIDDEN);
+}
+
+void setWifiSignal(bool _ap, int signal)
+{
+    clearWifiSignalImg();
+    if (_ap)
+    {
+        return;
+    }
+    if ((signal >= -90 ) && (signal <= -80))
+    {
+        lv_obj_clear_flag(ui_WIFI_signal1, LV_OBJ_FLAG_HIDDEN);
+    }else if ((signal > -80 ) && (signal <= -70))
+    {
+        lv_obj_clear_flag(ui_WIFI_signal2, LV_OBJ_FLAG_HIDDEN);
+    }else if ((signal > -70 ) && (signal <= -67))
+    {
+        lv_obj_clear_flag(ui_WIFI_signal3, LV_OBJ_FLAG_HIDDEN);
+    }else if ((signal > -67 ) && (signal <= -30))
+    {
+        lv_obj_clear_flag(ui_WIFI_signal4, LV_OBJ_FLAG_HIDDEN);
+    }
+}
+
+void updateWiFiConfig()
+{
+    char _wifiMode[WIFI_MODE_MAX_LEN];
+    bool _hidden;
+    char _ssid[SSID_MAX_LEN];
+    int signal = 0;
+
+    if (uci_config_getWifiMode(_wifiMode, &_hidden, _ssid))
+    {
+        if (strcmp(_wifiMode, "ap") == 0) 
+        {
+            lv_label_set_text(ui_WIFI_mode_value,"ACCESS POINT");
+            setWifiSignal(true, 0);
+        }
+        else 
+        {
+            lv_label_set_text(ui_WIFI_mode_value,"STATION");
+            t_ubus_iwinfo_getSignal_param param = { setWifiSignal, _ssid };
+            updateWiFiSignal(&param);
+        }
+
+        if (_hidden) lv_label_set_text(ui_WIFI_ssid__value,"********");
+        else lv_label_set_text(ui_WIFI_ssid__value, _ssid);
+    }
+}
+
 static int screenSaverTimer = 0;
 const int TIMER_EXPIRED_VALUE = 5;
 void resetScreenSaverTimer()
@@ -449,7 +556,7 @@ static void timer_sec_cb(lv_timer_t * timer)
 {
     if ((++count > PERIODIC_TIMER_UPDATE)||(_ui_updater_init))
     {
-        printf("Periodic update menuIndex:%d init:%d\r\n", menuIndex, _ui_updater_init);
+        //printf("Periodic update menuIndex:%d init:%d\r\n", menuIndex, _ui_updater_init);
         if ((menuIndex == UI_WANCONFIG)||(_ui_updater_init))
         {
             updateInterfaceStatus("wan", updateWanConfig);
@@ -460,10 +567,10 @@ static void timer_sec_cb(lv_timer_t * timer)
             updateInterfaceStatus("lan", updateLanConfig);
         }
 
-        // if ((menuIndex == UI_VPNSTATUS)||(_ui_updater_init))
-        // {
-        //     updateInterfaceStatus("ovpn0", NULL);
-        // }
+        if ((menuIndex == UI_WIFICONFIG )||(_ui_updater_init))
+        {
+            updateWiFiConfig();
+        }
 
         if ((menuIndex == UI_WLANCONFIG)||(_ui_updater_init))
         {
@@ -484,6 +591,8 @@ static void timer_sec_cb(lv_timer_t * timer)
 
 }
 
+int uci_config_getServiceTag(char* _serviceTag);
+
 static void timer_min_cb(lv_timer_t * timer)
 {
     if (isScreenSaverrTimerExp())
@@ -498,6 +607,11 @@ static void timer_min_cb(lv_timer_t * timer)
 
     if ((menuIndex == UI_HOME)||(_ui_updater_init))
     {
+        char _serviceTag[MAX_SERVICE_TAG_LEN] = "";
+        if (uci_config_getServiceTag(_serviceTag))
+        {
+            lv_label_set_text(ui_HOME_servicetag, _serviceTag);
+        }
         printLocalTime();
         get_uptime();
 
@@ -533,6 +647,8 @@ static void timer_min_cb(lv_timer_t * timer)
     
 static void timer_startup_cb(lv_timer_t * timer)
 {
+	printf("%s:%d\r\n", __FUNCTION__, __LINE__);
+
     minTimer = lv_timer_create(timer_min_cb, TIMER_1MIN, lv_scr_act());
     secTimer = lv_timer_create(timer_sec_cb, TIMER_1SEC, lv_scr_act());
     timer_min_cb(minTimer);

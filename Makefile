@@ -6,7 +6,8 @@ LVGL_DIR_NAME ?= lvgl
 LVGL_DIR ?= ${shell pwd}
 INCLUDE_FLAGS = -I$(LVGL_DIR)/ui/ -I$(LVGL_DIR)/squareline/ -I$(LVGL_DIR)/squareline2/
 DEFINE_FLAGS = -DLIBUBUS
-LIB_FLAGS += -lubox -lubus -lgps
+LIB_FLAGS += -lubox -lubus -lgps -lblobmsg_json -ljson-c -luci
+
 CFLAGS += -O1 -g3 -I$(LVGL_DIR)/ -Wall -Wshadow -Wundef -Wmissing-prototypes -Wall -Wextra \
 -Wno-unused-function -Wno-error=strict-prototypes -Wpointer-arith -fno-strict-aliasing \
 -Wno-error=cpp -Wuninitialized -Wno-unused-parameter -Wno-missing-field-initializers \
@@ -58,7 +59,12 @@ UI_GEN_SRC = \
     $(LVGL_DIR)/squareline/ui_font_dejavusans.c \
     $(LVGL_DIR)/squareline/ui_font_arialbd.c
 
-UI_SRC = $(LVGL_DIR)/ui/ui_update.c  $(LVGL_DIR)/ui/ubus.c $(LVGL_DIR)/ui/ui_gps.c $(LVGL_DIR)/ui/ui_gsm.c $(LVGL_DIR)/ui/gpsdclient.c
+UI_SRC = 	$(LVGL_DIR)/ui/ui_update.c \
+			$(LVGL_DIR)/ui/ubus.c \
+			$(LVGL_DIR)/ui/uci.c \
+			$(LVGL_DIR)/ui/ui_gps.c \
+			$(LVGL_DIR)/ui/ui_gsm.c \
+			$(LVGL_DIR)/ui/gpsdclient.c
 CSRCS +=$(LVGL_DIR)/mouse_cursor_icon.c $(UI_GEN_SRC) $(UI_SRC)
 OBJEXT ?= .o
 

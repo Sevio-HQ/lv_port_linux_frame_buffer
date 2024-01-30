@@ -4,16 +4,35 @@
 #include <unistd.h>
 #include "lvgl/lvgl.h"
 #include "libubox/blob.h"
+#include "libubox/blobmsg_json.h"
 #include "ubus.h"
+#include <arpa/inet.h>
+#include <netdb.h>
+#include <stdio.h>
+#include <string.h>
+#include <sys/socket.h>
 
-#define MAX_IFNAME_LEN	   256
-#define UBUS_TIMEOUT	   3000 /* 3 sec */
+#define MAX_IFNAME_LEN	   	256
+#define UBUS_TIMEOUT	   	3000 /* 3 sec */
+#define MAX_IP_LEN 			16
 
 static struct ubus_context* ctx;
 
 /*** network interface events ***/
 
 static struct ubus_event_handler interface_event_handler;
+
+static void dumpBlobJson(struct blob_attr* msg)
+{
+	char *str;
+	
+	if (msg == NULL) return;
+
+	str = blobmsg_format_json_indent(msg, true, 0);
+	printf("%s\n", str);
+	free(str);
+}
+
 
 enum {
 	IFSTAT_UP,
@@ -119,56 +138,79 @@ static bool ubus_interface_status(const char* name)
 	return true;
 }
 
-static const struct blobmsg_policy iwinfo_policy[] = {
-	[IWINFO_SSID] = {.name = "ssid", .type = BLOBMSG_TYPE_STRING},
-	[IWINFO_BSSID] = {.name = "bssid", .type = BLOBMSG_TYPE_STRING},
-	[IWINFO_MODE] = {.name = "mode", .type = BLOBMSG_TYPE_STRING},
-	[IWINFO_CH] = {.name = "channel", .type = BLOBMSG_TYPE_INT32},
+/*** generic result callback: just copies msg to last_result_msg ***/
+
+enum {
+	DEVSTAT_UP,
+	DEVSTAT_SPEED,
+	DEVSTAT_MAC,
+	DEVSTAT_MAX
+};
+
+static const struct blobmsg_policy devstat_policy[] = {
+	[DEVSTAT_UP] = {.name = "up", .type = BLOBMSG_TYPE_BOOL},
+	[DEVSTAT_SPEED] = {.name = "speed", .type = BLOBMSG_TYPE_STRING},
+	[DEVSTAT_MAC] = {.name = "macaddr", .type = BLOBMSG_TYPE_STRING},
 };
 
 
-/*** generic result callback: just copies msg to last_result_msg ***/
-
-static void ubus_network_device_result_cb	__attribute__((unused)) struct ubus_request* req,
+static void ubus_network_device_result_cb (	__attribute__((unused)) struct ubus_request* req,
 						   					__attribute__((unused)) int type,
 						   					struct blob_attr* msg)
 {
 	if (!msg) {
+		printf("msg NULL\r\n");
 		return;
+	}else{
+		//printf("Blob msg len:%d\r\n", blob_len(msg));
 	}
 	
-	static const struct blobmsg_policy policy = { "up", BLOBMSG_TYPE_STRING };
-	struct blob_attr *cur;
+	// char *str;
 
-	blobmsg_parse(&policy, 1, &cur, blob_data(msg), blob_len(msg));
-	if (cur)
-		
-		bool deviceStatusUp = (strcmp(blobmsg_get_string(cur), "up") == 0);
-		*req->priv = deviceStatusUp;
-		printf("Received status up:%s %d", blobmsg_get_string(cur), deviceStatusUp);
+	// str = blobmsg_format_json_indent(msg, true, 0);
+	// printf("%s\n", str);
+	// free(str);
+
+	struct blob_attr* tb[ARRAY_SIZE(devstat_policy)];
+	if ( blobmsg_parse(devstat_policy, ARRAY_SIZE(devstat_policy), tb,
+				  blob_data(msg), blob_len(msg)) == 0 )
+	{
+		bool deviceStatusUp = blobmsg_get_bool(tb[DEVSTAT_UP]) ? true : false;
+		//printf("Received status up:%d\r\n", deviceStatusUp);
+		*((bool*)req->priv) = deviceStatusUp;
 	}
 }
+
+static struct blob_buf b;
 
 static bool ubus_network_device_status(const char* name, void* priv)
 {
 	uint32_t id;
 	int ret;
 
-	char idstr[32];
+	char idstr[64];
+	blob_buf_init(&b, 0);
 
-	ret = snprintf(idstr, sizeof(idstr), "network.device status '{ "name" : ""%s"" }' ", name);
+
+	ret = snprintf(idstr, sizeof(idstr), "{ \"name\" : \"%s\" }", name);
 	if (ret <= 0 || (unsigned int)ret >= sizeof(idstr)) { // error or truncated
 		return false;
+	}else{
+		if (!blobmsg_add_json_from_string(&b, idstr))
+			printf("error adding json param\r\n");
 	}
 
-	ret = ubus_lookup_id(ctx, netowrk.device, &id);
+	printf("%s idstr:%s\r\n", __FUNCTION__, idstr);
+	ret = ubus_lookup_id(ctx, "network.device", &id);
 	if (ret) {
+		printf("%s:%d ret:%d -->\r\n", __FUNCTION__, __LINE__, ret);
 		return false;
 	}
 
-	ret = ubus_invoke(ctx, id, idstr, NULL, ubus_network_device_result_cb, priv,
+	ret = ubus_invoke(ctx, id, "status", b.head, ubus_network_device_result_cb, priv,
 					  UBUS_TIMEOUT);
-	if (ret < 0) {
+	if (ret) {
+		printf("%s:%d ret:%d\r\n", __FUNCTION__, __LINE__, ret);
 		return false;
 	}
 
@@ -184,10 +226,12 @@ static bool ubus_network_device_status(const char* name, void* priv)
  * 	     1 up but no default route
  * 	     2 default route exists
  */
-int ubus_interface_get_status(const char* name, ubus_gui_update_handler_t cb)
+
+int ubus_interface_get_status(const char* name, bool* _ifup, char* _dev,
+ char* _route, char* _defGw, char* _ipv4, unsigned long* _mask )
 {
 	int ret;
-	char device[MAX_IFNAME_LEN]="";
+	//char device[MAX_IFNAME_LEN]="";
 	const char* dev = "";
 	const char* route = "";
 	const char* defGw = "";
@@ -195,7 +239,7 @@ int ubus_interface_get_status(const char* name, ubus_gui_update_handler_t cb)
     unsigned long mask = 0;
 	bool ifup = false;
 
-// ubus call network.interface.wan status
+	// ubus call network.interface.wan status
 	ret = ubus_interface_status(name);
 	if (!ret) {
 		return -1;
@@ -206,16 +250,6 @@ int ubus_interface_get_status(const char* name, ubus_gui_update_handler_t cb)
 				  blob_data(last_result_msg), blob_len(last_result_msg));
 
 	// up
-	// if (!tb[IFSTAT_UP]) {
-	// 	ret = -1;
-	// 	goto exit; // error
-	// }
-	// if (!blobmsg_get_bool(tb[IFSTAT_UP])) {
-	// 	ret = 0;
-	// 	LV_LOG_INFO("Interface DOWN"));
-	// 	goto exit; // down
-	// }
-		
 	ifup = blobmsg_get_bool(tb[IFSTAT_UP]) ? true : false;
 
 	// device
@@ -232,7 +266,6 @@ int ubus_interface_get_status(const char* name, ubus_gui_update_handler_t cb)
 		ret = -1;
 		goto exit; // error
 	}
-	strcpy(device, dev);
 
 	// routes
 	//  "route": [
@@ -288,12 +321,16 @@ int ubus_interface_get_status(const char* name, ubus_gui_update_handler_t cb)
 		}
 	}
 
+	// copy values
+	strcpy(_dev, dev);
+	strcpy(_ipv4, ipv4);
+	strcpy(_defGw, defGw);
+	*_ifup = ifup;
+	*_mask = mask;
+
 exit:
-	LV_LOG_INFO("stat:%s dev:%s ipv4:%s mask:%lu gw:%s", ifup ? "UP" : "DOWN", device, ipv4, mask, defGw);
-	if (cb != NULL)
-	{		
-		cb(ifup, ipv4, mask, defGw);
-	}
+	LV_LOG_INFO("stat:%s dev:%s ipv4:%s mask:%lu gw:%s", ifup ? "UP" : "DOWN", dev, ipv4, mask, defGw);
+
 	free(last_result_msg);
 	last_result_msg = NULL;
 	return ret;
@@ -301,6 +338,119 @@ exit:
 
 
 /*** network interface status ***/
+
+int updateInterfaceStatus(const char* iface, ubus_gui_update_handler_t cb )
+{
+    #ifdef LIBUBUS
+
+	// const char *ubus_socket = NULL;
+
+	// int ret = uloop_init();
+	// if (ret < 0) {
+	// 	LV_LOG_ERROR("Could not initialize uloop");
+	// 	return EXIT_FAILURE;
+	// }
+
+	// ctx = ubus_connect(ubus_socket);
+	// if (!ctx) {
+	// 	LV_LOG_ERROR("Failed to connect to ubus\n");
+	// 	return EXIT_FAILURE;
+	// }
+
+	// ubus_add_uloop(ctx);
+
+	char dev[MAX_IFNAME_LEN]  = "";
+	char route[MAX_IP_LEN] = "";
+	char defGw[MAX_IP_LEN]  = "";
+	char ipv4[MAX_IP_LEN]  = "";
+    unsigned long mask = 0;
+	bool ifup = false;
+    ubus_interface_get_status(iface, &ifup, dev, route, defGw, ipv4, &mask);
+	if (cb != NULL)
+	{		
+		LV_LOG_INFO("Calling CB stat:%s dev:%s ipv4:%s mask:%lu gw:%s", ifup ? "UP" : "DOWN", dev, ipv4, mask, defGw);
+		cb(ifup, ipv4, mask, defGw);
+	}
+	
+	// ubus_free(ctx);
+	// uloop_done();
+    #endif
+}
+
+static bool concentrator_resolve(char* hostname)
+{
+	struct addrinfo hints;
+	struct addrinfo* addr;
+
+	memset(&hints, 0, sizeof(struct addrinfo));
+	hints.ai_family = AF_INET;
+	//hints.ai_socktype = pi->conf_proto == ICMP ? SOCK_DGRAM : SOCK_STREAM;
+	hints.ai_socktype = SOCK_DGRAM;
+
+	int r = getaddrinfo(hostname, NULL, &hints, &addr);
+	if (r < 0 || addr == NULL) {
+		LV_LOG_ERROR("Failed to resolve '%s'", hostname);
+		return false;
+	}
+
+	/* use only first address */
+	struct sockaddr_in* sa = (struct sockaddr_in*)addr->ai_addr;
+	printf("Resolved %s to %s\n", hostname,
+		   inet_ntoa((struct in_addr)sa->sin_addr));
+	//pi->conf_host = sa->sin_addr.s_addr;
+
+	freeaddrinfo(addr);
+	return true;
+}
+
+int updateVpnStatus(ubus_gui_update_vpnstatus_handler_t cb )
+{
+	bool eth0_up = false, wlan0_up = false, wwan0_up = false;
+
+	ubus_network_device_status("eth0", (void*)&eth0_up);
+	if (!eth0_up)
+	{
+		ubus_network_device_status("wlan0", (void*)&wlan0_up);
+		if (!wlan0_up)
+			ubus_network_device_status("wwan0", (void*)&wwan0_up);
+	}
+	bool _uplink = eth0_up | wlan0_up | wwan0_up;
+
+	char dev[MAX_IFNAME_LEN]  = "";
+	char route[MAX_IP_LEN] = "";
+	char defGw[MAX_IP_LEN]  = "";
+	char ipv4[MAX_IP_LEN]  = "";
+    unsigned long mask = 0;
+	bool wan_ifup = false, wlan_ifup = false, wwan_ifup = false, ovpn_ifup = false;
+    ubus_interface_get_status("wan", &wan_ifup, dev, route, defGw, ipv4, &mask);
+    ubus_interface_get_status("wlan", &wlan_ifup, dev, route, defGw, ipv4, &mask);
+    ubus_interface_get_status("wwan", &wwan_ifup, dev, route, defGw, ipv4, &mask);
+
+	//VPNSTATUS_internet
+	bool _internet = false;
+	if (concentrator_resolve("concentrators.sevio.it"))
+	{
+		_internet = true;
+	}else if (concentrator_resolve("vpn.sevio.dev"))
+	{
+		_internet = true;
+	}else if (concentrator_resolve("vpn2.sevio.dev"))
+	{
+		_internet = true;
+	}
+	
+	//VPNSTATUS_vpn
+	ubus_interface_get_status("ovpn0", &ovpn_ifup, dev, route, defGw, ipv4, &mask);
+
+	bool _ipAddr = wan_ifup | wlan_ifup | wwan_ifup;
+
+	bool _gw = true;
+
+	bool _vpnPorts = ovpn_ifup;
+	cb(_uplink, _ipAddr, _gw, _internet, _vpnPorts);
+
+	return 0;
+}
 
 static bool ubus_iwinfo_info(const char* name)
 {
@@ -329,47 +479,188 @@ static bool ubus_iwinfo_info(const char* name)
 }
 
 
-int updateInterfaceStatus(const char* iface, ubus_gui_update_handler_t cb )
+enum {
+	IWINFO_SCAN_SSID,
+	IWINFO_SCAN_SIGNAL,
+	IWINFO_SCAN_QUALITY,
+	IWINFO_SCAN_MAX
+};
+
+static const struct blobmsg_policy iwinfoScan_policy[] = {
+	[IWINFO_SCAN_SSID] = {.name = "ssid", .type = BLOBMSG_TYPE_STRING},
+	[IWINFO_SCAN_SIGNAL] = {.name = "signal", .type = BLOBMSG_TYPE_INT32},
+	[IWINFO_SCAN_QUALITY] = {.name = "quality", .type = BLOBMSG_TYPE_INT32},
+};
+
+enum {
+	IWINFO_SCAN_WIFI_RESULTS,
+	IWINFO_SCAN_WIFI_MAX
+};
+
+static const struct blobmsg_policy iwinfoScanWifi_policy[IWINFO_SCAN_WIFI_MAX] = {
+	[IWINFO_SCAN_WIFI_RESULTS] = {.name = "results", .type = BLOBMSG_TYPE_ARRAY}
+};
+
+static void ubus_iwinfo_scan_cb(__attribute__((unused)) struct ubus_request* req,
+						   __attribute__((unused)) int type,
+						   struct blob_attr* msg)
 {
-    #ifdef LIBUBUS
-
-	const char *ubus_socket = NULL;
-
-	int ret = uloop_init();
-	if (ret < 0) {
-		LV_LOG_ERROR("Could not initialize uloop");
-		return EXIT_FAILURE;
+	if (!msg) {
+		return;
 	}
 
-	ctx = ubus_connect(ubus_socket);
-	if (!ctx) {
-		LV_LOG_ERROR("Failed to connect to ubus\n");
-		return EXIT_FAILURE;
+	printf("%s:%d\r\n", __FUNCTION__, __LINE__);
+
+	struct blob_attr* tb[ARRAY_SIZE(iwinfoScanWifi_policy)];
+	blobmsg_parse(iwinfoScanWifi_policy, ARRAY_SIZE(iwinfoScanWifi_policy), tb,
+				  blob_data(msg), blob_len(msg));
+
+	if (tb[IWINFO_SCAN_WIFI_RESULTS]) {
+		int len = blobmsg_data_len(tb[IWINFO_SCAN_WIFI_RESULTS]);
+		struct blob_attr* arr = blobmsg_data(tb[IWINFO_SCAN_WIFI_RESULTS]);
+
+		struct blob_attr* attr;
+		__blob_for_each_attr(attr, arr, len)
+		{
+			struct blob_attr* tb2[ARRAY_SIZE(iwinfoScan_policy)];
+			blobmsg_parse(iwinfoScan_policy, ARRAY_SIZE(iwinfoScan_policy), tb2,
+						blobmsg_data(attr), blobmsg_data_len(attr));
+			if (tb2[IWINFO_SCAN_SSID]) {
+				char* _ssid = blobmsg_get_string(tb2[IWINFO_SCAN_SSID]);
+				if (_ssid != NULL ) {
+					printf("SSID:%s\r\n", _ssid);
+				}
+			}
+			if (tb2[IWINFO_SCAN_SIGNAL]) {
+				int _signal = (int32_t) blobmsg_get_u32(tb2[IWINFO_SCAN_SIGNAL]);
+				printf("Signal:%d\r\n", _signal);
+			}
+
+			if (tb2[IWINFO_SCAN_QUALITY]) {
+				int _quality = (int32_t) blobmsg_get_u32(tb2[IWINFO_SCAN_QUALITY]);
+				printf("Qaulity:%d\r\n", _quality);
+			}
+		}
 	}
-
-	ubus_add_uloop(ctx);
-
-    ubus_interface_get_status(iface, cb);
-    // ubus_interface_get_status("lan", device, MAX_IFNAME_LEN);
-	// ubus_interface_get_status("wlan", device, MAX_IFNAME_LEN);
-    // ubus_interface_get_status("wan", device, MAX_IFNAME_LEN);
-    // ubus_interface_get_status("ovpn0", device, MAX_IFNAME_LEN);
-
-	ubus_free(ctx);
-	uloop_done();
-    #endif
 }
 
-int updateVpnStatus(ubus_gui_update_vpnstatus_handler_t cb )
+static bool ubus_iwinfo_scan(const char* name)
 {
-	bool eth0_up = false, wlan0_up = false, wwan0_up = false;
-	ubus_network_device_status("eth0", (void*)&eth0_up);
-	ubus_network_device_status("wlan0", (void*)&wlan0_up);
-	ubus_network_device_status("wwan0", (void*)&wwan0_up);
+	uint32_t id;
+	int ret;
+	char idstr[32]="{ \"device\" : \"wlan0\" }";
 
-	bool _uplink = eth0_up | wlan0_up | wwan0_up;
-	cb(_uplink, randomState(), randomState(), randomState(), randomState());
-	return 0;
+	blob_buf_init(&b, 0);
+	if (!blobmsg_add_json_from_string(&b, idstr))
+	{
+		printf("error adding json param\r\n");
+	}
+
+	ret = ubus_lookup_id(ctx, "iwinfo", &id);
+	if (ret) {
+		return false;
+	}
+
+	ret = ubus_invoke(ctx, id, "scan", b.head, ubus_iwinfo_scan_cb, NULL,
+					  UBUS_TIMEOUT);
+	if (ret < 0) {
+		return false;
+	}
+
+	// client needs to free(last_result_msg);
+	return true;
+}
+
+static void ubus_iwinfo_getSignal_cb(__attribute__((unused)) struct ubus_request* req,
+						   __attribute__((unused)) int type,
+						   struct blob_attr* msg)
+{
+	if (!msg) {
+		return;
+	}
+
+	t_ubus_iwinfo_getSignal_param* _param = (t_ubus_iwinfo_getSignal_param*)req->priv;
+
+	struct blob_attr* tb[ARRAY_SIZE(iwinfoScanWifi_policy)];
+	blobmsg_parse(iwinfoScanWifi_policy, ARRAY_SIZE(iwinfoScanWifi_policy), tb,
+				  blob_data(msg), blob_len(msg));
+
+	if (tb[IWINFO_SCAN_WIFI_RESULTS]) {
+		int len = blobmsg_data_len(tb[IWINFO_SCAN_WIFI_RESULTS]);
+		struct blob_attr* arr = blobmsg_data(tb[IWINFO_SCAN_WIFI_RESULTS]);
+
+		struct blob_attr* attr;
+		__blob_for_each_attr(attr, arr, len)
+		{
+			struct blob_attr* tb2[ARRAY_SIZE(iwinfoScan_policy)];
+			blobmsg_parse(iwinfoScan_policy, ARRAY_SIZE(iwinfoScan_policy), tb2,
+						blobmsg_data(attr), blobmsg_data_len(attr));
+
+			if (tb2[IWINFO_SCAN_SSID]) {
+				char* _ssid = blobmsg_get_string(tb2[IWINFO_SCAN_SSID]);
+				if ((_ssid != NULL ) && (strcmp(_ssid, _param->_ssid) == 0)) {
+					if (tb2[IWINFO_SCAN_SIGNAL]) {
+						int _signal = (int32_t) blobmsg_get_u32(tb2[IWINFO_SCAN_SIGNAL]);
+						_param->cb(false, _signal);
+						printf("Signal:%d\r\n", _signal);
+					}
+				}
+			}
+		}
+	}
+}
+
+
+
+
+bool updateWiFiSignal(t_ubus_iwinfo_getSignal_param* _param)
+{
+	uint32_t id;
+	int ret;
+	char idstr[32]="{ \"device\" : \"wlan0\" }";
+
+	printf("%s:%d\r\n", __FUNCTION__, __LINE__);
+
+	blob_buf_init(&b, 0);
+	if (!blobmsg_add_json_from_string(&b, idstr)) {
+		printf("error adding json param\r\n");
+	}
+
+	ret = ubus_lookup_id(ctx, "iwinfo", &id);
+	if (ret) {
+		return false;
+	}
+
+	ret = ubus_invoke(ctx, id, "scan", b.head, ubus_iwinfo_getSignal_cb, _param,
+					  UBUS_TIMEOUT);
+	if (ret < 0) {
+		return false;
+	}
+
+	return true;
+}
+
+/*** init / finish ***/
+
+bool ubus_init(void)
+{
+	ctx = ubus_connect(NULL);
+	if (!ctx) {
+		printf("Failed to connect to ubus");
+		return false;
+	}
+	return true;
+}
+
+void ubus_finish(void)
+{
+	free(last_result_msg);
+	if (ctx == NULL) {
+		return;
+	}
+
+	//ubus_remove_object(ctx, &server_object);
+	ubus_free(ctx);
 }
 
 #else
@@ -396,5 +687,11 @@ int updateVpnStatus(ubus_gui_update_vpnstatus_handler_t cb )
 	cb(randomState(), randomState(), randomState(), randomState(), randomState());
 	return 0;
 }
+
+bool ubus_init(void)
+{}
+
+void ubus_finish(void)
+{}
 
 #endif
