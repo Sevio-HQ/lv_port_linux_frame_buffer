@@ -105,12 +105,19 @@ static void ubus_ifStatus_cb(__attribute__((unused)) struct ubus_request* req,
 	int ret;
 
 	const char* dev = "";
-	const char* route = "";
 	const char* defGw = "";
 	const char* ipv4 = "";
     unsigned long mask = 0;
 	bool ifup = false;
 	bool dhcp = false;
+	const char* ifname = "";
+	t_ubus_ifStatus_param* _param = NULL;
+
+	if ((req) && (req->priv))
+	{
+		_param = (t_ubus_ifStatus_param*)req->priv;
+		ifname = _param->ifname;
+	}
 
 	struct blob_attr* tb[ARRAY_SIZE(ifstat_policy)];
 	blobmsg_parse(ifstat_policy, ARRAY_SIZE(ifstat_policy), tb,
@@ -158,7 +165,7 @@ static void ubus_ifStatus_cb(__attribute__((unused)) struct ubus_request* req,
 			blobmsg_parse(route_policy, ARRAY_SIZE(route_policy), tb2,
 						blobmsg_data(attr), blobmsg_data_len(attr));
 			if (tb2[ROUTE_TARGET]) {
-				route = blobmsg_get_string(tb2[ROUTE_TARGET]);
+				char* route = blobmsg_get_string(tb2[ROUTE_TARGET]);
 				if (route != NULL && strcmp(route, "0.0.0.0") == 0) {
 					if (tb2[ROUTE_NEXTHOP]) {
 						defGw = blobmsg_get_string(tb2[ROUTE_NEXTHOP]);
@@ -194,23 +201,20 @@ static void ubus_ifStatus_cb(__attribute__((unused)) struct ubus_request* req,
 	}
 
 	// copy values
-	if ((req) && (req->priv))
+	if (_param)
 	{
-		t_ubus_ifStatus_param* _param = (t_ubus_ifStatus_param*)req->priv;
-
 		if (_param->cb) _param->cb(ifup, ipv4, mask, defGw, dhcp);
 		else{
 			strcpy(_param->dev, dev);
 			strcpy(_param->ipv4, ipv4);
 			strcpy(_param->defGw, defGw);
-			strcpy(_param->route, route);
 			*_param->ifup = ifup;
 			*_param->dhcp = dhcp;
 			*_param->mask = mask;
 		}
 	}
 exit:
-	LV_LOG_INFO("stat:%s dev:%s ipv4:%s mask:%lu gw:%s route:%s dhcp:%s", ifup ? "UP" : "DOWN", dev, ipv4, mask, defGw, route, dhcp ? "ON" : "OFF");
+	LV_LOG_INFO("name:%s stat:%s dev:%s ipv4:%s mask:%lu gw:%s dhcp:%s", ifname, ifup ? "UP" : "DOWN", dev, ipv4, mask, defGw, dhcp ? "ON" : "OFF");
 }
 
 /*** network interface status ***/
@@ -325,11 +329,11 @@ static bool ubus_network_device_status(const char* name, void* priv)
  */
 
 int updateInterfaceStatus(const char* name, bool* _ifup, char* _dev,
- char* _route, char* _defGw, char* _ipv4, unsigned long* _mask, bool* _dhcp )
+ 							char* _defGw, char* _ipv4, unsigned long* _mask, bool* _dhcp )
 {
 	int ret;
 
-	t_ubus_ifStatus_param _param = {.dev =_dev, .route = _route, .defGw = _defGw, 
+	t_ubus_ifStatus_param _param = {.dev =_dev, .defGw = _defGw, .ifname = name,
 									.ipv4 = _ipv4, .mask = _mask, .ifup = _ifup, .dhcp = _dhcp};
 
 	// ubus call network.interface.<iface> status
@@ -347,7 +351,7 @@ int updateInterfaceStatusCb(const char* iface, ubus_gui_update_handler_t cb )
 {
 	int ret; 
 
-	t_ubus_ifStatus_param _param = { .cb=cb };
+	t_ubus_ifStatus_param _param = { .cb=cb, .ifname = iface};
 
 	// ubus call network.interface.<iface> status
 	ret = ubus_interface_status(iface, &_param);
@@ -397,14 +401,13 @@ int updateVpnStatus(ubus_gui_update_vpnstatus_handler_t cb )
 	bool _uplink = eth0_up | wlan0_up | wwan0_up;
 
 	char dev[MAX_IFNAME_LEN]  = "";
-	char route[MAX_IP_LEN] = "";
 	char defGw[MAX_IP_LEN]  = "";
 	char ipv4[MAX_IP_LEN]  = "";
     unsigned long mask = 0;
 	bool wan_ifup = false, wlan_ifup = false, wwan_ifup = false, ovpn_ifup = false, dhcp = false;
-    updateInterfaceStatus("wan", &wan_ifup, dev, route, defGw, ipv4, &mask, &dhcp);
-    updateInterfaceStatus("wlan", &wlan_ifup, dev, route, defGw, ipv4, &mask, &dhcp);
-    updateInterfaceStatus("wwan", &wwan_ifup, dev, route, defGw, ipv4, &mask, &dhcp);
+    updateInterfaceStatus("wan", &wan_ifup, dev, defGw, ipv4, &mask, &dhcp);
+    updateInterfaceStatus("wlan", &wlan_ifup, dev, defGw, ipv4, &mask, &dhcp);
+    updateInterfaceStatus("wwan", &wwan_ifup, dev, defGw, ipv4, &mask, &dhcp);
 
 	bool _ipAddr = wan_ifup | wlan_ifup | wwan_ifup;
 
@@ -422,7 +425,7 @@ int updateVpnStatus(ubus_gui_update_vpnstatus_handler_t cb )
 	}
 	
 	//VPNSTATUS_vpn
-	updateInterfaceStatus("ovpn0", &ovpn_ifup, dev, route, defGw, ipv4, &mask, &dhcp);
+	updateInterfaceStatus("ovpn0", &ovpn_ifup, dev, defGw, ipv4, &mask, &dhcp);
 
 
 	bool _gw = true;
@@ -577,9 +580,10 @@ static void ubus_iwinfo_getSignal_cb(__attribute__((unused)) struct ubus_request
 					if (tb2[IWINFO_SCAN_SIGNAL]) {
 						_signal = (int32_t) blobmsg_get_u32(tb2[IWINFO_SCAN_SIGNAL]);
 						_param->cb(false, _signal);
+						LV_LOG_INFO("SSID:%s Signal:%d", _ssid, _signal);
 					}
 				}
-				LV_LOG_INFO("SSID:%s Signal:%d", _ssid, _signal);
+				//LV_LOG_INFO("SSID:%s Signal:%d", _ssid, _signal);
 			}
 		}
 	}

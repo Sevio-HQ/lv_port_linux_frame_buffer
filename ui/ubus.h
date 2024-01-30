@@ -12,8 +12,8 @@ typedef struct ubus_ifStatus_param
 {
 	/* data */
 	ubus_gui_update_handler_t cb;
+	const char* ifname;
 	char* dev;
-	char* route;
 	char* defGw;
 	char* ipv4;
     unsigned long* mask;
