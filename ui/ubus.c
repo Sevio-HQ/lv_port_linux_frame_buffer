@@ -252,14 +252,18 @@ enum {
 	DEVSTAT_SPEED,
 	DEVSTAT_MAC,
 	DEVSTAT_DEVTYPE,
+	DEVSTAT_AUTONEG,
+	DEVSTAT_CARRIER,
 	DEVSTAT_MAX
 };
 
-static const struct blobmsg_policy devstat_policy[] = {
+static const struct blobmsg_policy devstat_policy[DEVSTAT_MAX] = {
 	[DEVSTAT_UP] = {.name = "up", .type = BLOBMSG_TYPE_BOOL},
 	[DEVSTAT_SPEED] = {.name = "speed", .type = BLOBMSG_TYPE_STRING},
 	[DEVSTAT_MAC] = {.name = "macaddr", .type = BLOBMSG_TYPE_STRING},
 	[DEVSTAT_DEVTYPE] = {.name = "devtype", .type = BLOBMSG_TYPE_STRING},
+	[DEVSTAT_AUTONEG] = {.name = "autoneg", .type = BLOBMSG_TYPE_BOOL},
+	[DEVSTAT_CARRIER] = {.name = "carrier", .type = BLOBMSG_TYPE_BOOL}
 };
 
 
@@ -284,9 +288,50 @@ static void ubus_network_device_result_cb (	__attribute__((unused)) struct ubus_
 	}
 }
 
+static void ubus_network_device_port_result_cb (	__attribute__((unused)) struct ubus_request* req,
+						   							__attribute__((unused)) int type,
+						   							struct blob_attr* msg)
+{
+	if (!msg) {
+		printf("msg NULL\r\n");
+		return;
+	}
+	const char* ifname = "";
+	t_ubus_PortStatus_param* _param = NULL;
+
+	if ((req) && (req->priv))
+	{
+		_param = (t_ubus_PortStatus_param*)req->priv;
+		if (_param)
+			ifname = _param->ifname;
+	}
+
+	struct blob_attr* tb[ARRAY_SIZE(devstat_policy)];
+	if ( blobmsg_parse(devstat_policy, ARRAY_SIZE(devstat_policy), tb,
+				  blob_data(msg), blob_len(msg)) == 0 )
+	{
+		bool portStatus = false; bool portCarrier = false; bool portAutoNeg = false; char* portSpeed = "";
+		if (tb[DEVSTAT_UP]) portStatus = blobmsg_get_bool(tb[DEVSTAT_UP]) ? true : false;
+		if (tb[DEVSTAT_CARRIER]) portCarrier = blobmsg_get_bool(tb[DEVSTAT_CARRIER]) ? true : false;
+		if (tb[DEVSTAT_AUTONEG]) portAutoNeg = blobmsg_get_bool(tb[DEVSTAT_AUTONEG]) ? true : false;
+		if (tb[DEVSTAT_SPEED]) portSpeed = blobmsg_get_string(tb[DEVSTAT_SPEED]);
+
+		LV_LOG_INFO("ifname:%s status:%s link:%s auotneg:%s speed:%s", ifname, portStatus ? "UP" : "DOWN",
+						 portCarrier ? "UP" : "DOWN", portAutoNeg ? "ENA" : "DIS", portSpeed);
+
+		if (_param)
+		{
+			if (_param->cb) _param->cb(portStatus, portCarrier, portAutoNeg, portSpeed);
+		}
+		
+	}
+}
+
+
+
 static struct blob_buf b;
 
-static bool ubus_network_device_status(const char* name, void* priv)
+static bool ubus_network_device_status_generic(const char* name, ubus_data_handler_t _cb, void* priv)
 {
 	uint32_t id;
 	int ret;
@@ -309,14 +354,24 @@ static bool ubus_network_device_status(const char* name, void* priv)
 		return false;
 	}
 
-	ret = ubus_invoke(ctx, id, "status", b.head, ubus_network_device_result_cb, priv,
+	ret = ubus_invoke(ctx, id, "status", b.head, _cb, priv,
 					  UBUS_TIMEOUT);
 	if (ret) {
-		printf("%s:%d ret:%d\r\n", __FUNCTION__, __LINE__, ret);
+		printf("%s:%d %s ret:%d\r\n", __FUNCTION__, __LINE__, idstr, ret);
 		return false;
 	}
 
 	return true;
+}
+
+static bool ubus_network_device_status(const char* name, void* priv)
+{
+	return ubus_network_device_status_generic(name, ubus_network_device_result_cb, priv);
+}
+
+static bool ubus_network_device_port_status(const char* name, void* priv)
+{
+	return ubus_network_device_status_generic(name, ubus_network_device_port_result_cb, priv);
 }
 
 /*
@@ -434,6 +489,15 @@ int updateVpnStatus(ubus_gui_update_vpnstatus_handler_t cb )
 	cb(_uplink, _ipAddr, _gw, _internet, _vpnPorts);
 
 	return 0;
+}
+
+int updatePortsStatus(const char* ifname, ubus_gui_update_portstatus_handler_t cb)
+{
+	t_ubus_PortStatus_param _param;
+	_param.ifname = ifname;
+	_param.cb = cb;
+
+	ubus_network_device_port_status(ifname, &_param);
 }
 
 // static bool ubus_iwinfo_info(const char* name)
@@ -663,6 +727,8 @@ int updateVpnStatus(ubus_gui_update_vpnstatus_handler_t cb )
 	cb(randomState(), randomState(), randomState(), randomState(), randomState());
 	return 0;
 }
+
+int updatePortsStatus(const char* ifname, ubus_gui_update_portstatus_handler_t cb) { return 0; }
 
 bool ubus_init(void)
 {}

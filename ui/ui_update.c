@@ -83,6 +83,7 @@ void updateUiMenuNoGpsGsm(void)
 
 static int ports_index = 0;
 const char* PORTS_LABEL[] = {"WAN", "LAN1", "LAN2", "LAN3", "LAN4", "LAN5"};
+const char* PORTS_NAME[] = {"eth0", "lan1", "lan2", "lan3", "lan4", "lan5"};
 
 int ui_ports_refresh_ui()
 {
@@ -453,6 +454,40 @@ void updateWwanConfig(bool _ifup, const char* _ip, unsigned int _mask, const cha
     else wwan_up = false;
 }
 
+void updatePortsStatusUI(bool status, bool carrier, bool autoneg, char* speed)
+{
+    LV_LOG_INFO("status:%d, link:%d, autoneg:%d, speed:%s", status, carrier, autoneg, speed);
+    if (status)
+    {
+        lv_obj_set_style_bg_color(ui_PORTS_status_panel, lv_color_hex(0x2563EB), LV_PART_MAIN | LV_STATE_DEFAULT );
+        lv_label_set_text(ui_PORTS_status_value,"UP");
+    }else{
+         lv_obj_set_style_bg_color(ui_PORTS_status_panel, lv_color_hex(0xFF0707), LV_PART_MAIN | LV_STATE_DEFAULT );
+        lv_label_set_text(ui_PORTS_status_value,"DOWN");       
+    }
+    if (carrier)
+    {
+        lv_obj_set_style_bg_color(ui_PORTS_link_panel, lv_color_hex(0x2563EB), LV_PART_MAIN | LV_STATE_DEFAULT );
+        lv_label_set_text(ui_PORTS_link_value,"UP");
+    }else{
+         lv_obj_set_style_bg_color(ui_PORTS_link_panel, lv_color_hex(0xFF0707), LV_PART_MAIN | LV_STATE_DEFAULT );
+        lv_label_set_text(ui_PORTS_link_value,"DOWN");       
+    }
+    if (autoneg)
+    {
+        lv_label_set_text(ui_PORTS_negotiation_value,"ENA");
+    }else{
+        lv_label_set_text(ui_PORTS_negotiation_value,"DIS");       
+    }
+    if (speed)
+    {
+        if (strcmp(speed, "-1F") == 0) lv_label_set_text(ui_PORTS_speed_value,"---");
+        else if (strcmp(speed, "10F") == 0) lv_label_set_text(ui_PORTS_speed_value,"10/FD");
+        else if (strcmp(speed, "100F") == 0) lv_label_set_text(ui_PORTS_speed_value,"100/FD");
+        else if (strcmp(speed, "1000F") == 0) lv_label_set_text(ui_PORTS_speed_value,"1000/FD");
+    }
+}
+
 void updateVpnStatusUI(bool _uplink, bool _ipAddr, bool _gw, bool _internet, bool _vpnPorts)
 {
     LV_LOG_INFO("_uplink:%d, _ipAddr:%d, _gw:%d, _internet:%d, _vpnPorts:%d", _uplink, _ipAddr, _gw, _internet, _vpnPorts);
@@ -610,6 +645,11 @@ static void timer_sec_cb(lv_timer_t * timer)
         if ((menuIndex == UI_VPNSTATUS)||(_ui_updater_init))
         {
             updateVpnStatus(updateVpnStatusUI);
+        }
+
+        if ((menuIndex == UI_PORTSCONFIG)||(_ui_updater_init))
+        {
+            updatePortsStatus(PORTS_NAME[ports_index], updatePortsStatusUI);
         }
         count = 0;
     }
