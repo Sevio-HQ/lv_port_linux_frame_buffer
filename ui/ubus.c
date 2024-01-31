@@ -46,7 +46,7 @@ enum {
 
 static const struct blobmsg_policy ifstat_policy[] = {
 	[IFSTAT_UP] = {.name = "up", .type = BLOBMSG_TYPE_BOOL},
-	[IFSTAT_DHCP] = {.name = "dhcp", .type = BLOBMSG_TYPE_BOOL},
+	[IFSTAT_DHCP] = {.name = "proto", .type = BLOBMSG_TYPE_STRING},
 	[IFSTAT_DEVICE] = {.name = "device", .type = BLOBMSG_TYPE_STRING},
 	[IFSTAT_L3DEVICE] = {.name = "l3_device", .type = BLOBMSG_TYPE_STRING},
 	[IFSTAT_ROUTE] = {.name = "route", .type = BLOBMSG_TYPE_ARRAY},
@@ -129,7 +129,7 @@ static void ubus_ifStatus_cb(__attribute__((unused)) struct ubus_request* req,
 
 	//dhcp
 	if (tb[IFSTAT_DHCP])
-		dhcp = blobmsg_get_bool(tb[IFSTAT_DHCP]) ? true : false;
+		dhcp = strcmp(blobmsg_get_string(tb[IFSTAT_DHCP]), "dhcp") == 0 ? true : false;
 
 	// device
 	if (tb[IFSTAT_L3DEVICE]) {

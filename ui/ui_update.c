@@ -74,11 +74,28 @@ tUiMenuIndex prev_menuIndex = UI_NONE;
 void getGpsData();
 bool gpsDataInit();
 bool isGpsGsmPresent(void);
+extern bool isModemAvail;
+extern int ui_gsm_getAvail();
+
 
 void updateUiMenuNoGpsGsm(void)
 {
-    uiMenu[UI_PORTSCONFIG].rigth = UI_HOME;
-    uiMenu[UI_HOME].left = UI_PORTSCONFIG;
+    ui_gsm_getAvail();
+    if (isModemAvail)
+    {
+        uiMenu[UI_PORTSCONFIG].rigth = UI_GSMCONFIG;
+        uiMenu[UI_HOME].left = UI_GSMCONFIG;
+    }else{
+        uiMenu[UI_PORTSCONFIG].rigth = UI_HOME;
+        uiMenu[UI_HOME].left = UI_PORTSCONFIG;
+    }
+
+}
+
+int ui_home_refresh()
+{
+    updateUiMenuNoGpsGsm(); 
+    return 0;
 }
 
 static int ports_index = 0;
@@ -101,7 +118,7 @@ int ui_ports_refresh_ui()
     lv_label_set_text(ui_PORTS_page_label, PORTS_LABEL[ports_index]);
     // update ports status and data
     // TODO
-
+    updateUiMenuNoGpsGsm();
     return 0;
 }
 
@@ -159,6 +176,7 @@ void uiMenu_init()
     uiMenu[UI_HOME].left = UI_GSMCONFIG;
     uiMenu[UI_HOME].down = UI_NONE;
     uiMenu[UI_HOME].rigth = UI_VPNSTATUS;
+    uiMenu[UI_HOME].refresh = ui_home_refresh;
 
     uiMenu[UI_VPNSTATUS].left = UI_HOME;
     uiMenu[UI_VPNSTATUS].down = UI_NONE;
@@ -205,7 +223,7 @@ void uiMenu_init()
     uiMenu[UI_GPSCONFIG].rigth = UI_HOME;
     uiMenu[UI_GPSCONFIG].refresh = refreshGPS_ui;
 
-    if (!gpsDataInit())  updateUiMenuNoGpsGsm();
+    updateUiMenuNoGpsGsm();
 }
 
 lv_obj_t * uiMenu_getCurrent()
@@ -379,6 +397,31 @@ void readBoardValues()
     readAdcValues(ADC_CH_CURRENT);
 }
 
+typedef enum eExtGpio { DI1, DI2, DO1, DO2, NUM_OF_EXT_GPIO } tExtGpio;
+const char* gpioLabels[NUM_OF_EXT_GPIO] = {"", "", "sevio:out:1", "sevio:out:2"};
+
+int readGpioStatus(tExtGpio _gpio)
+{
+    int value = -1;
+    char buf[255]="";
+    char path[255]="";
+    int len=snprintf(path, sizeof(path), "/sys/class/leds/%s/brightness", gpioLabels[_gpio]);
+    int fd = open(path, O_RDONLY);
+     if (fd < 0)
+    {
+        LV_LOG_ERROR("gpio:%s path:%s len:%d", gpioLabels[_gpio], path, len);
+        return fd;
+    }else{
+        read(fd, buf, sizeof(buf));
+        value = atoi(buf);
+
+        LV_LOG_INFO("gpio:%s value:%d", gpioLabels[_gpio], value);
+    }
+    close(fd);
+
+    return value;
+}
+
 int readTempValues()
 {
     char buf[255]="";
@@ -421,13 +464,17 @@ void updateLanConfig(bool _ifup, const char* _ip, unsigned int _mask, const char
 {
     //lv_label_set_text(ui_WANIPCONFIG_Label10,"IP:  192.168.134.27/24");
     lv_label_set_text_fmt(ui_LANIPCONFIG_ip_value, "%s/%d", _ip, _mask);
+}
+
+void updateLanConfigDhcp(bool dhcp)
+{
     if (dhcp) 
     {
-        lv_obj_clear_flag(ui_WANIPCONFIG_dhcp_on, LV_OBJ_FLAG_HIDDEN); 
-        lv_obj_add_flag(ui_WANIPCONFIG_dhcp_off, LV_OBJ_FLAG_HIDDEN); 
+        lv_obj_clear_flag(ui_LANIPCONFIG_dhcp_on, LV_OBJ_FLAG_HIDDEN); 
+        lv_obj_add_flag(ui_LANIPCONFIG_dhcp_off, LV_OBJ_FLAG_HIDDEN); 
     }else{
-        lv_obj_clear_flag(ui_WANIPCONFIG_dhcp_off, LV_OBJ_FLAG_HIDDEN); 
-        lv_obj_add_flag(ui_WANIPCONFIG_dhcp_on, LV_OBJ_FLAG_HIDDEN); 
+        lv_obj_clear_flag(ui_LANIPCONFIG_dhcp_off, LV_OBJ_FLAG_HIDDEN); 
+        lv_obj_add_flag(ui_LANIPCONFIG_dhcp_on, LV_OBJ_FLAG_HIDDEN); 
     }
 }
 
@@ -593,6 +640,23 @@ void updateWiFiConfig()
     }
 }
 
+#define GREY_COLOR 0x525552
+#define BLUE_COLOR 0x2563EB
+
+void updateIOStatus()
+{
+    if (readGpioStatus(DO1)) {
+        lv_obj_set_style_bg_color(ui_IO_do1_panel, lv_color_hex(BLUE_COLOR), LV_PART_MAIN | LV_STATE_DEFAULT );
+    } else {
+        lv_obj_set_style_bg_color(ui_IO_do1_panel, lv_color_hex(GREY_COLOR), LV_PART_MAIN | LV_STATE_DEFAULT );
+    }
+    if (readGpioStatus(DO2)) {
+        lv_obj_set_style_bg_color(ui_IO_do2_panel, lv_color_hex(BLUE_COLOR), LV_PART_MAIN | LV_STATE_DEFAULT );
+    } else {
+        lv_obj_set_style_bg_color(ui_IO_do2_panel, lv_color_hex(GREY_COLOR), LV_PART_MAIN | LV_STATE_DEFAULT );
+    }
+}
+
 static int screenSaverTimer = 0;
 const int TIMER_EXPIRED_VALUE = 5;
 void resetScreenSaverTimer()
@@ -611,6 +675,7 @@ bool isScreenSaverrTimerExp()
 }
 
 static int count = 0;
+int uci_config_getLanDhcpServer();
 
 static void timer_sec_cb(lv_timer_t * timer)
 {
@@ -625,6 +690,7 @@ static void timer_sec_cb(lv_timer_t * timer)
         if ((menuIndex == UI_LANCONFIG)||(_ui_updater_init))
         {
             updateInterfaceStatusCb("lan", updateLanConfig);
+            updateLanConfigDhcp(uci_config_getLanDhcpServer() == 1);
         }
 
         if ((menuIndex == UI_WIFICONFIG )||(_ui_updater_init))
@@ -649,7 +715,14 @@ static void timer_sec_cb(lv_timer_t * timer)
 
         if ((menuIndex == UI_PORTSCONFIG)||(_ui_updater_init))
         {
+            if (_ui_updater_init) ports_index = 0;
+
             updatePortsStatus(PORTS_NAME[ports_index], updatePortsStatusUI);
+        }
+
+        if ((menuIndex == UI_IOCONFIG)||(_ui_updater_init))
+        {
+            updateIOStatus();
         }
         count = 0;
     }

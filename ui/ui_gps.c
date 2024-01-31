@@ -115,7 +115,7 @@ bool gpsDataInit()
         LV_LOG_ERROR("Cannot open gps source");
         default_lcd();
         gpsGsmPresence = 0;
-        updateUiMenuNoGpsGsm();
+        //updateUiMenuNoGpsGsm();
         return false;
     }else{
         gpsGsmPresence = 1;
@@ -133,14 +133,14 @@ int getGpsData()
 {
     int result = -1;
     int maxRetry = 5;
-     LV_LOG_INFO("GPSD get data...");
+    LV_LOG_INFO("GPSD get data...");
     //for (;;) { /* heart of the client */
     do {
         if (!gps_waiting(&gpsdata, 2000000)) {
             LV_LOG_ERROR("getGpsData: error while waiting\n");
             return -1;
         } else {
-            LV_LOG_INFO("GPSD read data...");  
+            //LV_LOG_INFO("GPSD read data...");  
 
             int status = gps_read(&gpsdata, NULL, 0);
             if (status >= 0)

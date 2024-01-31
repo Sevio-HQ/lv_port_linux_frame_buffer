@@ -177,8 +177,9 @@ int getModem()
     int infp, outfp, _mdm;
     FILE * fpout;
     int result = -1;
+    char hold[ 256 ] = { 0 };
 
-    pid_t _pid = popen2("dmesg | grep ttyUSB3 | wc -l", &infp, &outfp);
+    pid_t _pid = popen2("dmesg | grep ttyUSB3 | tail -1", &infp, &outfp);
     if(_pid <= 0) {
         LV_LOG_ERROR("Unable to exec command\n");
         return -1;
@@ -187,14 +188,14 @@ int getModem()
         LV_LOG_ERROR("Unable to open fd\n");
         return -1;
     } else {
-        fscanf(fpout, "%d", &_mdm); /* or other STDIO input functions */
-        if(_mdm == 1)
-            isModemAvail = true;
-        else
-            isModemAvail = false;
-        LV_LOG_INFO("Modem: %s", (isModemAvail) ? "OK" : "KO");
+        fgets(hold, sizeof(hold), fpout);
+        LV_LOG_INFO("Read:%s", hold);
+        char* value = strstr(hold, "attached");
+        if ( value != NULL) isModemAvail = true;
+        else isModemAvail = false; 
+        LV_LOG_INFO("Modem: %s, %s", (isModemAvail) ? "OK" : "KO", value);
     }
-    LV_LOG_INFO("pid:%d, in:%d, out:%d\n Waiting pid to close...", _pid, infp, outfp);
+    //LV_LOG_INFO("pid:%d, in:%d, out:%d\n Waiting pid to close...", _pid, infp, outfp);
     if(waitpid(_pid, NULL, 0) < 0) {
         LV_LOG_ERROR("wait error");
         return -1;
@@ -253,6 +254,12 @@ int ui_gsm_update_ui()
         lv_obj_set_style_border_color(ui_MOBILE_status_panel, lv_color_hex(0xf3e32a), LV_PART_MAIN | LV_STATE_DEFAULT);
     }
     return wwan_up;
+}
+
+
+int ui_gsm_getAvail()
+{
+    getModem();
 }
 
 int ui_gsm_update()

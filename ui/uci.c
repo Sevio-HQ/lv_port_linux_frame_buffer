@@ -43,6 +43,44 @@ int uci_config_getServiceTag(char* _serviceTag)
 			}
         }
     }
+	uci_free_context(uci);
+}
+
+int uci_config_getLanDhcpServer()
+{
+    struct uci_context* uci;
+	struct uci_package* p;
+	struct uci_element* e;
+	const char* str;
+	int val = -1;
+
+	uci = uci_alloc_context();
+	if (uci == NULL) {
+		return -1;
+	}
+
+	if (uci_load(uci, "dhcp", &p)) {
+		uci_free_context(uci);
+		return -1;
+	}
+
+	uci_foreach_element(&p->sections, e)
+	{
+		struct uci_section* s = uci_to_section(e);
+        printf("** name: %s\r\n", e->name);
+        printf("** type: %s\r\n", s->type);
+		if ((strcmp(s->type, "dhcp") == 0) && (strcmp(e->name, "lan") == 0)) {
+		    str = uci_lookup_option_string(uci, s, "dhcpv4");
+			if (str != NULL) {
+				if (strcmp(str,"server") == 0) val = 1;
+				else val = 0; 
+                LV_LOG_INFO("dhcpv4: %s", str);
+			}
+        }
+    }
+	uci_free_context(uci);
+
+	return val;
 }
 
 int uci_config_getWifiMode(char* _mode, bool* _hidden, char* _ssid)
@@ -88,6 +126,7 @@ int uci_config_getWifiMode(char* _mode, bool* _hidden, char* _ssid)
         }
 
     }
+	uci_free_context(uci);
 }
 
 int uci_config_isWifiDisabled(bool* _wifiDis)
@@ -123,4 +162,5 @@ int uci_config_isWifiDisabled(bool* _wifiDis)
             else *_wifiDis = true;
         }
     }
+	uci_free_context(uci);
 }
