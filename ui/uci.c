@@ -84,7 +84,7 @@ int uci_config_getLanDhcpServer()
 	return val;
 }
 
-int uci_config_getWifiMode(char* _mode, bool* _hidden, char* _ssid)
+int uci_config_getWifiMode(char* _mode, bool* _hidden, char* _ssid, bool* _disabled)
 {
     struct uci_context* uci;
 	struct uci_package* p;
@@ -123,7 +123,15 @@ int uci_config_getWifiMode(char* _mode, bool* _hidden, char* _ssid)
 			if (str != NULL) {
 				strcpy(_ssid, str);
 			}
-			LV_LOG_INFO("Wifi SSID:%s mode:%s hidden:%d", _ssid, _mode, *_hidden);
+
+			val = uci_lookup_option_int(uci, s, "disabled");
+            if (val == 0) 
+            {
+                *_disabled = false;
+            }
+            else *_disabled = true;
+
+			LV_LOG_INFO("Wifi SSID:%s mode:%s hidden:%d disabled:%d", _ssid, _mode, *_hidden, *_disabled);
         }
 
     }

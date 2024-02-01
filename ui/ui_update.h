@@ -3,6 +3,8 @@
 
 #define MAX_IP_LEN 			16
 #define MAX_IFNAME_LEN 	    256
+#define GREY_COLOR 0x525552
+#define BLUE_COLOR 0x2563EB
 
 typedef enum ifDefined {WAN, WLAN, WWAN, MAX_IF_DEFINED} tIfDefined;
 typedef enum {CHECK_FAIL, CHECK_OK, CHECK_NONE} tCheckStatus;

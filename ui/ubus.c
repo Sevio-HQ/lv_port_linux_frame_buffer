@@ -137,6 +137,7 @@ static void ubus_ifStatus_cb(__attribute__((unused)) struct ubus_request* req,
 	} else if (tb[IFSTAT_DEVICE]) {
 		dev = blobmsg_get_string(tb[IFSTAT_DEVICE]);
 	} else {
+		LV_LOG_ERROR("device not found");
 		ret = -1;
 		goto exit; // error
 	}
@@ -199,7 +200,7 @@ static void ubus_ifStatus_cb(__attribute__((unused)) struct ubus_request* req,
 			}
 		}
 	}
-
+exit:
 	// copy values
 	if (_param)
 	{
@@ -213,7 +214,7 @@ static void ubus_ifStatus_cb(__attribute__((unused)) struct ubus_request* req,
 			*_param->mask = mask;
 		}
 	}
-exit:
+
 	LV_LOG_INFO("name:%s stat:%s dev:%s ipv4:%s mask:%lu gw:%s dhcp:%s", ifname, ifup ? "UP" : "DOWN", dev, ipv4, mask, defGw, dhcp ? "ON" : "OFF");
 }
 

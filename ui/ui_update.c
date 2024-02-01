@@ -506,8 +506,12 @@ int readTempValues()
 
 void updateWanConfig(bool _ifup, const char* _ip, unsigned int _mask, const char* _gw, bool dhcp)
 {
-    //lv_label_set_text(ui_WANIPCONFIG_Label2,"IP:  192.168.134.27/24");
-    //lv_label_set_text(ui_WANIPCONFIG_Label3,"GW:  192.168.1.254");
+    if (!_ifup)
+    {
+        lv_label_set_text(ui_WANIPCONFIG_ip_value, "---");
+        lv_label_set_text(ui_WANIPCONFIG_gateway_value, "---");
+        return;
+    }
     lv_label_set_text_fmt(ui_WANIPCONFIG_ip_value, "%s/%d", _ip, _mask);
     lv_label_set_text_fmt(ui_WANIPCONFIG_gateway_value, "%s", _gw);
     if (dhcp) 
@@ -541,8 +545,15 @@ void updateLanConfigDhcp(bool dhcp)
 
 void updateWlanConfig(bool _ifup, const char* _ip, unsigned int _mask, const char* _gw, bool dhcp)
 {
-    //lv_label_set_text(ui_WANIPCONFIG_Label6,"IP:  192.168.134.27/24");
-    //lv_label_set_text(ui_WANIPCONFIG_Label7,"GW:  192.168.1.254");
+	LV_LOG_INFO("stat:%s ipv4:%s mask:%d gw:%s dhcp:%s", _ifup ? "UP" : "DOWN", _ip, _mask, _gw, dhcp ? "ON" : "OFF");
+
+    if (!_ifup)
+    {
+        lv_label_set_text(ui_WLANIPCONFIG_ip_value, "---");
+        lv_label_set_text(ui_WLANIPCONFIG_gateway_value, "---");
+        return;
+    }
+
     lv_label_set_text_fmt(ui_WLANIPCONFIG_ip_value, "%s/%d", _ip, _mask);
     lv_label_set_text_fmt(ui_WLANIPCONFIG_gateway_value, "%s", _gw);
     if (dhcp) 
@@ -677,7 +688,7 @@ void updateVpnStatusUI(tCheckStatus _uplink, tCheckStatus _ipAddr, tCheckStatus 
     }
 }
 
-int uci_config_getWifiMode(char* _mode, bool* _hidden, char* _ssid);
+int uci_config_getWifiMode(char* _mode, bool* _hidden, char* _ssid, bool* _disabled);
 
 void clearWifiSignalImg()
 {
@@ -715,30 +726,39 @@ void updateWiFiConfig()
 {
     char _wifiMode[WIFI_MODE_MAX_LEN];
     bool _hidden;
+    bool _disabled;
     char _ssid[SSID_MAX_LEN];
     int signal = 0;
 
-    if (uci_config_getWifiMode(_wifiMode, &_hidden, _ssid))
+    if (uci_config_getWifiMode(_wifiMode, &_hidden, _ssid, &_disabled))
     {
-        if (strcmp(_wifiMode, "ap") == 0) 
+        if (_disabled)
         {
-            lv_label_set_text(ui_WIFI_mode_value,"ACCESS POINT");
-            setWifiSignal(true, 0);
-        }
-        else 
-        {
-            lv_label_set_text(ui_WIFI_mode_value,"STATION");
-            t_ubus_iwinfo_getSignal_param param = { setWifiSignal, _ssid };
-            updateWiFiSignal(&param);
+            lv_label_set_text(ui_WIFI_mode_value,"---");
+            lv_label_set_text(ui_WIFI_ssid__value,"---");
+            lv_label_set_text(ui_WIFI_status_value,"Disabled");
+            lv_obj_set_style_bg_color(ui_WIFI_status_panel, lv_color_hex(GREY_COLOR), LV_PART_MAIN | LV_STATE_DEFAULT );
+            clearWifiSignalImg();
+        }else {
+            lv_label_set_text(ui_WIFI_status_value,"Registered");
+            lv_obj_set_style_bg_color(ui_WIFI_status_panel, lv_color_hex(BLUE_COLOR), LV_PART_MAIN | LV_STATE_DEFAULT );
+            if (strcmp(_wifiMode, "ap") == 0) 
+            {
+                lv_label_set_text(ui_WIFI_mode_value,"ACCESS POINT");
+                setWifiSignal(true, 0);
+            }
+            else 
+            {
+                lv_label_set_text(ui_WIFI_mode_value,"STATION");
+                t_ubus_iwinfo_getSignal_param param = { setWifiSignal, _ssid };
+                updateWiFiSignal(&param);
+            }
+            if (_hidden) lv_label_set_text(ui_WIFI_ssid__value,"********");
+            else lv_label_set_text(ui_WIFI_ssid__value, _ssid);
         }
 
-        if (_hidden) lv_label_set_text(ui_WIFI_ssid__value,"********");
-        else lv_label_set_text(ui_WIFI_ssid__value, _ssid);
     }
 }
-
-#define GREY_COLOR 0x525552
-#define BLUE_COLOR 0x2563EB
 
 void updateIOStatus()
 {
