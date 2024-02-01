@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <uci.h>
+#include "ui_update.h"
 
 /** analogous to uci_lookup_option_string from uci.h, returns -1 when not found
  */
@@ -67,14 +68,14 @@ int uci_config_getLanDhcpServer()
 	uci_foreach_element(&p->sections, e)
 	{
 		struct uci_section* s = uci_to_section(e);
-        printf("** name: %s\r\n", e->name);
-        printf("** type: %s\r\n", s->type);
+        // printf("** name: %s\r\n", e->name);
+        // printf("** type: %s\r\n", s->type);
 		if ((strcmp(s->type, "dhcp") == 0) && (strcmp(e->name, "lan") == 0)) {
 		    str = uci_lookup_option_string(uci, s, "dhcpv4");
 			if (str != NULL) {
 				if (strcmp(str,"server") == 0) val = 1;
 				else val = 0; 
-                LV_LOG_INFO("dhcpv4: %s", str);
+                LV_LOG_INFO("%s dhcpv4: %s", e->name, str);
 			}
         }
     }
@@ -160,6 +161,52 @@ int uci_config_isWifiDisabled(bool* _wifiDis)
                 *_wifiDis = false;
             }
             else *_wifiDis = true;
+        }
+    }
+	uci_free_context(uci);
+}
+
+int uci_config_set_pingcheck()
+{
+    struct uci_context* uci;
+	struct uci_package* p;
+	struct uci_element* e;
+	const char* str;
+    int val = 0;
+
+	uci = uci_alloc_context();
+	if (uci == NULL) {
+		return 0;
+	}
+
+	if (uci_load(uci, "pingcheck", &p)) {
+		uci_free_context(uci);
+		return 0;
+	}
+
+	uci_foreach_element(&p->sections, e)
+	{
+		struct uci_section* s = uci_to_section(e);
+        printf("** name:%s type:%s\r\n", e->name, s->type);
+		if (strcmp(s->type, "interface") == 0) {
+
+            const char* name = uci_lookup_option_string(uci, s, "name");
+            const char* host = uci_lookup_option_string(uci, s, "host");
+            LV_LOG_INFO("name:%s host: %s", name, host);
+			bool up; unsigned long mask; char* gw; char* ip;
+			if (getIfStatEntry(name, &up, &gw, &ip, &mask))
+			{
+				if (strcmp(gw, host) != 0) 
+				{
+					//up date uci configuration
+					struct uci_ptr ptr = { .p = p, .s = s, .option = "host", .value = gw };
+					uci_set(uci, &ptr);
+					uci_commit(uci, &p, true);
+					LV_LOG_INFO("CHANGED name:%s gw:%s host:%s", name, gw, host);
+
+				}
+				LV_LOG_INFO("name:%s up:%s ip:%s mask:%lu gw:%s", name, up ? "UP" : "DOWN", ip, mask, gw);
+			}
         }
     }
 	uci_free_context(uci);

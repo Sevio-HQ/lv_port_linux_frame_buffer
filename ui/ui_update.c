@@ -77,6 +77,67 @@ bool isGpsGsmPresent(void);
 extern bool isModemAvail;
 extern int ui_gsm_getAvail();
 
+tIfStat ifStats[MAX_IF_DEFINED] = { { .up = false, .name="wan", .ip="", .gw="", .mask=0, .reachable = false },
+                                    { .up = false, .name="wlan", .ip="", .gw="", .mask=0, .reachable = false },
+                                    { .up = false, .name="wwan", .ip="", .gw="", .mask=0, .reachable = false } 
+                                  };
+
+void setIfStatIfChanged(tIfDefined _if, char* name, bool up, char* gw, char* ip, unsigned long mask)
+{
+	LV_LOG_INFO("%d) name:%s up:%s ip:%s mask:%lu gw:%s", _if, name, up ? "UP" : "DOWN", ip, mask, gw);
+
+    if(up != ifStats[_if].up) {
+        ifStats[_if].up = up;
+    }
+    if(strcmp(gw, ifStats[_if].gw) != 0) {
+        strcpy(ifStats[_if].gw, gw);
+    }
+    if(strcmp(ip, ifStats[_if].ip) != 0) {
+        strcpy(ifStats[_if].ip, ip);
+    }
+    if(mask != ifStats[_if].mask) {
+        ifStats[_if].mask = mask;
+    }
+
+}
+
+int getIfStatEntry(const char* name, bool* up, char** gw, char** ip, unsigned long* mask)
+{
+    int index = WAN;
+    do {
+        LV_LOG_INFO("%d) name:%s - %s", index, name, ifStats[index].name);
+        if (strcmp(name, ifStats[index].name) == 0)
+        {
+            *up = ifStats[index].up;
+            *gw = ifStats[index].gw;
+            *ip = ifStats[index].ip;
+            *mask = ifStats[index].mask;
+	        LV_LOG_INFO("FOUND name:%s up:%s ip:%s mask:%lu gw:%s", name, *up ? "UP" : "DOWN", *ip, *mask, *gw);
+
+            return 1;
+        }else{
+            ++index;
+        }
+    }while( index<MAX_IF_DEFINED );
+    return 0;
+}
+
+int updateIfStats(char* name, bool up, char* gw, char* ip, unsigned long mask)
+{
+	LV_LOG_INFO("name:%s up:%s ip:%s mask:%lu gw:%s", name, up ? "UP" : "DOWN", ip, mask, gw);
+    if ((strcmp(name, "wan") == 0))
+    {
+        setIfStatIfChanged(WAN, name, up, gw, ip, mask);
+    }
+    if ((strcmp(name, "wlan") == 0))
+    {
+        setIfStatIfChanged(WLAN, name, up, gw, ip, mask);
+    }
+        if ((strcmp(name, "wwan") == 0))
+    {
+        setIfStatIfChanged(WWAN, name, up, gw, ip, mask);
+    }
+}
 
 void updateUiMenuNoGpsGsm(void)
 {
@@ -108,6 +169,7 @@ int ui_ports_refresh_ui()
     {
         // enter in the Prots config menu. Reset to first port
         ports_index = 0;
+        updateUiMenuNoGpsGsm();
     }else if (((prev_menuIndex == UI_PORTSCONFIG) && (menuIndex == UI_PORTSCONFIG)))
     {
         if (ports_index < MAX_NUM_PORTS)
@@ -118,7 +180,6 @@ int ui_ports_refresh_ui()
     lv_label_set_text(ui_PORTS_page_label, PORTS_LABEL[ports_index]);
     // update ports status and data
     // TODO
-    updateUiMenuNoGpsGsm();
     return 0;
 }
 
@@ -535,48 +596,84 @@ void updatePortsStatusUI(bool status, bool carrier, bool autoneg, char* speed)
     }
 }
 
-void updateVpnStatusUI(bool _uplink, bool _ipAddr, bool _gw, bool _internet, bool _vpnPorts)
+
+void updateVpnStatusUI(tCheckStatus _uplink, tCheckStatus _ipAddr, tCheckStatus _gw, tCheckStatus _internet, tCheckStatus _vpnPorts)
 {
     LV_LOG_INFO("_uplink:%d, _ipAddr:%d, _gw:%d, _internet:%d, _vpnPorts:%d", _uplink, _ipAddr, _gw, _internet, _vpnPorts);
-    if (_uplink) 
+    switch (_uplink) 
     {
-        lv_obj_clear_flag(ui_VPNSTATUS_uplink_pass, LV_OBJ_FLAG_HIDDEN);
-        lv_obj_add_flag(ui_VPNSTATUS_uplink_fail, LV_OBJ_FLAG_HIDDEN); 
-    }else{
-        lv_obj_add_flag(ui_VPNSTATUS_uplink_pass, LV_OBJ_FLAG_HIDDEN);
-        lv_obj_clear_flag(ui_VPNSTATUS_uplink_fail, LV_OBJ_FLAG_HIDDEN); 
+        case CHECK_NONE:
+            lv_obj_add_flag(ui_VPNSTATUS_uplink_fail, LV_OBJ_FLAG_HIDDEN); 
+            lv_obj_add_flag(ui_VPNSTATUS_uplink_pass, LV_OBJ_FLAG_HIDDEN);
+            break;
+        case CHECK_OK:
+            lv_obj_clear_flag(ui_VPNSTATUS_uplink_pass, LV_OBJ_FLAG_HIDDEN);
+            lv_obj_add_flag(ui_VPNSTATUS_uplink_fail, LV_OBJ_FLAG_HIDDEN); 
+            break;
+        case CHECK_FAIL:
+            lv_obj_add_flag(ui_VPNSTATUS_uplink_pass, LV_OBJ_FLAG_HIDDEN);
+            lv_obj_clear_flag(ui_VPNSTATUS_uplink_fail, LV_OBJ_FLAG_HIDDEN); 
+            break;
     }
-    if (_ipAddr) 
+    switch (_ipAddr) 
     {
-        lv_obj_clear_flag(ui_VPNSTATUS_ip_pass, LV_OBJ_FLAG_HIDDEN);
-        lv_obj_add_flag(ui_VPNSTATUS_ip_fail, LV_OBJ_FLAG_HIDDEN); 
-    }else{
-        lv_obj_add_flag(ui_VPNSTATUS_ip_pass, LV_OBJ_FLAG_HIDDEN);
-        lv_obj_clear_flag(ui_VPNSTATUS_ip_fail, LV_OBJ_FLAG_HIDDEN); 
+        case CHECK_NONE:
+            lv_obj_add_flag(ui_VPNSTATUS_ip_pass, LV_OBJ_FLAG_HIDDEN); 
+            lv_obj_add_flag(ui_VPNSTATUS_ip_fail, LV_OBJ_FLAG_HIDDEN); 
+            break;
+        case CHECK_OK:
+            lv_obj_clear_flag(ui_VPNSTATUS_ip_pass, LV_OBJ_FLAG_HIDDEN);
+            lv_obj_add_flag(ui_VPNSTATUS_ip_fail, LV_OBJ_FLAG_HIDDEN); 
+            break;
+        case CHECK_FAIL:
+            lv_obj_add_flag(ui_VPNSTATUS_ip_pass, LV_OBJ_FLAG_HIDDEN);
+            lv_obj_clear_flag(ui_VPNSTATUS_ip_fail, LV_OBJ_FLAG_HIDDEN); 
+            break;
     }
-    if (_gw) 
+    switch (_gw) 
     {
-        lv_obj_clear_flag(ui_VPNSTATUS_gateway_pass, LV_OBJ_FLAG_HIDDEN);
-        lv_obj_add_flag(ui_VPNSTATUS_gateway_fail, LV_OBJ_FLAG_HIDDEN); 
-    }else{
-        lv_obj_add_flag(ui_VPNSTATUS_gateway_pass, LV_OBJ_FLAG_HIDDEN);
-        lv_obj_clear_flag(ui_VPNSTATUS_gateway_fail, LV_OBJ_FLAG_HIDDEN); 
+        case CHECK_NONE:
+            lv_obj_add_flag(ui_VPNSTATUS_gateway_fail, LV_OBJ_FLAG_HIDDEN); 
+            lv_obj_add_flag(ui_VPNSTATUS_gateway_pass, LV_OBJ_FLAG_HIDDEN); 
+            break;
+        case CHECK_OK:
+            lv_obj_clear_flag(ui_VPNSTATUS_gateway_pass, LV_OBJ_FLAG_HIDDEN);
+            lv_obj_add_flag(ui_VPNSTATUS_gateway_fail, LV_OBJ_FLAG_HIDDEN); 
+            break;
+        case CHECK_FAIL:
+            lv_obj_add_flag(ui_VPNSTATUS_gateway_pass, LV_OBJ_FLAG_HIDDEN);
+            lv_obj_clear_flag(ui_VPNSTATUS_gateway_fail, LV_OBJ_FLAG_HIDDEN); 
+            break;
     }
-    if (_internet) 
+    switch (_internet) 
     {
-        lv_obj_clear_flag(ui_VPNSTATUS_internet_pass, LV_OBJ_FLAG_HIDDEN);
-        lv_obj_add_flag(ui_VPNSTATUS_internet_fail, LV_OBJ_FLAG_HIDDEN); 
-    }else{
-        lv_obj_add_flag(ui_VPNSTATUS_internet_pass, LV_OBJ_FLAG_HIDDEN);
-        lv_obj_clear_flag(ui_VPNSTATUS_internet_fail, LV_OBJ_FLAG_HIDDEN); 
+        case CHECK_NONE:
+            lv_obj_add_flag(ui_VPNSTATUS_internet_fail, LV_OBJ_FLAG_HIDDEN); 
+            lv_obj_add_flag(ui_VPNSTATUS_internet_pass, LV_OBJ_FLAG_HIDDEN); 
+            break;
+        case CHECK_OK:
+            lv_obj_clear_flag(ui_VPNSTATUS_internet_pass, LV_OBJ_FLAG_HIDDEN);
+            lv_obj_add_flag(ui_VPNSTATUS_internet_fail, LV_OBJ_FLAG_HIDDEN); 
+            break;
+        case CHECK_FAIL:
+            lv_obj_add_flag(ui_VPNSTATUS_internet_pass, LV_OBJ_FLAG_HIDDEN);
+            lv_obj_clear_flag(ui_VPNSTATUS_internet_fail, LV_OBJ_FLAG_HIDDEN); 
+            break;
     }
-    if (_vpnPorts) 
+    switch (_vpnPorts) 
     {
-        lv_obj_clear_flag(ui_VPNSTATUS_vpn_pass, LV_OBJ_FLAG_HIDDEN);
-        lv_obj_add_flag(ui_VPNSTATUS_vpn_fail, LV_OBJ_FLAG_HIDDEN); 
-    }else{
-        lv_obj_add_flag(ui_VPNSTATUS_vpn_pass, LV_OBJ_FLAG_HIDDEN);
-        lv_obj_clear_flag(ui_VPNSTATUS_vpn_fail, LV_OBJ_FLAG_HIDDEN); 
+        case CHECK_NONE:
+            lv_obj_add_flag(ui_VPNSTATUS_vpn_fail, LV_OBJ_FLAG_HIDDEN); 
+            lv_obj_add_flag(ui_VPNSTATUS_vpn_pass, LV_OBJ_FLAG_HIDDEN); 
+            break;
+        case CHECK_OK:
+            lv_obj_clear_flag(ui_VPNSTATUS_vpn_pass, LV_OBJ_FLAG_HIDDEN);
+            lv_obj_add_flag(ui_VPNSTATUS_vpn_fail, LV_OBJ_FLAG_HIDDEN); 
+            break;
+        case CHECK_FAIL:
+            lv_obj_add_flag(ui_VPNSTATUS_vpn_pass, LV_OBJ_FLAG_HIDDEN);
+            lv_obj_clear_flag(ui_VPNSTATUS_vpn_fail, LV_OBJ_FLAG_HIDDEN); 
+            break;
     }
 }
 

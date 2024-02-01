@@ -2,8 +2,7 @@
 #define UBUS_H
 
 #include <stdbool.h>
-#define MAX_IFNAME_LEN	   	256
-#define MAX_IP_LEN 			16
+#include "ui_update.h"
 
 typedef void (*ubus_gui_update_handler_t)(bool _ifup, const char* _ip,
 				    unsigned int _mask, const char* _gw, bool dhcp);
@@ -31,8 +30,7 @@ typedef struct ubus_iwinfo_getSignal_param
 	const char* _ssid;
 }t_ubus_iwinfo_getSignal_param;
 
-typedef void (*ubus_gui_update_vpnstatus_handler_t)(bool _uplink, bool _ipAddr, bool _gw, bool _internet, bool _vpnPorts);
-
+typedef void (*ubus_gui_update_vpnstatus_handler_t)(tCheckStatus _uplink, tCheckStatus _ipAddr, tCheckStatus _gw, tCheckStatus _internet, tCheckStatus _vpnPorts);
 
 typedef void (*ubus_gui_update_portstatus_handler_t)(bool status, bool carrier, bool autoneg, char* speed);
 

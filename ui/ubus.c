@@ -11,7 +11,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <sys/socket.h>
-
+#include "ui_update.h"
 
 #define UBUS_TIMEOUT	   	3000 /* 3 sec */
 
@@ -441,8 +441,16 @@ static bool concentrator_resolve(char* hostname)
 	return true;
 }
 
+extern int uci_config_set_pingcheck();
+
 int updateVpnStatus(ubus_gui_update_vpnstatus_handler_t cb )
 {
+	tCheckStatus _uplink = CHECK_NONE;
+	tCheckStatus _ipAddr = CHECK_NONE;
+	tCheckStatus _gw = CHECK_NONE;
+	tCheckStatus _internet = CHECK_NONE;
+	tCheckStatus _vpnPorts = CHECK_NONE;
+
 	bool eth0_up = false, wlan0_up = false, wwan0_up = false;
 
 	// Physical Uplink
@@ -453,39 +461,53 @@ int updateVpnStatus(ubus_gui_update_vpnstatus_handler_t cb )
 		if (!wlan0_up)
 			ubus_network_device_status("wwan0", (void*)&wwan0_up);
 	}
-	bool _uplink = eth0_up | wlan0_up | wwan0_up;
+	_uplink = (eth0_up | wlan0_up | wwan0_up) ? CHECK_OK : CHECK_FAIL;
+	cb(_uplink, _ipAddr, _gw, _internet, _vpnPorts);
+	if (_uplink == CHECK_FAIL) return 0;
 
 	char dev[MAX_IFNAME_LEN]  = "";
 	char defGw[MAX_IP_LEN]  = "";
 	char ipv4[MAX_IP_LEN]  = "";
     unsigned long mask = 0;
 	bool wan_ifup = false, wlan_ifup = false, wwan_ifup = false, ovpn_ifup = false, dhcp = false;
-    updateInterfaceStatus("wan", &wan_ifup, dev, defGw, ipv4, &mask, &dhcp);
+    updateInterfaceStatus("wan", &wan_ifup, dev, defGw, ipv4, &mask, &dhcp);		
+	updateIfStats("wan", wan_ifup, defGw, ipv4, mask);
+	defGw[0] = '\0'; ipv4[0]='\0'; mask = 0;
     updateInterfaceStatus("wlan", &wlan_ifup, dev, defGw, ipv4, &mask, &dhcp);
+	updateIfStats("wlan", wlan_ifup, defGw, ipv4, mask);
+	defGw[0] = '\0'; ipv4[0]='\0'; mask = 0;
     updateInterfaceStatus("wwan", &wwan_ifup, dev, defGw, ipv4, &mask, &dhcp);
+	updateIfStats("wwan", wwan_ifup, defGw, ipv4, mask);
 
-	bool _ipAddr = wan_ifup | wlan_ifup | wwan_ifup;
+	_ipAddr = (wan_ifup | wlan_ifup | wwan_ifup) ? CHECK_OK : CHECK_FAIL;
+	cb(_uplink, _ipAddr, _gw, _internet, _vpnPorts);
+	if (_ipAddr == CHECK_FAIL) return 0;
+
+	//VPNSTATUS_gateway
+	_gw = CHECK_OK;
+	uci_config_set_pingcheck();
+	cb(_uplink, _ipAddr, _gw, _internet, _vpnPorts);
+	if (_gw == CHECK_FAIL) return 0;
 
 	//VPNSTATUS_internet
-	bool _internet = false;
 	if (concentrator_resolve("concentrators.sevio.it"))
 	{
-		_internet = true;
+		_internet = CHECK_OK;
 	}else if (concentrator_resolve("vpn.sevio.dev"))
 	{
-		_internet = true;
+		_internet = CHECK_OK;
 	}else if (concentrator_resolve("vpn2.sevio.dev"))
 	{
-		_internet = true;
+		_internet = CHECK_OK;
+	}else{
+		_internet = CHECK_FAIL;
 	}
-	
+	cb(_uplink, _ipAddr, _gw, _internet, _vpnPorts);
+	if (_internet == CHECK_FAIL) return 0;
+
 	//VPNSTATUS_vpn
 	updateInterfaceStatus("ovpn0", &ovpn_ifup, dev, defGw, ipv4, &mask, &dhcp);
-
-
-	bool _gw = true;
-
-	bool _vpnPorts = ovpn_ifup;
+	_vpnPorts = ovpn_ifup ? CHECK_OK : CHECK_FAIL;
 	cb(_uplink, _ipAddr, _gw, _internet, _vpnPorts);
 
 	return 0;
