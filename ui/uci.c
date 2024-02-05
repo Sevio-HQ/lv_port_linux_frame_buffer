@@ -174,13 +174,19 @@ int uci_config_isWifiDisabled(bool* _wifiDis)
 	uci_free_context(uci);
 }
 
-int uci_config_set_pingcheck()
+bool uci_config_set_pingcheck(char* ifname)
 {
     struct uci_context* uci;
 	struct uci_package* p;
 	struct uci_element* e;
+	struct uci_section* s;
 	const char* str;
     int val = 0;
+	const char* name;
+	const char* host;
+	bool up; unsigned long mask; char* gw; char* ip;
+
+	if (ifname == NULL) return 0;
 
 	uci = uci_alloc_context();
 	if (uci == NULL) {
@@ -192,30 +198,67 @@ int uci_config_set_pingcheck()
 		return 0;
 	}
 
+	bool found = false; bool changed = false; 
+
 	uci_foreach_element(&p->sections, e)
 	{
-		struct uci_section* s = uci_to_section(e);
-        printf("** name:%s type:%s\r\n", e->name, s->type);
-		if (strcmp(s->type, "interface") == 0) {
+		s = uci_to_section(e);
 
-            const char* name = uci_lookup_option_string(uci, s, "name");
-            const char* host = uci_lookup_option_string(uci, s, "host");
-            LV_LOG_INFO("name:%s host: %s", name, host);
-			bool up; unsigned long mask; char* gw; char* ip;
-			if (getIfStatEntry(name, &up, &gw, &ip, &mask))
+		if ((s)&&(strcmp(s->type, "interface") == 0)) {
+
+            name = uci_lookup_option_string(uci, s, "name");
+            host = uci_lookup_option_string(uci, s, "host");
+
+			if ((name) && (strcmp(ifname, name) == 0) )
 			{
-				if (strcmp(gw, host) != 0) 
-				{
-					//up date uci configuration
-					struct uci_ptr ptr = { .p = p, .s = s, .option = "host", .value = gw };
-					uci_set(uci, &ptr);
-					uci_commit(uci, &p, true);
-					LV_LOG_INFO("CHANGED name:%s gw:%s host:%s", name, gw, host);
+				found = true;
+				if (getIfStatEntry(name, &up, &gw, &ip, &mask))
+					if ((gw) && (host) &&(strcmp(gw, host) != 0))
+					{
+						changed = true;
+						//up date uci configuration
+						struct uci_ptr ptr = { .p = p, .s = s, .option = "host", .value = gw };
+						int ret = uci_set(uci, &ptr);
 
-				}
+						LV_LOG_INFO("CHANGED name:%s gw:%s host:%s ret:%d", name, gw, host, ret);
+					}
 				LV_LOG_INFO("name:%s up:%s ip:%s mask:%lu gw:%s", name, up ? "UP" : "DOWN", ip, mask, gw);
 			}
         }
     }
+
+	if (!found) 
+	{
+		LV_LOG_INFO("If not found name:%s ADD", ifname);
+		if (getIfStatEntry(ifname, &up, &gw, &ip, &mask))
+		{
+			LV_LOG_INFO("name:%s up:%s ip:%s mask:%lu gw:%s", ifname, up ? "UP" : "DOWN", ip, mask, gw);
+			if (up)
+			{
+				struct uci_ptr ptr = { .p = p };
+				uci_add_section(uci, p, "interface", &ptr.s);
+
+				if (ptr.s)
+				{
+					ptr.o = NULL;
+					ptr.option = "host";
+					ptr.value = gw;
+					uci_set(uci, &ptr);
+
+					ptr.o = NULL;
+					ptr.option = "name";
+					ptr.value = ifname;
+					uci_set(uci, &ptr);
+						
+					changed = true;
+				}else{
+					LV_LOG_ERROR("Section not created");
+				}
+			}
+		}
+	}
+	if (changed) uci_commit(uci, &p, false);
 	uci_free_context(uci);
+
+	return changed;
 }

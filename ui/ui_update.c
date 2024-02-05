@@ -105,20 +105,23 @@ int getIfStatEntry(const char* name, bool* up, char** gw, char** ip, unsigned lo
 {
     int index = WAN;
     do {
-        LV_LOG_INFO("%d) name:%s - %s", index, name, ifStats[index].name);
+        //LV_LOG_INFO("%d) name:%s - %s", index, name, ifStats[index].name);
         if (strcmp(name, ifStats[index].name) == 0)
         {
             *up = ifStats[index].up;
             *gw = ifStats[index].gw;
             *ip = ifStats[index].ip;
             *mask = ifStats[index].mask;
-	        LV_LOG_INFO("FOUND name:%s up:%s ip:%s mask:%lu gw:%s", name, *up ? "UP" : "DOWN", *ip, *mask, *gw);
+	        //LV_LOG_INFO("FOUND name:%s up:%s ip:%s mask:%lu gw:%s", name, *up ? "UP" : "DOWN", *ip, *mask, *gw);
 
             return 1;
         }else{
             ++index;
         }
     }while( index<MAX_IF_DEFINED );
+
+    LV_LOG_INFO("IF not FOUND name:%s", name);
+
     return 0;
 }
 

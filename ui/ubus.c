@@ -375,6 +375,78 @@ static bool ubus_network_device_port_status(const char* name, void* priv)
 	return ubus_network_device_status_generic(name, ubus_network_device_port_result_cb, priv);
 }
 
+enum {
+	PINGCHECK_STATUS,
+	PINGCHECK_INTERFACE,
+	PINGCHECK_DEVICE,
+	PINGCHECK_PERC,
+	PINGCHECK_MAX
+};
+
+static const struct blobmsg_policy pingcheck_policy[PINGCHECK_MAX] = {
+	[PINGCHECK_STATUS] = {.name = "status", .type = BLOBMSG_TYPE_STRING},
+	[PINGCHECK_INTERFACE] = {.name = "interface", .type = BLOBMSG_TYPE_STRING},
+	[PINGCHECK_DEVICE] = {.name = "device", .type = BLOBMSG_TYPE_STRING},
+	[PINGCHECK_PERC] = {.name = "percent", .type = BLOBMSG_TYPE_INT16},
+};
+
+
+static void ubus_pingcheck_result_cb (	__attribute__((unused)) struct ubus_request* req,
+						   				__attribute__((unused)) int type,
+						   				struct blob_attr* msg)
+{
+	if (!msg) {
+		printf("msg NULL\r\n");
+		return;
+	}
+
+	struct blob_attr* tb[ARRAY_SIZE(pingcheck_policy)];
+	if ( blobmsg_parse(pingcheck_policy, ARRAY_SIZE(pingcheck_policy), tb,
+				  blob_data(msg), blob_len(msg)) == 0 )
+	{
+		char* status = blobmsg_get_string(tb[PINGCHECK_STATUS]);
+		char* ifname = blobmsg_get_string(tb[PINGCHECK_INTERFACE]);
+		char* device = blobmsg_get_string(tb[PINGCHECK_DEVICE]);
+		if (strcmp(status, "ONLINE") == 0) 	*((bool*)req->priv) = true;
+		else *((bool*)req->priv) = false;;
+		LV_LOG_INFO("Interface :%s dev:%s status:%s %d", ifname, device, status, *((bool*)req->priv));
+	}
+}
+
+static bool ubus_pingcheck_status_generic(const char* name, void* priv)
+{
+	uint32_t id;
+	int ret;
+
+	char idstr[64];
+	blob_buf_init(&b, 0);
+
+
+	ret = snprintf(idstr, sizeof(idstr), "{ \"interface\" : \"%s\" }", name);
+	if (ret <= 0 || (unsigned int)ret >= sizeof(idstr)) { // error or truncated
+		return false;
+	}else{
+		if (!blobmsg_add_json_from_string(&b, idstr))
+			printf("error adding json param\r\n");
+	}
+
+	ret = ubus_lookup_id(ctx, "pingcheck", &id);
+	if (ret) {
+		printf("%s:%d ret:%d -->\r\n", __FUNCTION__, __LINE__, ret);
+		return false;
+	}
+
+	ret = ubus_invoke(ctx, id, "status", b.head, ubus_pingcheck_result_cb, priv,
+					  UBUS_TIMEOUT);
+	if (ret) {
+		printf("%s:%d %s ret:%d\r\n", __FUNCTION__, __LINE__, idstr, ret);
+		return false;
+	}
+
+	return true;
+}
+
+
 /*
  * checks interface is up and default route goes thru it
  *
@@ -442,7 +514,46 @@ static bool concentrator_resolve(char* hostname)
 	return true;
 }
 
-extern int uci_config_set_pingcheck();
+extern bool uci_config_set_pingcheck();
+
+static bool ubus_restart_service(const char* name)
+{
+	uint32_t id;
+	int ret;
+
+	char idstr[64];
+	blob_buf_init(&b, 0);
+
+
+	ret = snprintf(idstr, sizeof(idstr), "{ \"name\" : \"%s\",  \"signal\":\"10\"}", name);
+	if (ret <= 0 || (unsigned int)ret >= sizeof(idstr)) { // error or truncated
+		return false;
+	}else{
+		if (!blobmsg_add_json_from_string(&b, idstr))
+			printf("error adding json param\r\n");
+	}
+
+	ret = ubus_lookup_id(ctx, "service", &id);
+	if (ret) {
+		printf("%s:%d ret:%d -->\r\n", __FUNCTION__, __LINE__, ret);
+		return false;
+	}
+
+	ret = ubus_invoke(ctx, id, "signal", b.head, NULL, NULL,
+					  UBUS_TIMEOUT);
+	if (ret) {
+		printf("%s:%d %s ret:%d\r\n", __FUNCTION__, __LINE__, idstr, ret);
+		return false;
+	}
+
+	return true;
+}
+
+
+void restartPingCheckService()
+{
+	ubus_restart_service("pingcheck");
+}
 
 int updateVpnStatus(ubus_gui_update_vpnstatus_handler_t cb )
 {
@@ -486,7 +597,23 @@ int updateVpnStatus(ubus_gui_update_vpnstatus_handler_t cb )
 
 	//VPNSTATUS_gateway
 	_gw = CHECK_OK;
-	uci_config_set_pingcheck();
+	if (uci_config_set_pingcheck("wan") || uci_config_set_pingcheck("wlan") || uci_config_set_pingcheck("wwan")) restartPingCheckService();
+	
+	
+	bool wan_pingstatus = false;
+	bool wlan_pingstatus = false;
+	bool wwan_pingstatus = false;
+	
+	ubus_pingcheck_status_generic("wan", (void*)&wan_pingstatus);
+	if (!wan_pingstatus)
+	{
+		ubus_pingcheck_status_generic("wlan", (void*)&wlan_pingstatus);
+		if (!wlan_pingstatus)
+			ubus_pingcheck_status_generic("wwan", (void*)&wwan_pingstatus);
+	}
+	LV_LOG_INFO("PingStatus wan:%d wlan:%d wwan:%d", wan_pingstatus, wlan_pingstatus, wwan_pingstatus);
+	_gw = (wan_pingstatus | wlan_pingstatus | wwan_pingstatus) ? CHECK_OK : CHECK_FAIL;
+
 	cb(_uplink, _ipAddr, _gw, _internet, _vpnPorts);
 	if (_gw == CHECK_FAIL) return 0;
 
