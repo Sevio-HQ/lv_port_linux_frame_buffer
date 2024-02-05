@@ -281,7 +281,9 @@ static void ubus_network_device_result_cb (	__attribute__((unused)) struct ubus_
 	if ( blobmsg_parse(devstat_policy, ARRAY_SIZE(devstat_policy), tb,
 				  blob_data(msg), blob_len(msg)) == 0 )
 	{
-		bool deviceStatusUp = blobmsg_get_bool(tb[DEVSTAT_UP]) ? true : false;
+		// bool deviceStatusUp = blobmsg_get_bool(tb[DEVSTAT_UP]) ? true : false;
+		// *((bool*)req->priv) = deviceStatusUp;
+		bool deviceStatusUp = blobmsg_get_bool(tb[DEVSTAT_CARRIER]) ? true : false;
 		*((bool*)req->priv) = deviceStatusUp;
 
 		char* devType = blobmsg_get_string(tb[DEVSTAT_DEVTYPE]);

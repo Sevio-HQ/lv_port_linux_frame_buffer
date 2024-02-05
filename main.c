@@ -73,18 +73,24 @@ extern int evdev_key_val;
  *  STATIC PROTOTYPES
  **********************/
 
-void updateUiMenu(uint32_t key)
+void updateUiMenu(uint32_t key, lv_indev_state_t state)
 {
     switch(key)
     {
         case LV_KEY_LEFT:
-            uiMenu_left();
+            if (state == LV_INDEV_STATE_REL) uiMenu_left();
         break;
         case LV_KEY_RIGHT:
-            uiMenu_right();
+            if (state == LV_INDEV_STATE_REL) uiMenu_right();
         break;
         case LV_KEY_DOWN:
-            uiMenu_down();
+            if (state == LV_INDEV_STATE_REL) uiMenu_down();
+        break;
+        case LV_KEY_NEXT:
+            DI1_status = state;
+        break;
+        case LV_KEY_PREV:
+            DI2_status = state;
         break;
     }
     uiMenu_load();
@@ -118,6 +124,12 @@ void kbdev_read(lv_indev_drv_t * drv, lv_indev_data_t * data)
                     case KEY_DOWN:
                         data->key = LV_KEY_DOWN;
                         break;
+                    case BTN_3:
+                        data->key = LV_KEY_NEXT;
+                        break;
+                    case BTN_4:
+                        data->key = LV_KEY_PREV;
+                        break;
                     default:
                         data->key = 0;
                         break;
@@ -125,10 +137,7 @@ void kbdev_read(lv_indev_drv_t * drv, lv_indev_data_t * data)
                 if (data->key != 0) {
                     /* Only record button state when actual output is produced to prevent widgets from refreshing */
                     data->state = (in.value) ? LV_INDEV_STATE_PR : LV_INDEV_STATE_REL;
-                    if (data->state == LV_INDEV_STATE_REL)
-                    {
-                        updateUiMenu(data->key);
-                    }
+                    updateUiMenu(data->key, data->state);
                 }
                 evdev_key_val = data->key;
                 evdev_button = data->state;

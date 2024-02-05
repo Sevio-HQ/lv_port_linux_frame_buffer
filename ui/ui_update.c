@@ -35,6 +35,9 @@ lv_timer_t * minTimer = NULL;
 lv_timer_t * secTimer = NULL;
 lv_timer_t * refreshTimer = NULL;
 
+int DI1_status = 0;
+int DI2_status = 0;
+
 int refreshGPS();
 int refreshGPS_ui();
 int ui_gsm_update_ui();
@@ -774,6 +777,16 @@ void updateIOStatus()
         lv_obj_set_style_bg_color(ui_IO_do2_panel, lv_color_hex(BLUE_COLOR), LV_PART_MAIN | LV_STATE_DEFAULT );
     } else {
         lv_obj_set_style_bg_color(ui_IO_do2_panel, lv_color_hex(GREY_COLOR), LV_PART_MAIN | LV_STATE_DEFAULT );
+    }
+    if (DI1_status) {
+        lv_obj_set_style_bg_color(ui_IO_di1_panel, lv_color_hex(BLUE_COLOR), LV_PART_MAIN | LV_STATE_DEFAULT );
+    } else {
+        lv_obj_set_style_bg_color(ui_IO_di1_panel, lv_color_hex(GREY_COLOR), LV_PART_MAIN | LV_STATE_DEFAULT );
+    }
+    if (DI2_status) {
+        lv_obj_set_style_bg_color(ui_IO_di2_panel, lv_color_hex(BLUE_COLOR), LV_PART_MAIN | LV_STATE_DEFAULT );
+    } else {
+        lv_obj_set_style_bg_color(ui_IO_di2_panel, lv_color_hex(GREY_COLOR), LV_PART_MAIN | LV_STATE_DEFAULT );
     }
 }
 

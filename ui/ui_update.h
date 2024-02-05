@@ -18,6 +18,8 @@ typedef struct ifStat{
     bool reachable;
 }tIfStat;
 
+extern int DI1_status, DI2_status;
+
 int updateIfStats(char* name, bool up, char* gw, char* ip, unsigned long mask);
 
 int getIfStatEntry(const char* name, bool* up, char** gw, char** ip, unsigned long* mask);
