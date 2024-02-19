@@ -75,6 +75,9 @@ extern int evdev_key_val;
 
 void updateUiMenu(uint32_t key, lv_indev_state_t state)
 {
+    bool noMenuUpdate = false;
+    LV_LOG_INFO("key:%d state:%d", key, state);
+
     switch(key)
     {
         case LV_KEY_LEFT:
@@ -85,6 +88,7 @@ void updateUiMenu(uint32_t key, lv_indev_state_t state)
         break;
         case LV_KEY_DOWN:
             if (state == LV_INDEV_STATE_REL) uiMenu_down();
+            else noMenuUpdate = true;
         break;
         case LV_KEY_NEXT:
             DI1_status = state;
@@ -93,7 +97,7 @@ void updateUiMenu(uint32_t key, lv_indev_state_t state)
             DI2_status = state;
         break;
     }
-    uiMenu_load();
+    if (!noMenuUpdate) uiMenu_load();
 }
 
 /**
