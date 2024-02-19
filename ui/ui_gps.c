@@ -92,7 +92,7 @@ static int update_lcd(struct gps_data_t *gpsdata)
                 ++_used;
           }
       }
-        snprintf(tmpbuf, sizeof(tmpbuf) - 1, "%d/%d", gpsdata->satellites_visible, _used /* gpsdata->satellites_used*/);
+        snprintf(tmpbuf, sizeof(tmpbuf) - 1, "%d/%d", _used, gpsdata->satellites_visible/* gpsdata->satellites_used*/);
         lv_label_set_text(ui_GPS_satellites_value, tmpbuf);
         LV_LOG_INFO("Seen/Used: %d/%d(%d)",gpsdata->satellites_visible, gpsdata->satellites_used, _used);
 
