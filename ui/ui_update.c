@@ -918,7 +918,7 @@ static void timer_min_cb(lv_timer_t * timer)
     
 static void timer_startup_cb(lv_timer_t * timer)
 {
-	printf("%s:%d\r\n", __FUNCTION__, __LINE__);
+	//printf("%s:%d\r\n", __FUNCTION__, __LINE__);
 
     minTimer = lv_timer_create(timer_min_cb, TIMER_1MIN, lv_scr_act());
     secTimer = lv_timer_create(timer_sec_cb, TIMER_1SEC, lv_scr_act());

@@ -75,7 +75,7 @@ int getSignalQuality()
     int _sigQ = 99, _reg = 99;
     int result = -1;
 
-    pid_t _pid = popen2("comgt -d /dev/ttyUSB3 sig", &infp, &outfp);
+    pid_t _pid = popen2("comgt -d /dev/ttyUSB2 sig", &infp, &outfp);
     if(_pid <= 0) {
         LV_LOG_ERROR("Unable to exec command\n");
         return -1;
@@ -88,7 +88,7 @@ int getSignalQuality()
         fscanf(fpout, "Signal Quality: %d,%d", &_sigQ, &_reg); /* or other STDIO input functions */
         LV_LOG_INFO("sig quality: %d", _sigQ);
     }
-    LV_LOG_INFO("pid:%d, in:%d, out:%d\n Waiting pid to close...", _pid, infp, outfp);
+    //LV_LOG_INFO("pid:%d, in:%d, out:%d\n Waiting pid to close...", _pid, infp, outfp);
     if(waitpid(_pid, NULL, 0) < 0) {
         LV_LOG_ERROR("wait error");
         return -1;
@@ -108,7 +108,7 @@ int getOperator()
     int _reg   = 99, _mod, _fmt;
     int result = -1;
 
-    pid_t _pid = popen2("comgt -d /dev/ttyUSB3 -s /etc/gcom/getoprinfo.gcom", &infp, &outfp);
+    pid_t _pid = popen2("comgt -d /dev/ttyUSB2 -s /etc/gcom/getoprinfo.gcom", &infp, &outfp);
     if(_pid <= 0) {
         LV_LOG_ERROR("Unable to exec command\n");
         return -1;
@@ -126,7 +126,7 @@ int getOperator()
         LV_LOG_INFO("2 - fscanf count: %d", count);
         LV_LOG_INFO("Registration: %s, %d", _operator, _reg);
     }
-    LV_LOG_INFO("pid:%d, in:%d, out:%d\n Waiting pid to close...", _pid, infp, outfp);
+    //LV_LOG_INFO("pid:%d, in:%d, out:%d\n Waiting pid to close...", _pid, infp, outfp);
     if(waitpid(_pid, NULL, 0) < 0) {
         LV_LOG_ERROR("wait error");
         return -1;
@@ -159,7 +159,7 @@ int getAPN()
         fscanf(fpout, "network.wwan.apn=\'%[^\']\'", _apn); /* or other STDIO input functions */
         LV_LOG_INFO("APN: %s", _apn);
     }
-    LV_LOG_INFO("pid:%d, in:%d, out:%d\n Waiting pid to close...", _pid, infp, outfp);
+    //LV_LOG_INFO("pid:%d, in:%d, out:%d\n Waiting pid to close...", _pid, infp, outfp);
     if(waitpid(_pid, NULL, 0) < 0) {
         LV_LOG_ERROR("wait error");
         return -1;
@@ -177,23 +177,25 @@ int getModem()
     int infp, outfp, _mdm;
     FILE * fpout;
     int result = -1;
-    char hold[ 256 ] = { 0 };
+    char hold[ 2 ] = { 0 };
 
-    pid_t _pid = popen2("dmesg | grep ttyUSB3 | tail -1", &infp, &outfp);
+    pid_t _pid = popen2("lsusb | grep Quectel | wc -l", &infp, &outfp);
+    LV_LOG_INFO("pid:%d in:%d out:%d", _pid, infp, outfp);
     if(_pid <= 0) {
         LV_LOG_ERROR("Unable to exec command\n");
         return -1;
     }
+
     if((fpout = fdopen(outfp, "r")) == NULL) {
         LV_LOG_ERROR("Unable to open fd\n");
         return -1;
     } else {
         fgets(hold, sizeof(hold), fpout);
         LV_LOG_INFO("Read:%s", hold);
-        char* value = strstr(hold, "attached");
-        if ( value != NULL) isModemAvail = true;
+        
+        if ( strcmp(hold, "1") == 0) isModemAvail = true;
         else isModemAvail = false; 
-        LV_LOG_INFO("Modem: %s, %s", (isModemAvail) ? "OK" : "KO", value);
+        LV_LOG_INFO("Modem: %s", (isModemAvail) ? "OK" : "KO");
     }
     //LV_LOG_INFO("pid:%d, in:%d, out:%d\n Waiting pid to close...", _pid, infp, outfp);
     if(waitpid(_pid, NULL, 0) < 0) {

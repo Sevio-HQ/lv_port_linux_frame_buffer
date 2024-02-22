@@ -92,9 +92,11 @@ void updateUiMenu(uint32_t key, lv_indev_state_t state)
         break;
         case LV_KEY_NEXT:
             DI1_status = state;
+            LV_LOG_INFO("DI1:%d", state);
         break;
         case LV_KEY_PREV:
             DI2_status = state;
+            LV_LOG_INFO("DI2:%d", state);
         break;
     }
     if (!noMenuUpdate) uiMenu_load();

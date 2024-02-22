@@ -137,7 +137,7 @@ int getGpsData()
     //for (;;) { /* heart of the client */
     do {
         if (!gps_waiting(&gpsdata, 2000000)) {
-            LV_LOG_ERROR("getGpsData: error while waiting\n");
+            LV_LOG_ERROR("Error while waiting\n");
             return -1;
         } else {
             //LV_LOG_INFO("GPSD read data...");  
