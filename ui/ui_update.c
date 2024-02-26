@@ -168,6 +168,7 @@ int ui_home_refresh()
 static int ports_index = 0;
 const char* PORTS_LABEL[] = {"WAN", "LAN1", "LAN2", "LAN3", "LAN4", "LAN5"};
 const char* PORTS_NAME[] = {"eth0", "lan1", "lan2", "lan3", "lan4", "lan5"};
+void updatePortsStatusUI_def();
 
 int ui_ports_refresh_ui()
 {
@@ -185,7 +186,7 @@ int ui_ports_refresh_ui()
     }
     lv_label_set_text(ui_PORTS_page_label, PORTS_LABEL[ports_index]);
     // update ports status and data
-    // TODO
+    updatePortsStatusUI_def();
     return 0;
 }
 
@@ -579,6 +580,24 @@ void updateWwanConfig(bool _ifup, const char* _ip, unsigned int _mask, const cha
     else wwan_up = false;
 }
 
+#define UPDATING_COLOR lv_palette_lighten(LV_PALETTE_GREY, 4)
+#define UPDATING_STRING "---"
+
+void updatePortsStatusUI_def()
+{
+    LV_LOG_INFO("Default UI");
+    lv_obj_set_style_bg_color(ui_PORTS_status_panel, UPDATING_COLOR, LV_PART_MAIN | LV_STATE_DEFAULT );
+    lv_label_set_text(ui_PORTS_status_value,UPDATING_STRING);
+
+    lv_obj_set_style_bg_color(ui_PORTS_link_panel, UPDATING_COLOR, LV_PART_MAIN | LV_STATE_DEFAULT );
+    lv_label_set_text(ui_PORTS_link_value,UPDATING_STRING);
+
+    lv_obj_set_style_bg_color(ui_PORTS_negotiation_panel, UPDATING_COLOR, LV_PART_MAIN | LV_STATE_DEFAULT );
+
+    lv_label_set_text(ui_PORTS_negotiation_value, UPDATING_STRING);
+    lv_label_set_text(ui_PORTS_speed_value, UPDATING_STRING);
+}
+
 void updatePortsStatusUI(bool status, bool carrier, bool autoneg, char* speed)
 {
     LV_LOG_INFO("status:%d, link:%d, autoneg:%d, speed:%s", status, carrier, autoneg, speed);
@@ -598,6 +617,8 @@ void updatePortsStatusUI(bool status, bool carrier, bool autoneg, char* speed)
          lv_obj_set_style_bg_color(ui_PORTS_link_panel, lv_color_hex(0xFF0707), LV_PART_MAIN | LV_STATE_DEFAULT );
         lv_label_set_text(ui_PORTS_link_value,"DOWN");       
     }
+    
+    lv_obj_set_style_bg_color(ui_PORTS_negotiation_panel, lv_color_hex(0x2563EB), LV_PART_MAIN | LV_STATE_DEFAULT );
     if (autoneg)
     {
         lv_label_set_text(ui_PORTS_negotiation_value,"ENA");
@@ -849,7 +870,6 @@ static void timer_sec_cb(lv_timer_t * timer)
         if ((menuIndex == UI_PORTSCONFIG)||(_ui_updater_init))
         {
             if (_ui_updater_init) ports_index = 0;
-
             updatePortsStatus(PORTS_NAME[ports_index], updatePortsStatusUI);
         }
 
