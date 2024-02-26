@@ -71,11 +71,17 @@ int uci_config_getLanDhcpServer()
         // printf("** name: %s\r\n", e->name);
         // printf("** type: %s\r\n", s->type);
 		if ((strcmp(s->type, "dhcp") == 0) && (strcmp(e->name, "lan") == 0)) {
-		    str = uci_lookup_option_string(uci, s, "dhcpv4");
+		    // str = uci_lookup_option_string(uci, s, "dhcpv4");
+			// if (str != NULL) {
+			// 	if (strcmp(str,"server") == 0) val = 1;
+			// 	else val = 0; 
+            //     LV_LOG_INFO("%s dhcpv4: %s", e->name, str);
+			// }
+			str = uci_lookup_option_string(uci, s, "disabled");
 			if (str != NULL) {
-				if (strcmp(str,"server") == 0) val = 1;
+				if (strcmp(str,"0") == 0) val = 1;
 				else val = 0; 
-                LV_LOG_INFO("%s dhcpv4: %s", e->name, str);
+                LV_LOG_INFO("%s disabled: %s", e->name, str);
 			}
         }
     }
