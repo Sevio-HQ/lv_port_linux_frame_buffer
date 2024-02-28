@@ -14,7 +14,7 @@
 #include "ui_update.h"
 
 #define UBUS_TIMEOUT	   	3000 /* 3 sec */
-
+#define UBUS_MODEMINFO_TIMEOUT 15000
 
 static struct ubus_context* ctx;
 
@@ -32,7 +32,6 @@ static void dumpBlobJson(struct blob_attr* msg)
 	printf("%s\n", str);
 	free(str);
 }
-
 
 enum {
 	IFSTAT_UP,
@@ -830,6 +829,74 @@ bool updateWiFiSignal(t_ubus_iwinfo_getSignal_param* _param)
 		return false;
 	}
 
+	return true;
+}
+
+
+enum {
+	MODEMINFO_COPS,
+	MODEMINFO_CSQ,
+	MODEMINFO_MAX
+};
+
+static const struct blobmsg_policy modeminfo_policy[] = {
+	[MODEMINFO_COPS] = {.name = "cops", .type = BLOBMSG_TYPE_STRING},
+	[MODEMINFO_CSQ] = {.name = "csq_per", .type = BLOBMSG_TYPE_STRING},
+};
+
+static void ubus_modeminfo_cb (__attribute__((unused)) struct ubus_request* req,
+						   __attribute__((unused)) int type,
+						   struct blob_attr* msg)
+{
+	LV_LOG_INFO("Start ModemInfo_cb");
+
+	if (!msg) {
+		return;
+	}
+
+	t_ubus_modeminfo_param* _param = (t_ubus_modeminfo_param*)req->priv;
+
+	struct blob_attr* tb[ARRAY_SIZE(modeminfo_policy)];
+	blobmsg_parse(modeminfo_policy, ARRAY_SIZE(modeminfo_policy), tb,
+				  blob_data(msg), blob_len(msg));
+
+	if (tb[MODEMINFO_COPS]) {
+		char* _cops = blobmsg_get_string(tb[MODEMINFO_COPS]);
+		LV_LOG_INFO("Operator:%s", _cops);
+		strcpy(_param->_cops, _cops);
+	}
+
+	if (tb[MODEMINFO_CSQ]) {
+		char* _csq = blobmsg_get_string(tb[MODEMINFO_CSQ]);
+		LV_LOG_INFO("Signal Level:%s", _csq);
+		strcpy(_param->_csq, _csq);
+
+	}
+}
+
+
+/*** modeminfo info ***/
+
+bool ubus_modeminfo_status(t_ubus_modeminfo_param* _param)
+{
+	uint32_t id;
+	int ret;
+	LV_LOG_INFO("Start ModemInfo");
+
+	ret = ubus_lookup_id(ctx, "modeminfo", &id);
+	if (ret) {
+		return false;
+	}
+	LV_LOG_INFO("Invoke ModemInfo");
+
+	ret = ubus_invoke_async(ctx, id, "info", NULL, ubus_modeminfo_cb, (void*)_param,
+					  UBUS_MODEMINFO_TIMEOUT);
+	LV_LOG_INFO("Result ModemInfo: %d", ret);
+	if (ret < 0) {
+		return false;
+	}
+
+	// client needs to free(last_result_msg);
 	return true;
 }
 

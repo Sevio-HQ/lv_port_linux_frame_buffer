@@ -9,6 +9,7 @@
 #include <unistd.h>
 #include <signal.h>
 #include <sys/wait.h>
+#include "ubus.h"
 
 typedef enum eSigLevel { NO_SIG_LEVEL, SIG_LEVEL_1, SIG_LEVEL_2, SIG_LEVEL_3, SIG_LEVEL_4, SIG_LEVEL_5 } tSigLevel;
 
@@ -64,7 +65,7 @@ tSigLevel mapSigq2SigLevel(int sigQ)
     if(sigQ <= 9) return SIG_LEVEL_2;  // -99  - -95
     if(sigQ <= 14) return SIG_LEVEL_3; // -93 - -85
     if(sigQ <= 19) return SIG_LEVEL_4;
-    if(sigQ <= 30) return SIG_LEVEL_5;
+    if ((sigQ <= 30)||(sigQ < 99)) return SIG_LEVEL_5;
     return NO_SIG_LEVEL;
 }
 
@@ -139,6 +140,16 @@ int getOperator()
     return 0;
 }
 
+int getSignalOperator(char* operator, int16_t* signal)
+{   
+    #define STR_SIGNAL_LENGTH_MAX 5
+    char _signal[STR_SIGNAL_LENGTH_MAX] = ""; 
+    t_ubus_modeminfo_param param = { operator, _signal};
+    ubus_modeminfo_status(&param);
+    *signal = atoi(_signal);
+    LV_LOG_INFO("Operator: %s Signal:%d", operator, *signal);
+}
+
 int getAPN()
 {
     int infp, outfp;
@@ -210,6 +221,41 @@ int getModem()
     return _pid;
 }
 
+/* Read values for modem and connection using ubus
+root@sevio:~# ubus call modeminfo info
+{
+        "device": "--",
+       * "cops": "Iliad",
+        "mode": "LTE",
+       * "csq_per": "64",
+        "lac": "D744",
+        "cid": "F504352",
+        "rssi": "-76",
+        "sinr": "13",
+        "rsrp": "-105",
+        "rsrq": "-11",
+        "imei": "--",
+        "reg": "1",
+        "csq_col": "green",
+        "arfcn": "1500",
+        "chiptemp": "26",
+        "firmware": "--",
+        "bwdl": "3",
+        "lteca": "0",
+        "enbid": "1003587",
+        "distance": "",
+        "cell": "82",
+        "scc": "",
+        "bwca": "",
+        "iccid": "--",
+        "imsi": "--",
+        "pci": "95"
+}
+*/
+
+
+
+
 void showLevel(tSigLevel _lvl)
 {
     switch(_lvl) {
@@ -272,9 +318,13 @@ int ui_gsm_update()
 
     getModem();
     if(isModemAvail) {
-        level = mapSigq2SigLevel(getSignalQuality());
+        int16_t _signal = 0;
+        getSignalOperator(_operator, &_signal);
+        LV_LOG_INFO("Operator: %s Signal:%d", _operator, _signal);
+
+        level = mapSigq2SigLevel(_signal);
         setSigLevel(level);
-        getOperator();
+        //getOperator();
         getAPN();
     }
     return ui_gsm_update_ui();
