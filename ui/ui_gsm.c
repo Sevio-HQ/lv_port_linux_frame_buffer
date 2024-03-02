@@ -8,10 +8,13 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include <signal.h>
+#include <math.h>
 #include <sys/wait.h>
 #include "ubus.h"
 
-typedef enum eSigLevel { NO_SIG_LEVEL, SIG_LEVEL_1, SIG_LEVEL_2, SIG_LEVEL_3, SIG_LEVEL_4, SIG_LEVEL_5 } tSigLevel;
+#define MODEMINFO
+
+typedef enum eSigLevel { NO_SIG_LEVEL, SIG_LEVEL_1, SIG_LEVEL_2, SIG_LEVEL_3, SIG_LEVEL_4, SIG_LEVEL_5, MAX_SIG_LEVEL } tSigLevel;
 
 #define MAX_STRING_LEN_GSM 20
 #define READ 0
@@ -61,12 +64,19 @@ pid_t popen2(const char * command, int * infp, int * outfp)
 
 tSigLevel mapSigq2SigLevel(int sigQ)
 {
+    #ifndef MODEMINFO
     if(sigQ <= 6) return SIG_LEVEL_1;  // -109 - -101
     if(sigQ <= 9) return SIG_LEVEL_2;  // -99  - -95
     if(sigQ <= 14) return SIG_LEVEL_3; // -93 - -85
     if(sigQ <= 19) return SIG_LEVEL_4;
     if ((sigQ <= 30)||(sigQ < 99)) return SIG_LEVEL_5;
     return NO_SIG_LEVEL;
+    #else
+    //sigq is percentage
+    int _sigQNorm = round(sigQ * (MAX_SIG_LEVEL - 1) / 100.0 + 0.5);
+    LV_LOG_INFO("Signal Level: %d%% - %d", sigQ, _sigQNorm);
+    return (tSigLevel)_sigQNorm;
+    #endif
 }
 
 int getSignalQuality()
@@ -241,7 +251,7 @@ int getModem()
     char hold[ 2 ] = { 0 };
 
     pid_t _pid = popen2("lsusb | grep Quectel | wc -l", &infp, &outfp);
-    LV_LOG_INFO("pid:%d in:%d out:%d", _pid, infp, outfp);
+    //LV_LOG_INFO("pid:%d in:%d out:%d", _pid, infp, outfp);
     if(_pid <= 0) {
         LV_LOG_ERROR("Unable to exec command\n");
         return -1;
@@ -252,7 +262,7 @@ int getModem()
         return -1;
     } else {
         fgets(hold, sizeof(hold), fpout);
-        LV_LOG_INFO("Read:%s", hold);
+        //LV_LOG_INFO("Read:%s", hold);
         
         if ( strcmp(hold, "1") == 0) isModemAvail = true;
         else isModemAvail = false; 
@@ -301,6 +311,20 @@ root@sevio:~# ubus call modeminfo info
         "imsi": "--",
         "pci": "95"
 }
+
+Stripped version
+root@sevio:/usr/share/modeminfo/scripts# ubus call modeminfo info
+{
+	"cops": "Iliad",
+	"mode": "LTE",
+	"csq_per": "70",
+	"rssi": "-69",
+	"chiptemp": "--",
+	"iccid": " 8939500000062006982F",
+	"imsi": "222500005213318",
+	"roamservice": "--"
+}
+
 */
 
 
@@ -332,7 +356,6 @@ void hideLevel(tSigLevel _lvl)
 
 void setSigLevel(tSigLevel newLevel)
 {
-    LV_LOG_INFO("sig level: %d", newLevel);
     hideLevel(_level);
     showLevel(newLevel);
     _level = newLevel;
@@ -365,6 +388,8 @@ int ui_gsm_update()
 
     tSigLevel level = NO_SIG_LEVEL;
     setSigLevel(level);
+    char _lockFile[256];
+    char _modemTty[64];
 
     getModem();
     if(isModemAvail) {
@@ -375,8 +400,6 @@ int ui_gsm_update()
 
             return -1;
         }
-        LV_LOG_INFO("Operator: %s Signal:%d", _operator, _signal);
-
         level = mapSigq2SigLevel(_signal);
         setSigLevel(level);
         //getOperator();

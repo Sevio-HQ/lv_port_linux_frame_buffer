@@ -848,8 +848,6 @@ static void ubus_modeminfo_cb (__attribute__((unused)) struct ubus_request* req,
 						   __attribute__((unused)) int type,
 						   struct blob_attr* msg)
 {
-	LV_LOG_INFO("Start ModemInfo_cb");
-
 	if (!msg) {
 		return;
 	}
@@ -862,13 +860,11 @@ static void ubus_modeminfo_cb (__attribute__((unused)) struct ubus_request* req,
 
 	if (tb[MODEMINFO_COPS]) {
 		char* _cops = blobmsg_get_string(tb[MODEMINFO_COPS]);
-		LV_LOG_INFO("Operator:%s", _cops);
 		strcpy(_param->_cops, _cops);
 	}
 
 	if (tb[MODEMINFO_CSQ]) {
 		char* _csq = blobmsg_get_string(tb[MODEMINFO_CSQ]);
-		LV_LOG_INFO("Signal Level:%s", _csq);
 		strcpy(_param->_csq, _csq);
 
 	}
@@ -881,22 +877,17 @@ bool ubus_modeminfo_status(t_ubus_modeminfo_param* _param)
 {
 	uint32_t id;
 	int ret;
-	LV_LOG_INFO("Start ModemInfo");
 
 	ret = ubus_lookup_id(ctx, "modeminfo", &id);
 	if (ret) {
 		return false;
 	}
-	LV_LOG_INFO("Invoke ModemInfo");
 
-	ret = ubus_invoke_async(ctx, id, "info", NULL, ubus_modeminfo_cb, (void*)_param,
+	ret = ubus_invoke(ctx, id, "info", NULL, ubus_modeminfo_cb, (void*)_param,
 					  UBUS_MODEMINFO_TIMEOUT);
-	LV_LOG_INFO("Result ModemInfo: %d", ret);
 	if (ret < 0) {
 		return false;
 	}
-
-	// client needs to free(last_result_msg);
 	return true;
 }
 
