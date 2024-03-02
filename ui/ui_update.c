@@ -860,6 +860,8 @@ static void timer_sec_cb(lv_timer_t * timer)
         if ((menuIndex == UI_GSMCONFIG)||(_ui_updater_init))
         {
             updateInterfaceStatusCb("wwan", updateWwanConfig);
+             if (_ui_updater_init) ui_gsm_init();
+            ui_gsm_update();
         }
 
         if ((menuIndex == UI_VPNSTATUS)||(_ui_updater_init))

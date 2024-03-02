@@ -140,6 +140,55 @@ int getOperator()
     return 0;
 }
 
+#ifndef MODEMINFO 
+#include <sys/file.h>
+#define CACHE_FILE "/tmp/modeminfo_cache.lock"
+
+/*
+exec 300>/tmp/modeminfo_cache.lock
+flock 300
+fuser -v /tmp/modeminfo_cache.lock
+flock -u 300
+exec 300>&-
+*/
+
+bool getSignalOperator(char* operator, int16_t* signal)
+{
+    /* l_type   l_whence  l_start  l_len  l_pid   */
+    struct flock fl = {F_WRLCK, SEEK_SET, 0, 0, 0};
+    int fd;
+
+    fl.l_pid = getpid();
+
+    if((fd = open(CACHE_FILE, O_WRONLY | O_CREAT)) == -1) {
+        LV_LOG_ERROR("open");
+        return false;
+    }
+
+    LV_LOG_INFO("Trying to get lock...%d %s", fl.l_pid, CACHE_FILE);
+
+    int ret = flock(fd, LOCK_EX | LOCK_NB);
+    LV_LOG_INFO("flock ret:%d", ret);
+    if (ret == -1)
+    {
+        LV_LOG_INFO("File locked ret:%d errno:%d go ahead...", ret, errno);
+        return false;
+    }
+
+    LV_LOG_INFO("got lock");
+    getOperator();
+    *signal = getSignalQuality();
+
+    ret = flock(fd, LOCK_UN);
+
+    LV_LOG_INFO("Unlocked.\n");
+
+    close(fd);
+    return true;
+}
+
+#else
+
 int getSignalOperator(char* operator, int16_t* signal)
 {   
     #define STR_SIGNAL_LENGTH_MAX 5
@@ -149,6 +198,7 @@ int getSignalOperator(char* operator, int16_t* signal)
     *signal = atoi(_signal);
     LV_LOG_INFO("Operator: %s Signal:%d", operator, *signal);
 }
+#endif
 
 int getAPN()
 {
@@ -319,7 +369,12 @@ int ui_gsm_update()
     getModem();
     if(isModemAvail) {
         int16_t _signal = 0;
-        getSignalOperator(_operator, &_signal);
+        if (!getSignalOperator(_operator, &_signal))
+        {
+            LV_LOG_INFO("Skip operator, signal update...");
+
+            return -1;
+        }
         LV_LOG_INFO("Operator: %s Signal:%d", _operator, _signal);
 
         level = mapSigq2SigLevel(_signal);
