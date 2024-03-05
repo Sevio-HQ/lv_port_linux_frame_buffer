@@ -11,6 +11,7 @@
 #include "time.h"
 #include "ubus.h"
 #include "ui_update.h"
+#include "uci_int.h"
 
 #define TIMER_1MIN  60000
 #define TIMER_1SEC  60*10
@@ -190,25 +191,36 @@ int ui_ports_refresh_ui()
     return 0;
 }
 
-int uci_config_isWifiDisabled(bool* _wifiDis);
+// int uci_config_isWifiDisabled(bool* _wifiDis);
+int uci_config_isWifiStaMode(bool* _wifiSta);
 
 int ui_wifi_config_refresh()
 {
-    bool _wifiDis = false;
+    // bool _wifiDis = false;
 
-    uci_config_isWifiDisabled(&_wifiDis);
-    if (!_wifiDis)
+    // uci_config_isWifiDisabled(&_wifiDis);
+    // if (!_wifiDis)
+    // {
+    //     uiMenu[UI_WANCONFIG].rigth = UI_WIFICONFIG;
+    //     uiMenu[UI_LANCONFIG].rigth = UI_WIFICONFIG;
+    //     uiMenu[UI_WLANCONFIG].rigth = UI_WIFICONFIG;
+    //     uiMenu[UI_IOCONFIG].left = UI_WIFICONFIG;
+    // }else{
+    //     uiMenu[UI_WANCONFIG].rigth = UI_IOCONFIG;
+    //     uiMenu[UI_LANCONFIG].rigth = UI_IOCONFIG;
+    //     uiMenu[UI_WLANCONFIG].rigth = UI_IOCONFIG;
+    //     uiMenu[UI_IOCONFIG].left = UI_WANCONFIG;
+    // }
+    bool _wifiStaMode = false;
+
+    uci_config_isWifiStaMode(&_wifiStaMode);
+    if (_wifiStaMode)
     {
-        uiMenu[UI_WANCONFIG].rigth = UI_WIFICONFIG;
-        uiMenu[UI_LANCONFIG].rigth = UI_WIFICONFIG;
-        uiMenu[UI_WLANCONFIG].rigth = UI_WIFICONFIG;
-        uiMenu[UI_IOCONFIG].left = UI_WIFICONFIG;
+        uiMenu[UI_LANCONFIG].down = UI_WLANCONFIG;
     }else{
-        uiMenu[UI_WANCONFIG].rigth = UI_IOCONFIG;
-        uiMenu[UI_LANCONFIG].rigth = UI_IOCONFIG;
-        uiMenu[UI_WLANCONFIG].rigth = UI_IOCONFIG;
-        uiMenu[UI_IOCONFIG].left = UI_WANCONFIG;
+        uiMenu[UI_LANCONFIG].down = UI_WANCONFIG;
     }
+
 }
 
 int ui_io_config_refresh()
@@ -259,7 +271,6 @@ void uiMenu_init()
     uiMenu[UI_LANCONFIG].down = UI_WLANCONFIG;
     uiMenu[UI_LANCONFIG].rigth = UI_WIFICONFIG;
     uiMenu[UI_LANCONFIG].refresh = ui_lan_config_refresh;
-
 
     uiMenu[UI_WLANCONFIG].left = UI_VPNSTATUS;
     uiMenu[UI_WLANCONFIG].down = UI_WANCONFIG;
@@ -421,12 +432,12 @@ void get_uptime()
 
 }
 
-void printLocalTime()
-{
-    time_t t = time(NULL);
-    struct tm tm = *localtime(&t);
-    lv_label_set_text_fmt(ui_HOME_datetime_value, "%02d:%02d %02d/%02d/%d UTC", tm.tm_hour + (tm.tm_isdst==1 ? 1:0), tm.tm_min, tm.tm_mday,  tm.tm_mon + 1, tm.tm_year + 1900);
-}
+// void printLocalTime()
+// {
+//     time_t t = time(NULL);
+//     struct tm tm = *localtime(&t);
+//     lv_label_set_text_fmt(ui_HOME_datetime_value, "%02d:%02d %02d/%02d/%d UTC", tm.tm_hour + (tm.tm_isdst==1 ? 1:0), tm.tm_min, tm.tm_mday,  tm.tm_mon + 1, tm.tm_year + 1900);
+// }
 
 int readAdcValues(int _ch)
 {
@@ -829,7 +840,6 @@ bool isScreenSaverrTimerExp()
 }
 
 static int count = 0;
-int uci_config_getLanDhcpServer();
 
 static void timer_sec_cb(lv_timer_t * timer)
 {
@@ -884,8 +894,6 @@ static void timer_sec_cb(lv_timer_t * timer)
 
 }
 
-int uci_config_getServiceTag(char* _serviceTag);
-
 static void timer_min_cb(lv_timer_t * timer)
 {
     if (isScreenSaverrTimerExp())
@@ -905,7 +913,7 @@ static void timer_min_cb(lv_timer_t * timer)
         {
             lv_label_set_text(ui_HOME_servicetag, _serviceTag);
         }
-        printLocalTime();
+        //printLocalTime();
         get_uptime();
 
         // Removed the values related to voltage and current

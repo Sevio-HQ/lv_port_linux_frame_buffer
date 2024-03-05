@@ -116,18 +116,18 @@ int uci_config_getModemInfo(char* lockFile, char* modemTty)
 		if (strcmp(s->type, "modeminfo") == 0) {
 			str = uci_lookup_option_string(uci, s, "device");
 			LV_LOG_INFO("%s: %s", s->type, str);
-			if ((str != NULL)&&(lockFile != NULL)) {
-				if (strcpy(lockFile, str) == 0) val = 1;
+			if ((str != NULL)&&(modemTty != NULL)) {
+				if (strcpy(modemTty, str) == 0) val = 1;
 				else val = 0; 
-                LV_LOG_INFO("%s disabled: %s", e->name, str);
+                LV_LOG_INFO("%s: %s", e->name, str);
 			}
 			str = uci_lookup_option_string(uci, s, "lock");
 			LV_LOG_INFO("%s: %s", s->type, str);
-			// if (str != NULL) {
-			// 	if (strcmp(str,"0") == 0) val = 1;
-			// 	else val = 0; 
-            //     LV_LOG_INFO("%s disabled: %s", e->name, str);
-			// }
+			if ((str != NULL)&&(lockFile != NULL)) {
+				if (strcpy(lockFile, str) == 0) val = 1;
+				else val = 0; 
+                LV_LOG_INFO("%s: %s", e->name, str);
+			}
         }
     }
 	uci_free_context(uci);
@@ -220,6 +220,42 @@ int uci_config_isWifiDisabled(bool* _wifiDis)
                 *_wifiDis = false;
             }
             else *_wifiDis = true;
+        }
+    }
+	uci_free_context(uci);
+}
+
+int uci_config_isWifiStaMode(bool* _wifiSta)
+{
+    struct uci_context* uci;
+	struct uci_package* p;
+	struct uci_element* e;
+	const char* str;
+    int val = 0;
+
+	uci = uci_alloc_context();
+	if (uci == NULL) {
+		return 0;
+	}
+
+	if (uci_load(uci, "wireless", &p)) {
+		uci_free_context(uci);
+		return 0;
+	}
+
+	uci_foreach_element(&p->sections, e)
+	{
+		struct uci_section* s = uci_to_section(e);
+        //printf("** type: %s\r\n", s->type);
+		if (strcmp(s->type, "wifi-iface") == 0) {
+
+            str = uci_lookup_option_string(uci, s, "mode");
+            LV_LOG_INFO("WiFi mode: %s", str);
+            if (strcmp(str, "ap") == 0) 
+            {
+                *_wifiSta = false;
+            }
+            else *_wifiSta = true;
         }
     }
 	uci_free_context(uci);

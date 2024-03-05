@@ -10,7 +10,9 @@
 #include <signal.h>
 #include <math.h>
 #include <sys/wait.h>
+#include <sys/file.h>
 #include "ubus.h"
+#include "uci_int.h"
 
 #define MODEMINFO
 
@@ -150,17 +152,56 @@ int getOperator()
     return 0;
 }
 
-#ifndef MODEMINFO 
-#include <sys/file.h>
-#define CACHE_FILE "/tmp/modeminfo_cache.lock"
+/* Procedure to test
 
-/*
-exec 300>/tmp/modeminfo_cache.lock
+exec 300>/tmp/modeminfo_cache.lock1
 flock 300
 fuser -v /tmp/modeminfo_cache.lock
 flock -u 300
 exec 300>&-
+
 */
+
+bool isNotLockFile()
+{
+    //get lock file name from uci
+    //#define CACHE_FILE "/tmp/modeminfo_cache.lock"
+    char fileLock[256];
+    char device[32];
+    uci_config_getModemInfo(fileLock, device);
+
+    /* l_type   l_whence  l_start  l_len  l_pid   */
+    struct flock fl = {F_WRLCK, SEEK_SET, 0, 0, 0};
+    int fd;
+
+    fl.l_pid = getpid();
+
+    if((fd = open(fileLock, O_WRONLY | O_CREAT)) == -1) {
+        LV_LOG_ERROR("open");
+        return false;
+    }
+
+    LV_LOG_INFO("Trying to get lock...%d %s", fl.l_pid, fileLock);
+
+    int ret = flock(fd, LOCK_EX | LOCK_NB);
+    LV_LOG_INFO("flock ret:%d", ret);
+    if (ret == -1)
+    {
+        LV_LOG_INFO("File locked ret:%d errno:%d go ahead...", ret, errno);
+        return false;
+    }
+
+    LV_LOG_INFO("got lock");
+
+    ret = flock(fd, LOCK_UN);
+
+    LV_LOG_INFO("Unlocked.\n");
+
+    close(fd);
+    return true;
+}
+
+#ifndef MODEMINFO 
 
 bool getSignalOperator(char* operator, int16_t* signal)
 {
@@ -204,9 +245,13 @@ int getSignalOperator(char* operator, int16_t* signal)
     #define STR_SIGNAL_LENGTH_MAX 5
     char _signal[STR_SIGNAL_LENGTH_MAX] = ""; 
     t_ubus_modeminfo_param param = { operator, _signal};
-    ubus_modeminfo_status(&param);
-    *signal = atoi(_signal);
-    LV_LOG_INFO("Operator: %s Signal:%d", operator, *signal);
+
+    if (isNotLockFile())
+    {
+        ubus_modeminfo_status(&param);
+        *signal = atoi(_signal);
+        LV_LOG_INFO("Operator: %s Signal:%d", operator, *signal);
+    }
 }
 #endif
 
