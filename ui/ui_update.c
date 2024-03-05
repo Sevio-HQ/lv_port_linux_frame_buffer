@@ -196,25 +196,13 @@ int uci_config_isWifiStaMode(bool* _wifiSta);
 
 int ui_wifi_config_refresh()
 {
-    // bool _wifiDis = false;
-
-    // uci_config_isWifiDisabled(&_wifiDis);
-    // if (!_wifiDis)
-    // {
-    //     uiMenu[UI_WANCONFIG].rigth = UI_WIFICONFIG;
-    //     uiMenu[UI_LANCONFIG].rigth = UI_WIFICONFIG;
-    //     uiMenu[UI_WLANCONFIG].rigth = UI_WIFICONFIG;
-    //     uiMenu[UI_IOCONFIG].left = UI_WIFICONFIG;
-    // }else{
-    //     uiMenu[UI_WANCONFIG].rigth = UI_IOCONFIG;
-    //     uiMenu[UI_LANCONFIG].rigth = UI_IOCONFIG;
-    //     uiMenu[UI_WLANCONFIG].rigth = UI_IOCONFIG;
-    //     uiMenu[UI_IOCONFIG].left = UI_WANCONFIG;
-    // }
+    bool _wifiDis = false;
     bool _wifiStaMode = false;
 
+    uci_config_isWifiDisabled(&_wifiDis);
     uci_config_isWifiStaMode(&_wifiStaMode);
-    if (_wifiStaMode)
+    
+    if ((_wifiStaMode)&&(!_wifiDis))
     {
         uiMenu[UI_LANCONFIG].down = UI_WLANCONFIG;
     }else{
