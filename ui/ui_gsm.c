@@ -81,6 +81,58 @@ tSigLevel mapSigq2SigLevel(int sigQ)
     #endif
 }
 
+
+/* Procedure to test
+
+exec 300>/tmp/modeminfo_cache.lock1
+flock 300
+fuser -v /tmp/modeminfo_cache.lock
+flock -u 300
+exec 300>&-
+
+*/
+
+bool isNotLockFile()
+{
+    //get lock file name from uci
+    //#define CACHE_FILE "/tmp/modeminfo_cache.lock"
+    char fileLock[256];
+    char device[32];
+    uci_config_getModemInfo(fileLock, device);
+
+    /* l_type   l_whence  l_start  l_len  l_pid   */
+    struct flock fl = {F_WRLCK, SEEK_SET, 0, 0, 0};
+    int fd;
+
+    fl.l_pid = getpid();
+
+    if((fd = open(fileLock, O_WRONLY | O_CREAT)) == -1) {
+        LV_LOG_ERROR("open");
+        return false;
+    }
+
+    LV_LOG_INFO("Trying to get lock...%d %s", fl.l_pid, fileLock);
+
+    int ret = flock(fd, LOCK_EX | LOCK_NB);
+    LV_LOG_INFO("flock ret:%d", ret);
+    if (ret == -1)
+    {
+        LV_LOG_INFO("File locked ret:%d errno:%d go ahead...", ret, errno);
+        return false;
+    }
+
+    LV_LOG_INFO("got lock");
+
+    ret = flock(fd, LOCK_UN);
+
+    LV_LOG_INFO("Unlocked.\n");
+
+    close(fd);
+    return true;
+}
+
+#ifndef MODEMINFO 
+
 int getSignalQuality()
 {
     int infp, outfp, _mdm;
@@ -152,57 +204,6 @@ int getOperator()
     return 0;
 }
 
-/* Procedure to test
-
-exec 300>/tmp/modeminfo_cache.lock1
-flock 300
-fuser -v /tmp/modeminfo_cache.lock
-flock -u 300
-exec 300>&-
-
-*/
-
-bool isNotLockFile()
-{
-    //get lock file name from uci
-    //#define CACHE_FILE "/tmp/modeminfo_cache.lock"
-    char fileLock[256];
-    char device[32];
-    uci_config_getModemInfo(fileLock, device);
-
-    /* l_type   l_whence  l_start  l_len  l_pid   */
-    struct flock fl = {F_WRLCK, SEEK_SET, 0, 0, 0};
-    int fd;
-
-    fl.l_pid = getpid();
-
-    if((fd = open(fileLock, O_WRONLY | O_CREAT)) == -1) {
-        LV_LOG_ERROR("open");
-        return false;
-    }
-
-    LV_LOG_INFO("Trying to get lock...%d %s", fl.l_pid, fileLock);
-
-    int ret = flock(fd, LOCK_EX | LOCK_NB);
-    LV_LOG_INFO("flock ret:%d", ret);
-    if (ret == -1)
-    {
-        LV_LOG_INFO("File locked ret:%d errno:%d go ahead...", ret, errno);
-        return false;
-    }
-
-    LV_LOG_INFO("got lock");
-
-    ret = flock(fd, LOCK_UN);
-
-    LV_LOG_INFO("Unlocked.\n");
-
-    close(fd);
-    return true;
-}
-
-#ifndef MODEMINFO 
-
 bool getSignalOperator(char* operator, int16_t* signal)
 {
     /* l_type   l_whence  l_start  l_len  l_pid   */
@@ -254,39 +255,6 @@ int getSignalOperator(char* operator, int16_t* signal)
     }
 }
 #endif
-
-int getAPN()
-{
-    int infp, outfp;
-    FILE * fpout;
-    int result = -1;
-
-    pid_t _pid = popen2("uci show network.wwan | grep apn", &infp, &outfp);
-    if(_pid <= 0) {
-        LV_LOG_ERROR("Unable to exec command\n");
-        return -1;
-    }
-    if((fpout = fdopen(outfp, "r")) == NULL) {
-        LV_LOG_ERROR("Unable to open fd\n");
-        return -1;
-    } else {
-        /* read output from command */
-        // network.wwan.apn='mobile.vodafone.it'
-        fscanf(fpout, "network.wwan.apn=\'%[^\']\'", _apn); /* or other STDIO input functions */
-        LV_LOG_INFO("APN: %s", _apn);
-    }
-    //LV_LOG_INFO("pid:%d, in:%d, out:%d\n Waiting pid to close...", _pid, infp, outfp);
-    if(waitpid(_pid, NULL, 0) < 0) {
-        LV_LOG_ERROR("wait error");
-        return -1;
-    }
-
-    close(infp);
-    close(outfp);
-    fclose(fpout);
-
-    return 0;
-}
 
 int getModem()
 {
@@ -447,8 +415,7 @@ int ui_gsm_update()
         }
         level = mapSigq2SigLevel(_signal);
         setSigLevel(level);
-        //getOperator();
-        getAPN();
+        uci_config_getAPN(_apn);
     }
     return ui_gsm_update_ui();
 }

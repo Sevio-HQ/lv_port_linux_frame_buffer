@@ -261,6 +261,45 @@ int uci_config_isWifiStaMode(bool* _wifiSta)
 	uci_free_context(uci);
 }
 
+int uci_config_getAPN(char* _apn)
+{
+    struct uci_context* uci;
+	struct uci_package* p;
+	struct uci_element* e;
+	const char* str;
+    int val = 0;
+
+	uci = uci_alloc_context();
+	if (uci == NULL) {
+		return 0;
+	}
+
+	if (uci_load(uci, "network", &p)) {
+		uci_free_context(uci);
+		return 0;
+	}
+
+	uci_foreach_element(&p->sections, e)
+	{
+		struct uci_section* s = uci_to_section(e);
+        // printf("** type: %s\r\n", s->type);
+        // printf("** name: %s\r\n", e->name);
+		if ((strcmp(s->type, "interface") == 0) && (strcmp(e->name, "wwan") == 0)) {
+
+            str = uci_lookup_option_string(uci, s, "apn");
+            LV_LOG_INFO("APN: %s", str);
+            if ((str != NULL) && (_apn != NULL))
+            {
+                strcpy(_apn, str);
+				val = 1;
+            }
+
+        }
+    }
+	uci_free_context(uci);
+	return val;
+}
+
 bool uci_config_set_pingcheck(char* ifname)
 {
     struct uci_context* uci;

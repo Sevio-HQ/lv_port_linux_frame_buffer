@@ -7,7 +7,6 @@
  *      INCLUDES
  *********************/
 #include "lvgl/lvgl.h"
-//#include "lvgl/demos/lv_demos.h"
 #include "lv_drivers/display/fbdev.h"
 #include "lv_drivers/indev/evdev.h"
 #include <unistd.h>
@@ -173,7 +172,6 @@ int main(int argc, char **argv)
 
     /*LittlevGL init*/
     lv_init();
-
 
     /*Initialize the HAL (display, input devices, tick) for LVGL*/
     hal_init();

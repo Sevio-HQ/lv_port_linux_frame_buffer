@@ -12,6 +12,7 @@
 #include <string.h>
 #include <sys/socket.h>
 #include "ui_update.h"
+#include "uci_int.h"
 
 #define UBUS_TIMEOUT	   	3000 /* 3 sec */
 #define UBUS_MODEMINFO_TIMEOUT 15000
@@ -514,8 +515,6 @@ static bool concentrator_resolve(char* hostname)
 	freeaddrinfo(addr);
 	return true;
 }
-
-extern bool uci_config_set_pingcheck();
 
 static bool ubus_restart_service(const char* name)
 {
