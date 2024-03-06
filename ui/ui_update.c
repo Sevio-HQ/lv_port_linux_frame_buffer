@@ -762,11 +762,11 @@ void updateWiFiConfig()
         {
             lv_label_set_text(ui_WIFI_mode_value,"---");
             lv_label_set_text(ui_WIFI_ssid__value,"---");
-            lv_label_set_text(ui_WIFI_status_value,"Disabled");
+            lv_label_set_text(ui_WIFI_status_value,"DISABLED");
             lv_obj_set_style_bg_color(ui_WIFI_status_panel, lv_color_hex(GREY_COLOR), LV_PART_MAIN | LV_STATE_DEFAULT );
             clearWifiSignalImg();
         }else {
-            lv_label_set_text(ui_WIFI_status_value,"Registered");
+            lv_label_set_text(ui_WIFI_status_value,"ENABLED");
             lv_obj_set_style_bg_color(ui_WIFI_status_panel, lv_color_hex(BLUE_COLOR), LV_PART_MAIN | LV_STATE_DEFAULT );
             if (strcmp(_wifiMode, "ap") == 0) 
             {
