@@ -99,7 +99,6 @@ extern lv_obj_t * ui_PORTS_link_label;
 extern lv_obj_t * ui_PORTS_link_panel;
 extern lv_obj_t * ui_PORTS_link_value;
 extern lv_obj_t * ui_PORTS_negotiation_label;
-extern lv_obj_t * ui_PORTS_negotiation_panel;
 extern lv_obj_t * ui_PORTS_negotiation_value;
 extern lv_obj_t * ui_PORTS_speed_label;
 extern lv_obj_t * ui_PORTS_speed_value;

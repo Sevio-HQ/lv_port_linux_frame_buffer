@@ -591,8 +591,6 @@ void updatePortsStatusUI_def()
     lv_obj_set_style_bg_color(ui_PORTS_link_panel, lv_color_hex(GREY_COLOR), LV_PART_MAIN | LV_STATE_DEFAULT );
     lv_label_set_text(ui_PORTS_link_value,"---");
 
-    lv_obj_set_style_bg_color(ui_PORTS_negotiation_panel, lv_color_hex(GREY_COLOR), LV_PART_MAIN | LV_STATE_DEFAULT );
-
     lv_label_set_text(ui_PORTS_negotiation_value, "---");
     lv_label_set_text(ui_PORTS_speed_value, "---");
 }
@@ -618,10 +616,8 @@ void updatePortsStatusUI(bool status, bool carrier, bool autoneg, char* speed)
     }
     if (autoneg)
     {
-        lv_obj_set_style_bg_color(ui_PORTS_negotiation_panel, lv_color_hex(BLUE_COLOR), LV_PART_MAIN | LV_STATE_DEFAULT );
         lv_label_set_text(ui_PORTS_negotiation_value,"DONE");
     }else{
-        lv_obj_set_style_bg_color(ui_PORTS_negotiation_panel, lv_color_hex(GREY_COLOR), LV_PART_MAIN | LV_STATE_DEFAULT );
         lv_label_set_text(ui_PORTS_negotiation_value,"DISABLED");       
     }
     if (speed)

@@ -94,7 +94,6 @@ lv_obj_t * ui_PORTS_link_label;
 lv_obj_t * ui_PORTS_link_panel;
 lv_obj_t * ui_PORTS_link_value;
 lv_obj_t * ui_PORTS_negotiation_label;
-lv_obj_t * ui_PORTS_negotiation_panel;
 lv_obj_t * ui_PORTS_negotiation_value;
 lv_obj_t * ui_PORTS_speed_label;
 lv_obj_t * ui_PORTS_speed_value;
@@ -795,7 +794,7 @@ void ui_IO_screen_init(void)
     ui_IO_di1_label = lv_label_create(ui_IO);
     lv_obj_set_width(ui_IO_di1_label, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_IO_di1_label, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_IO_di1_label, 8);
+    lv_obj_set_x(ui_IO_di1_label, 7);
     lv_obj_set_y(ui_IO_di1_label, 29);
     lv_label_set_text(ui_IO_di1_label, "I1 - Lock VPN");
     lv_obj_set_style_text_color(ui_IO_di1_label, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -817,7 +816,7 @@ void ui_IO_screen_init(void)
     ui_IO_di2_label = lv_label_create(ui_IO);
     lv_obj_set_width(ui_IO_di2_label, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_IO_di2_label, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_IO_di2_label, 8);
+    lv_obj_set_x(ui_IO_di2_label, 7);
     lv_obj_set_y(ui_IO_di2_label, 51);
     lv_label_set_text(ui_IO_di2_label, "I2 - Lock Access");
     lv_obj_set_style_text_color(ui_IO_di2_label, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -839,7 +838,7 @@ void ui_IO_screen_init(void)
     ui_IO_do1_label = lv_label_create(ui_IO);
     lv_obj_set_width(ui_IO_do1_label, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_IO_do1_label, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_IO_do1_label, 8);
+    lv_obj_set_x(ui_IO_do1_label, 7);
     lv_obj_set_y(ui_IO_do1_label, 73);
     lv_label_set_text(ui_IO_do1_label, "O1 - VPN Connected");
     lv_obj_set_style_text_color(ui_IO_do1_label, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -861,7 +860,7 @@ void ui_IO_screen_init(void)
     ui_IO_do2_label = lv_label_create(ui_IO);
     lv_obj_set_width(ui_IO_do2_label, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_IO_do2_label, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_IO_do2_label, 8);
+    lv_obj_set_x(ui_IO_do2_label, 7);
     lv_obj_set_y(ui_IO_do2_label, 95);
     lv_label_set_text(ui_IO_do2_label, "O2 - Access in prog");
     lv_obj_set_style_text_color(ui_IO_do2_label, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -1017,18 +1016,6 @@ void ui_PORTS_screen_init(void)
     lv_obj_set_style_text_opa(ui_PORTS_negotiation_label, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_PORTS_negotiation_label, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
 
-    ui_PORTS_negotiation_panel = lv_obj_create(ui_PORTS);
-    lv_obj_set_width(ui_PORTS_negotiation_panel, 62);
-    lv_obj_set_height(ui_PORTS_negotiation_panel, 14);
-    lv_obj_set_x(ui_PORTS_negotiation_panel, 28);
-    lv_obj_set_y(ui_PORTS_negotiation_panel, 14);
-    lv_obj_set_align(ui_PORTS_negotiation_panel, LV_ALIGN_CENTER);
-    lv_obj_clear_flag(ui_PORTS_negotiation_panel, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
-    lv_obj_set_style_radius(ui_PORTS_negotiation_panel, 3, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_color(ui_PORTS_negotiation_panel, lv_color_hex(0x2563EB), LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_bg_opa(ui_PORTS_negotiation_panel, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
-    lv_obj_set_style_border_side(ui_PORTS_negotiation_panel, LV_BORDER_SIDE_NONE, LV_PART_MAIN | LV_STATE_DEFAULT);
-
     ui_PORTS_negotiation_value = lv_label_create(ui_PORTS);
     lv_obj_set_width(ui_PORTS_negotiation_value, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_PORTS_negotiation_value, LV_SIZE_CONTENT);    /// 1
@@ -1036,7 +1023,7 @@ void ui_PORTS_screen_init(void)
     lv_obj_set_y(ui_PORTS_negotiation_value, 15);
     lv_obj_set_align(ui_PORTS_negotiation_value, LV_ALIGN_CENTER);
     lv_label_set_text(ui_PORTS_negotiation_value, "DISABLED");
-    lv_obj_set_style_text_color(ui_PORTS_negotiation_value, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
+    lv_obj_set_style_text_color(ui_PORTS_negotiation_value, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_PORTS_negotiation_value, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_align(ui_PORTS_negotiation_value, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_PORTS_negotiation_value, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
