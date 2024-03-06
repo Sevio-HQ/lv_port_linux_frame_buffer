@@ -111,7 +111,7 @@ void ui_HOME_screen_init(void)
     lv_obj_set_width(ui_HOME_servicetag, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_HOME_servicetag, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_x(ui_HOME_servicetag, 0);
-    lv_obj_set_y(ui_HOME_servicetag, 83);
+    lv_obj_set_y(ui_HOME_servicetag, 59);
     lv_obj_set_align(ui_HOME_servicetag, LV_ALIGN_TOP_MID);
     lv_label_set_text(ui_HOME_servicetag, "MRRVWQB");
     lv_obj_set_style_text_color(ui_HOME_servicetag, lv_color_hex(0xD1D0D0), LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -134,7 +134,7 @@ void ui_HOME_screen_init(void)
     lv_obj_set_width(ui_HOME_uptime_value, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_HOME_uptime_value, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_x(ui_HOME_uptime_value, 0);
-    lv_obj_set_y(ui_HOME_uptime_value, 61);
+    lv_obj_set_y(ui_HOME_uptime_value, 86);
     lv_obj_set_align(ui_HOME_uptime_value, LV_ALIGN_TOP_MID);
     lv_label_set_text(ui_HOME_uptime_value, "5d 7h 56' 32''");
     lv_obj_set_style_text_color(ui_HOME_uptime_value, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -296,7 +296,7 @@ void ui_VPNSTATUS_screen_init(void)
     lv_obj_set_height(ui_VPNSTATUS_vpn_label, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_x(ui_VPNSTATUS_vpn_label, 30);
     lv_obj_set_y(ui_VPNSTATUS_vpn_label, 93);
-    lv_label_set_text(ui_VPNSTATUS_vpn_label, "VPN ports");
+    lv_label_set_text(ui_VPNSTATUS_vpn_label, "VPN port");
     lv_obj_set_style_text_color(ui_VPNSTATUS_vpn_label, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_VPNSTATUS_vpn_label, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_VPNSTATUS_vpn_label, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
