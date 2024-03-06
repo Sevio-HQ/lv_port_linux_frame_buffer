@@ -579,19 +579,19 @@ void updateWwanConfig(bool _ifup, const char* _ip, unsigned int _mask, const cha
     else wwan_up = false;
 }
 
-#define UPDATING_COLOR lv_palette_lighten(LV_PALETTE_GREY, 4)
+//#define UPDATING_COLOR lv_palette_lighten(LV_PALETTE_GREY, 4)
 #define UPDATING_STRING "---"
 
 void updatePortsStatusUI_def()
 {
     LV_LOG_INFO("Default UI");
-    lv_obj_set_style_bg_color(ui_PORTS_status_panel, UPDATING_COLOR, LV_PART_MAIN | LV_STATE_DEFAULT );
+    lv_obj_set_style_bg_color(ui_PORTS_status_panel, lv_color_hex(GREY_COLOR), LV_PART_MAIN | LV_STATE_DEFAULT );
     lv_label_set_text(ui_PORTS_status_value,UPDATING_STRING);
 
-    lv_obj_set_style_bg_color(ui_PORTS_link_panel, UPDATING_COLOR, LV_PART_MAIN | LV_STATE_DEFAULT );
+    lv_obj_set_style_bg_color(ui_PORTS_link_panel, lv_color_hex(GREY_COLOR), LV_PART_MAIN | LV_STATE_DEFAULT );
     lv_label_set_text(ui_PORTS_link_value,UPDATING_STRING);
 
-    lv_obj_set_style_bg_color(ui_PORTS_negotiation_panel, UPDATING_COLOR, LV_PART_MAIN | LV_STATE_DEFAULT );
+    lv_obj_set_style_bg_color(ui_PORTS_negotiation_panel, lv_color_hex(GREY_COLOR), LV_PART_MAIN | LV_STATE_DEFAULT );
 
     lv_label_set_text(ui_PORTS_negotiation_value, UPDATING_STRING);
     lv_label_set_text(ui_PORTS_speed_value, UPDATING_STRING);
@@ -723,7 +723,6 @@ void clearWifiSignalImg()
     lv_obj_add_flag(ui_WIFI_signal2, LV_OBJ_FLAG_HIDDEN);
     lv_obj_add_flag(ui_WIFI_signal3, LV_OBJ_FLAG_HIDDEN);
     lv_obj_add_flag(ui_WIFI_signal4, LV_OBJ_FLAG_HIDDEN);
-    //lv_obj_add_flag(ui_WIFI_signal5, LV_OBJ_FLAG_HIDDEN);
 }
 
 void setWifiSignal(bool _ap, int signal)
