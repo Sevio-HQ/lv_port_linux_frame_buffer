@@ -379,13 +379,13 @@ int ui_gsm_update_ui()
     lv_label_set_text(ui_MOBILE_operator_value, _operator);
     lv_label_set_text(ui_MOBILE_apn_value, _apn);
     if(wwan_up) {
-        lv_label_set_text(ui_MOBILE_status_value, "Registered");
-        lv_obj_set_style_bg_color(ui_MOBILE_status_panel, lv_color_hex(0x11F308), LV_PART_MAIN | LV_STATE_DEFAULT);
-        lv_obj_set_style_border_color(ui_MOBILE_status_panel, lv_color_hex(0x11F308), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_label_set_text(ui_MOBILE_status_value, "ON");
+        lv_obj_set_style_bg_color(ui_MOBILE_status_panel, lv_color_hex(BLUE_COLOR), LV_PART_MAIN | LV_STATE_DEFAULT);
+        //lv_obj_set_style_border_color(ui_MOBILE_status_panel, lv_color_hex(0x11F308), LV_PART_MAIN | LV_STATE_DEFAULT);
     } else {
-        lv_label_set_text(ui_MOBILE_status_value, "Not Regist.");
-        lv_obj_set_style_bg_color(ui_MOBILE_status_panel, lv_color_hex(0xf3e32a), LV_PART_MAIN | LV_STATE_DEFAULT);
-        lv_obj_set_style_border_color(ui_MOBILE_status_panel, lv_color_hex(0xf3e32a), LV_PART_MAIN | LV_STATE_DEFAULT);
+        lv_label_set_text(ui_MOBILE_status_value, "OFF");
+        lv_obj_set_style_bg_color(ui_MOBILE_status_panel, lv_color_hex(GREY_COLOR), LV_PART_MAIN | LV_STATE_DEFAULT);
+        //lv_obj_set_style_border_color(ui_MOBILE_status_panel, lv_color_hex(0xf3e32a), LV_PART_MAIN | LV_STATE_DEFAULT);
     }
     return wwan_up;
 }

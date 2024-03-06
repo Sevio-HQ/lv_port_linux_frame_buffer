@@ -602,27 +602,27 @@ void updatePortsStatusUI(bool status, bool carrier, bool autoneg, char* speed)
     LV_LOG_INFO("status:%d, link:%d, autoneg:%d, speed:%s", status, carrier, autoneg, speed);
     if (status)
     {
-        lv_obj_set_style_bg_color(ui_PORTS_status_panel, lv_color_hex(0x2563EB), LV_PART_MAIN | LV_STATE_DEFAULT );
-        lv_label_set_text(ui_PORTS_status_value,"UP");
+        lv_obj_set_style_bg_color(ui_PORTS_status_panel, lv_color_hex(BLUE_COLOR), LV_PART_MAIN | LV_STATE_DEFAULT );
+        lv_label_set_text(ui_PORTS_status_value,"YES");
     }else{
-         lv_obj_set_style_bg_color(ui_PORTS_status_panel, lv_color_hex(0xFF0707), LV_PART_MAIN | LV_STATE_DEFAULT );
-        lv_label_set_text(ui_PORTS_status_value,"DOWN");       
+        lv_obj_set_style_bg_color(ui_PORTS_status_panel, lv_color_hex(GREY_COLOR), LV_PART_MAIN | LV_STATE_DEFAULT );
+        lv_label_set_text(ui_PORTS_status_value,"NO");       
     }
     if (carrier)
     {
-        lv_obj_set_style_bg_color(ui_PORTS_link_panel, lv_color_hex(0x2563EB), LV_PART_MAIN | LV_STATE_DEFAULT );
-        lv_label_set_text(ui_PORTS_link_value,"UP");
+        lv_obj_set_style_bg_color(ui_PORTS_link_panel, lv_color_hex(BLUE_COLOR), LV_PART_MAIN | LV_STATE_DEFAULT );
+        lv_label_set_text(ui_PORTS_link_value,"YES");
     }else{
-         lv_obj_set_style_bg_color(ui_PORTS_link_panel, lv_color_hex(0xFF0707), LV_PART_MAIN | LV_STATE_DEFAULT );
-        lv_label_set_text(ui_PORTS_link_value,"DOWN");       
+        lv_obj_set_style_bg_color(ui_PORTS_link_panel, lv_color_hex(GREY_COLOR), LV_PART_MAIN | LV_STATE_DEFAULT );
+        lv_label_set_text(ui_PORTS_link_value,"NO");       
     }
-    
-    lv_obj_set_style_bg_color(ui_PORTS_negotiation_panel, lv_color_hex(0x2563EB), LV_PART_MAIN | LV_STATE_DEFAULT );
     if (autoneg)
     {
-        lv_label_set_text(ui_PORTS_negotiation_value,"ENA");
+        lv_obj_set_style_bg_color(ui_PORTS_negotiation_panel, lv_color_hex(BLUE_COLOR), LV_PART_MAIN | LV_STATE_DEFAULT );
+        lv_label_set_text(ui_PORTS_negotiation_value,"DONE");
     }else{
-        lv_label_set_text(ui_PORTS_negotiation_value,"DIS");       
+        lv_obj_set_style_bg_color(ui_PORTS_negotiation_panel, lv_color_hex(GREY_COLOR), LV_PART_MAIN | LV_STATE_DEFAULT );
+        lv_label_set_text(ui_PORTS_negotiation_value,"DISABLED");       
     }
     if (speed)
     {
@@ -723,7 +723,7 @@ void clearWifiSignalImg()
     lv_obj_add_flag(ui_WIFI_signal2, LV_OBJ_FLAG_HIDDEN);
     lv_obj_add_flag(ui_WIFI_signal3, LV_OBJ_FLAG_HIDDEN);
     lv_obj_add_flag(ui_WIFI_signal4, LV_OBJ_FLAG_HIDDEN);
-    lv_obj_add_flag(ui_WIFI_signal5, LV_OBJ_FLAG_HIDDEN);
+    //lv_obj_add_flag(ui_WIFI_signal5, LV_OBJ_FLAG_HIDDEN);
 }
 
 void setWifiSignal(bool _ap, int signal)
@@ -762,11 +762,11 @@ void updateWiFiConfig()
         {
             lv_label_set_text(ui_WIFI_mode_value,"---");
             lv_label_set_text(ui_WIFI_ssid__value,"---");
-            lv_label_set_text(ui_WIFI_status_value,"DISABLED");
+            lv_label_set_text(ui_WIFI_status_value,"OFF");
             lv_obj_set_style_bg_color(ui_WIFI_status_panel, lv_color_hex(GREY_COLOR), LV_PART_MAIN | LV_STATE_DEFAULT );
             clearWifiSignalImg();
         }else {
-            lv_label_set_text(ui_WIFI_status_value,"ENABLED");
+            lv_label_set_text(ui_WIFI_status_value,"ON");
             lv_obj_set_style_bg_color(ui_WIFI_status_panel, lv_color_hex(BLUE_COLOR), LV_PART_MAIN | LV_STATE_DEFAULT );
             if (strcmp(_wifiMode, "ap") == 0) 
             {
