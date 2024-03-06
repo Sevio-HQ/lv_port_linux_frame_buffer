@@ -403,7 +403,7 @@ void ui_WANIPCONFIG_screen_init(void)
 
     ui_WANIPCONFIG_dhcp_off = lv_img_create(ui_WANIPCONFIG);
     lv_img_set_src(ui_WANIPCONFIG_dhcp_off, &ui_img_sel_off_png);
-    lv_obj_set_width(ui_WANIPCONFIG_dhcp_off, LV_SIZE_CONTENT);   /// 25
+    lv_obj_set_width(ui_WANIPCONFIG_dhcp_off, LV_SIZE_CONTENT);   /// 30
     lv_obj_set_height(ui_WANIPCONFIG_dhcp_off, LV_SIZE_CONTENT);    /// 14
     lv_obj_set_x(ui_WANIPCONFIG_dhcp_off, 41);
     lv_obj_set_y(ui_WANIPCONFIG_dhcp_off, -30);
@@ -413,7 +413,7 @@ void ui_WANIPCONFIG_screen_init(void)
 
     ui_WANIPCONFIG_dhcp_on = lv_img_create(ui_WANIPCONFIG);
     lv_img_set_src(ui_WANIPCONFIG_dhcp_on, &ui_img_sel_on_png);
-    lv_obj_set_width(ui_WANIPCONFIG_dhcp_on, LV_SIZE_CONTENT);   /// 25
+    lv_obj_set_width(ui_WANIPCONFIG_dhcp_on, LV_SIZE_CONTENT);   /// 30
     lv_obj_set_height(ui_WANIPCONFIG_dhcp_on, LV_SIZE_CONTENT);    /// 14
     lv_obj_set_x(ui_WANIPCONFIG_dhcp_on, 41);
     lv_obj_set_y(ui_WANIPCONFIG_dhcp_on, -30);
@@ -552,7 +552,7 @@ void ui_LANIPCONFIG_screen_init(void)
 
     ui_LANIPCONFIG_dhcp_off = lv_img_create(ui_LANIPCONFIG);
     lv_img_set_src(ui_LANIPCONFIG_dhcp_off, &ui_img_sel_off_png);
-    lv_obj_set_width(ui_LANIPCONFIG_dhcp_off, LV_SIZE_CONTENT);   /// 25
+    lv_obj_set_width(ui_LANIPCONFIG_dhcp_off, LV_SIZE_CONTENT);   /// 30
     lv_obj_set_height(ui_LANIPCONFIG_dhcp_off, LV_SIZE_CONTENT);    /// 14
     lv_obj_set_x(ui_LANIPCONFIG_dhcp_off, 41);
     lv_obj_set_y(ui_LANIPCONFIG_dhcp_off, -30);
@@ -562,7 +562,7 @@ void ui_LANIPCONFIG_screen_init(void)
 
     ui_LANIPCONFIG_dhcp_on = lv_img_create(ui_LANIPCONFIG);
     lv_img_set_src(ui_LANIPCONFIG_dhcp_on, &ui_img_sel_on_png);
-    lv_obj_set_width(ui_LANIPCONFIG_dhcp_on, LV_SIZE_CONTENT);   /// 25
+    lv_obj_set_width(ui_LANIPCONFIG_dhcp_on, LV_SIZE_CONTENT);   /// 30
     lv_obj_set_height(ui_LANIPCONFIG_dhcp_on, LV_SIZE_CONTENT);    /// 14
     lv_obj_set_x(ui_LANIPCONFIG_dhcp_on, 41);
     lv_obj_set_y(ui_LANIPCONFIG_dhcp_on, -30);
@@ -681,7 +681,7 @@ void ui_WLANIPCONFIG_screen_init(void)
 
     ui_WLANIPCONFIG_dhcp_off = lv_img_create(ui_WLANIPCONFIG);
     lv_img_set_src(ui_WLANIPCONFIG_dhcp_off, &ui_img_sel_off_png);
-    lv_obj_set_width(ui_WLANIPCONFIG_dhcp_off, LV_SIZE_CONTENT);   /// 25
+    lv_obj_set_width(ui_WLANIPCONFIG_dhcp_off, LV_SIZE_CONTENT);   /// 30
     lv_obj_set_height(ui_WLANIPCONFIG_dhcp_off, LV_SIZE_CONTENT);    /// 14
     lv_obj_set_x(ui_WLANIPCONFIG_dhcp_off, 41);
     lv_obj_set_y(ui_WLANIPCONFIG_dhcp_off, -30);
@@ -691,7 +691,7 @@ void ui_WLANIPCONFIG_screen_init(void)
 
     ui_WLANIPCONFIG_dhcp_on = lv_img_create(ui_WLANIPCONFIG);
     lv_img_set_src(ui_WLANIPCONFIG_dhcp_on, &ui_img_sel_on_png);
-    lv_obj_set_width(ui_WLANIPCONFIG_dhcp_on, LV_SIZE_CONTENT);   /// 25
+    lv_obj_set_width(ui_WLANIPCONFIG_dhcp_on, LV_SIZE_CONTENT);   /// 30
     lv_obj_set_height(ui_WLANIPCONFIG_dhcp_on, LV_SIZE_CONTENT);    /// 14
     lv_obj_set_x(ui_WLANIPCONFIG_dhcp_on, 41);
     lv_obj_set_y(ui_WLANIPCONFIG_dhcp_on, -30);
