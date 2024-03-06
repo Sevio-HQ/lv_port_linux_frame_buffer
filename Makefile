@@ -45,12 +45,17 @@ UI_GEN_SRC = \
     $(LVGL_DIR)/squareline/ui_helpers.c \
     $(LVGL_DIR)/squareline/ui_comp.c \
     $(LVGL_DIR)/squareline2/ui2.c \
-	$(LVGL_DIR)/squareline2/ui_img_no_signal_png.c \
-    $(LVGL_DIR)/squareline2/ui_img_signal_1_png.c \
-    $(LVGL_DIR)/squareline2/ui_img_signal_2_png.c \
-    $(LVGL_DIR)/squareline2/ui_img_signal_3_png.c \
-    $(LVGL_DIR)/squareline2/ui_img_signal_4_png.c \
-    $(LVGL_DIR)/squareline2/ui_img_signal_5_png.c \
+	$(LVGL_DIR)/squareline2/ui_img_wifi_no_signal_png.c \
+    $(LVGL_DIR)/squareline2/ui_img_wifi_signal_1_png.c \
+    $(LVGL_DIR)/squareline2/ui_img_wifi_signal_2_png.c \
+    $(LVGL_DIR)/squareline2/ui_img_wifi_signal_3_png.c \
+    $(LVGL_DIR)/squareline2/ui_img_wifi_signal_4_png.c \
+	$(LVGL_DIR)/squareline2/ui_img_mob_no_signal_png.c \
+    $(LVGL_DIR)/squareline2/ui_img_mob_signal_1_png.c \
+    $(LVGL_DIR)/squareline2/ui_img_mob_signal_2_png.c \
+    $(LVGL_DIR)/squareline2/ui_img_mob_signal_3_png.c \
+    $(LVGL_DIR)/squareline2/ui_img_mob_signal_4_png.c \
+    $(LVGL_DIR)/squareline2/ui_img_mob_signal_5_png.c \
     $(LVGL_DIR)/squareline2/ui_img_sim_png.c \
     $(LVGL_DIR)/squareline2/ui_img_gnss_png.c \
 	$(LVGL_DIR)/squareline2/ui_img_io_png.c \
