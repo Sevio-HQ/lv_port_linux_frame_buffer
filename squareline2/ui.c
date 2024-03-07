@@ -155,7 +155,7 @@ void ui_MOBILE_screen_init(void)
     ui_MOBILE_status_panel = lv_obj_create(ui_MOBILE);
     lv_obj_set_width(ui_MOBILE_status_panel, 62);
     lv_obj_set_height(ui_MOBILE_status_panel, 14);
-    lv_obj_set_x(ui_MOBILE_status_panel, 57);
+    lv_obj_set_x(ui_MOBILE_status_panel, 4);
     lv_obj_set_y(ui_MOBILE_status_panel, 27);
     lv_obj_clear_flag(ui_MOBILE_status_panel, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
     lv_obj_set_style_radius(ui_MOBILE_status_panel, 3, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -166,7 +166,7 @@ void ui_MOBILE_screen_init(void)
     ui_MOBILE_status_value = lv_label_create(ui_MOBILE);
     lv_obj_set_width(ui_MOBILE_status_value, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_MOBILE_status_value, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_MOBILE_status_value, 23);
+    lv_obj_set_x(ui_MOBILE_status_value, -30);
     lv_obj_set_y(ui_MOBILE_status_value, -29);
     lv_obj_set_align(ui_MOBILE_status_value, LV_ALIGN_CENTER);
     lv_label_set_text(ui_MOBILE_status_value, "Enabled");
@@ -219,7 +219,7 @@ void ui_MOBILE_screen_init(void)
     lv_img_set_src(ui_MOBILE_no_signal, &ui_img_mob_no_signal_png);
     lv_obj_set_width(ui_MOBILE_no_signal, LV_SIZE_CONTENT);   /// 39
     lv_obj_set_height(ui_MOBILE_no_signal, LV_SIZE_CONTENT);    /// 16
-    lv_obj_set_x(ui_MOBILE_no_signal, -40);
+    lv_obj_set_x(ui_MOBILE_no_signal, 40);
     lv_obj_set_y(ui_MOBILE_no_signal, -30);
     lv_obj_set_align(ui_MOBILE_no_signal, LV_ALIGN_CENTER);
     lv_obj_add_flag(ui_MOBILE_no_signal, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
@@ -229,7 +229,7 @@ void ui_MOBILE_screen_init(void)
     lv_img_set_src(ui_MOBILE_signal1, &ui_img_mob_signal_1_png);
     lv_obj_set_width(ui_MOBILE_signal1, LV_SIZE_CONTENT);   /// 39
     lv_obj_set_height(ui_MOBILE_signal1, LV_SIZE_CONTENT);    /// 16
-    lv_obj_set_x(ui_MOBILE_signal1, -40);
+    lv_obj_set_x(ui_MOBILE_signal1, 40);
     lv_obj_set_y(ui_MOBILE_signal1, -30);
     lv_obj_set_align(ui_MOBILE_signal1, LV_ALIGN_CENTER);
     lv_obj_add_flag(ui_MOBILE_signal1, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
@@ -239,7 +239,7 @@ void ui_MOBILE_screen_init(void)
     lv_img_set_src(ui_MOBILE_signal2, &ui_img_mob_signal_2_png);
     lv_obj_set_width(ui_MOBILE_signal2, LV_SIZE_CONTENT);   /// 39
     lv_obj_set_height(ui_MOBILE_signal2, LV_SIZE_CONTENT);    /// 16
-    lv_obj_set_x(ui_MOBILE_signal2, -40);
+    lv_obj_set_x(ui_MOBILE_signal2, 40);
     lv_obj_set_y(ui_MOBILE_signal2, -30);
     lv_obj_set_align(ui_MOBILE_signal2, LV_ALIGN_CENTER);
     lv_obj_add_flag(ui_MOBILE_signal2, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
@@ -249,7 +249,7 @@ void ui_MOBILE_screen_init(void)
     lv_img_set_src(ui_MOBILE_signal3, &ui_img_mob_signal_3_png);
     lv_obj_set_width(ui_MOBILE_signal3, LV_SIZE_CONTENT);   /// 39
     lv_obj_set_height(ui_MOBILE_signal3, LV_SIZE_CONTENT);    /// 16
-    lv_obj_set_x(ui_MOBILE_signal3, -40);
+    lv_obj_set_x(ui_MOBILE_signal3, 40);
     lv_obj_set_y(ui_MOBILE_signal3, -30);
     lv_obj_set_align(ui_MOBILE_signal3, LV_ALIGN_CENTER);
     lv_obj_add_flag(ui_MOBILE_signal3, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
@@ -259,7 +259,7 @@ void ui_MOBILE_screen_init(void)
     lv_img_set_src(ui_MOBILE_signal4, &ui_img_mob_signal_4_png);
     lv_obj_set_width(ui_MOBILE_signal4, LV_SIZE_CONTENT);   /// 39
     lv_obj_set_height(ui_MOBILE_signal4, LV_SIZE_CONTENT);    /// 16
-    lv_obj_set_x(ui_MOBILE_signal4, -40);
+    lv_obj_set_x(ui_MOBILE_signal4, 40);
     lv_obj_set_y(ui_MOBILE_signal4, -30);
     lv_obj_set_align(ui_MOBILE_signal4, LV_ALIGN_CENTER);
     lv_obj_add_flag(ui_MOBILE_signal4, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
@@ -269,7 +269,7 @@ void ui_MOBILE_screen_init(void)
     lv_img_set_src(ui_MOBILE_signal5, &ui_img_mob_signal_5_png);
     lv_obj_set_width(ui_MOBILE_signal5, LV_SIZE_CONTENT);   /// 39
     lv_obj_set_height(ui_MOBILE_signal5, LV_SIZE_CONTENT);    /// 16
-    lv_obj_set_x(ui_MOBILE_signal5, -40);
+    lv_obj_set_x(ui_MOBILE_signal5, 40);
     lv_obj_set_y(ui_MOBILE_signal5, -30);
     lv_obj_set_align(ui_MOBILE_signal5, LV_ALIGN_CENTER);
     lv_obj_add_flag(ui_MOBILE_signal5, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
@@ -358,7 +358,7 @@ void ui_GPS_screen_init(void)
     ui_GPS_status_panel = lv_obj_create(ui_GPS);
     lv_obj_set_width(ui_GPS_status_panel, 79);
     lv_obj_set_height(ui_GPS_status_panel, 14);
-    lv_obj_set_x(ui_GPS_status_panel, 45);
+    lv_obj_set_x(ui_GPS_status_panel, 4);
     lv_obj_set_y(ui_GPS_status_panel, 26);
     lv_obj_clear_flag(ui_GPS_status_panel, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
     lv_obj_set_style_radius(ui_GPS_status_panel, 3, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -369,7 +369,7 @@ void ui_GPS_screen_init(void)
     ui_GPS_status_value = lv_label_create(ui_GPS);
     lv_obj_set_width(ui_GPS_status_value, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_GPS_status_value, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_GPS_status_value, 21);
+    lv_obj_set_x(ui_GPS_status_value, -21);
     lv_obj_set_y(ui_GPS_status_value, -30);
     lv_obj_set_align(ui_GPS_status_value, LV_ALIGN_CENTER);
     lv_label_set_text(ui_GPS_status_value, "Connected");
@@ -565,7 +565,7 @@ void ui_WIFI_screen_init(void)
     ui_WIFI_status_panel = lv_obj_create(ui_WIFI);
     lv_obj_set_width(ui_WIFI_status_panel, 62);
     lv_obj_set_height(ui_WIFI_status_panel, 14);
-    lv_obj_set_x(ui_WIFI_status_panel, 57);
+    lv_obj_set_x(ui_WIFI_status_panel, 4);
     lv_obj_set_y(ui_WIFI_status_panel, 27);
     lv_obj_clear_flag(ui_WIFI_status_panel, LV_OBJ_FLAG_SCROLLABLE);      /// Flags
     lv_obj_set_style_radius(ui_WIFI_status_panel, 3, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -576,7 +576,7 @@ void ui_WIFI_screen_init(void)
     ui_WIFI_status_value = lv_label_create(ui_WIFI);
     lv_obj_set_width(ui_WIFI_status_value, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_WIFI_status_value, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_WIFI_status_value, 23);
+    lv_obj_set_x(ui_WIFI_status_value, -30);
     lv_obj_set_y(ui_WIFI_status_value, -29);
     lv_obj_set_align(ui_WIFI_status_value, LV_ALIGN_CENTER);
     lv_label_set_text(ui_WIFI_status_value, "Enabled");
@@ -629,7 +629,7 @@ void ui_WIFI_screen_init(void)
     lv_img_set_src(ui_WIFI_no_signal, &ui_img_wifi_no_signal_png);
     lv_obj_set_width(ui_WIFI_no_signal, LV_SIZE_CONTENT);   /// 40
     lv_obj_set_height(ui_WIFI_no_signal, LV_SIZE_CONTENT);    /// 15
-    lv_obj_set_x(ui_WIFI_no_signal, -40);
+    lv_obj_set_x(ui_WIFI_no_signal, 40);
     lv_obj_set_y(ui_WIFI_no_signal, -30);
     lv_obj_set_align(ui_WIFI_no_signal, LV_ALIGN_CENTER);
     lv_obj_add_flag(ui_WIFI_no_signal, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
@@ -639,7 +639,7 @@ void ui_WIFI_screen_init(void)
     lv_img_set_src(ui_WIFI_signal1, &ui_img_wifi_signal_1_png);
     lv_obj_set_width(ui_WIFI_signal1, LV_SIZE_CONTENT);   /// 40
     lv_obj_set_height(ui_WIFI_signal1, LV_SIZE_CONTENT);    /// 15
-    lv_obj_set_x(ui_WIFI_signal1, -40);
+    lv_obj_set_x(ui_WIFI_signal1, 40);
     lv_obj_set_y(ui_WIFI_signal1, -30);
     lv_obj_set_align(ui_WIFI_signal1, LV_ALIGN_CENTER);
     lv_obj_add_flag(ui_WIFI_signal1, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
@@ -649,7 +649,7 @@ void ui_WIFI_screen_init(void)
     lv_img_set_src(ui_WIFI_signal2, &ui_img_wifi_signal_2_png);
     lv_obj_set_width(ui_WIFI_signal2, LV_SIZE_CONTENT);   /// 40
     lv_obj_set_height(ui_WIFI_signal2, LV_SIZE_CONTENT);    /// 15
-    lv_obj_set_x(ui_WIFI_signal2, -40);
+    lv_obj_set_x(ui_WIFI_signal2, 40);
     lv_obj_set_y(ui_WIFI_signal2, -30);
     lv_obj_set_align(ui_WIFI_signal2, LV_ALIGN_CENTER);
     lv_obj_add_flag(ui_WIFI_signal2, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
@@ -659,7 +659,7 @@ void ui_WIFI_screen_init(void)
     lv_img_set_src(ui_WIFI_signal3, &ui_img_wifi_signal_3_png);
     lv_obj_set_width(ui_WIFI_signal3, LV_SIZE_CONTENT);   /// 40
     lv_obj_set_height(ui_WIFI_signal3, LV_SIZE_CONTENT);    /// 15
-    lv_obj_set_x(ui_WIFI_signal3, -40);
+    lv_obj_set_x(ui_WIFI_signal3, 40);
     lv_obj_set_y(ui_WIFI_signal3, -30);
     lv_obj_set_align(ui_WIFI_signal3, LV_ALIGN_CENTER);
     lv_obj_add_flag(ui_WIFI_signal3, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
@@ -669,7 +669,7 @@ void ui_WIFI_screen_init(void)
     lv_img_set_src(ui_WIFI_signal4, &ui_img_wifi_signal_4_png);
     lv_obj_set_width(ui_WIFI_signal4, LV_SIZE_CONTENT);   /// 40
     lv_obj_set_height(ui_WIFI_signal4, LV_SIZE_CONTENT);    /// 15
-    lv_obj_set_x(ui_WIFI_signal4, -40);
+    lv_obj_set_x(ui_WIFI_signal4, 40);
     lv_obj_set_y(ui_WIFI_signal4, -30);
     lv_obj_set_align(ui_WIFI_signal4, LV_ALIGN_CENTER);
     lv_obj_add_flag(ui_WIFI_signal4, LV_OBJ_FLAG_ADV_HITTEST);     /// Flags
@@ -986,8 +986,9 @@ void ui_PORTS_screen_init(void)
     ui_PORTS_negotiation_value = lv_label_create(ui_PORTS);
     lv_obj_set_width(ui_PORTS_negotiation_value, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_PORTS_negotiation_value, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_PORTS_negotiation_value, 70);
-    lv_obj_set_y(ui_PORTS_negotiation_value, 72);
+    lv_obj_set_x(ui_PORTS_negotiation_value, 27);
+    lv_obj_set_y(ui_PORTS_negotiation_value, 14);
+    lv_obj_set_align(ui_PORTS_negotiation_value, LV_ALIGN_CENTER);
     lv_label_set_text(ui_PORTS_negotiation_value, "Done");
     lv_obj_set_style_text_color(ui_PORTS_negotiation_value, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_PORTS_negotiation_value, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -1007,8 +1008,9 @@ void ui_PORTS_screen_init(void)
     ui_PORTS_speed_value = lv_label_create(ui_PORTS);
     lv_obj_set_width(ui_PORTS_speed_value, LV_SIZE_CONTENT);   /// 1
     lv_obj_set_height(ui_PORTS_speed_value, LV_SIZE_CONTENT);    /// 1
-    lv_obj_set_x(ui_PORTS_speed_value, 70);
-    lv_obj_set_y(ui_PORTS_speed_value, 94);
+    lv_obj_set_x(ui_PORTS_speed_value, 27);
+    lv_obj_set_y(ui_PORTS_speed_value, 36);
+    lv_obj_set_align(ui_PORTS_speed_value, LV_ALIGN_CENTER);
     lv_label_set_text(ui_PORTS_speed_value, "1000/FD");
     lv_obj_set_style_text_color(ui_PORTS_speed_value, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_PORTS_speed_value, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
