@@ -32,7 +32,7 @@ bool isGpsGsmPresent()
 
 static void default_lcd()
 {
-    lv_label_set_text(ui_GPS_status_value,"WAIT...");
+    lv_label_set_text(ui_GPS_status_value,"Waiting...");
     lv_obj_set_style_bg_color(ui_GPS_status_panel, lv_color_hex(GREY_COLOR), LV_PART_MAIN | LV_STATE_DEFAULT );
     //lv_obj_set_style_border_color(ui_GPS_status_panel, lv_color_hex(0xf3e32a), LV_PART_MAIN | LV_STATE_DEFAULT );
     lv_label_set_text(ui_GPS_latitude_value,"--");
@@ -59,7 +59,7 @@ static int update_lcd(struct gps_data_t *gpsdata)
         int track;
         char *s;
 
-        lv_label_set_text(ui_GPS_status_value,"RUN");
+        lv_label_set_text(ui_GPS_status_value,"Connected");
         lv_obj_set_style_bg_color(ui_GPS_status_panel, lv_color_hex(BLUE_COLOR), LV_PART_MAIN | LV_STATE_DEFAULT );
         //lv_obj_set_style_border_color(ui_GPS_status_panel, lv_color_hex(0x11F308), LV_PART_MAIN | LV_STATE_DEFAULT );
 

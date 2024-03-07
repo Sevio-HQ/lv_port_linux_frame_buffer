@@ -601,24 +601,24 @@ void updatePortsStatusUI(bool status, bool carrier, bool autoneg, char* speed)
     if (status)
     {
         lv_obj_set_style_bg_color(ui_PORTS_status_panel, lv_color_hex(BLUE_COLOR), LV_PART_MAIN | LV_STATE_DEFAULT );
-        lv_label_set_text(ui_PORTS_status_value,"YES");
+        lv_label_set_text(ui_PORTS_status_value,"Yes");
     }else{
         lv_obj_set_style_bg_color(ui_PORTS_status_panel, lv_color_hex(GREY_COLOR), LV_PART_MAIN | LV_STATE_DEFAULT );
-        lv_label_set_text(ui_PORTS_status_value,"NO");       
+        lv_label_set_text(ui_PORTS_status_value,"No");       
     }
     if (carrier)
     {
         lv_obj_set_style_bg_color(ui_PORTS_link_panel, lv_color_hex(BLUE_COLOR), LV_PART_MAIN | LV_STATE_DEFAULT );
-        lv_label_set_text(ui_PORTS_link_value,"YES");
+        lv_label_set_text(ui_PORTS_link_value,"Yes");
     }else{
         lv_obj_set_style_bg_color(ui_PORTS_link_panel, lv_color_hex(GREY_COLOR), LV_PART_MAIN | LV_STATE_DEFAULT );
-        lv_label_set_text(ui_PORTS_link_value,"NO");       
+        lv_label_set_text(ui_PORTS_link_value,"No");       
     }
     if (autoneg)
     {
-        lv_label_set_text(ui_PORTS_negotiation_value,"DONE");
+        lv_label_set_text(ui_PORTS_negotiation_value,"Enabled");
     }else{
-        lv_label_set_text(ui_PORTS_negotiation_value,"DISABLED");       
+        lv_label_set_text(ui_PORTS_negotiation_value,"Disabled");       
     }
     if (speed)
     {
@@ -757,20 +757,20 @@ void updateWiFiConfig()
         {
             lv_label_set_text(ui_WIFI_mode_value,"---");
             lv_label_set_text(ui_WIFI_ssid__value,"---");
-            lv_label_set_text(ui_WIFI_status_value,"OFF");
+            lv_label_set_text(ui_WIFI_status_value,"Disabled");
             lv_obj_set_style_bg_color(ui_WIFI_status_panel, lv_color_hex(GREY_COLOR), LV_PART_MAIN | LV_STATE_DEFAULT );
             clearWifiSignalImg();
         }else {
-            lv_label_set_text(ui_WIFI_status_value,"ON");
+            lv_label_set_text(ui_WIFI_status_value,"Enabled");
             lv_obj_set_style_bg_color(ui_WIFI_status_panel, lv_color_hex(BLUE_COLOR), LV_PART_MAIN | LV_STATE_DEFAULT );
             if (strcmp(_wifiMode, "ap") == 0) 
             {
-                lv_label_set_text(ui_WIFI_mode_value,"ACCESS POINT");
+                lv_label_set_text(ui_WIFI_mode_value,"Access Point");
                 setWifiSignal(true, 0);
             }
             else 
             {
-                lv_label_set_text(ui_WIFI_mode_value,"CLIENT");
+                lv_label_set_text(ui_WIFI_mode_value,"Client");
                 t_ubus_iwinfo_getSignal_param param = { setWifiSignal, _ssid };
                 updateWiFiSignal(&param);
             }
