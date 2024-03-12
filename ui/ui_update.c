@@ -31,7 +31,6 @@ uint8_t  voltage[MAX_FLOAT_STR_SIZE]="0.0";
 uint8_t  current[MAX_FLOAT_STR_SIZE]="0.0";
 static bool _ui_updater_init = true;
 static bool gpsNotFixed = true;
-bool wwan_up = false;
 lv_timer_t * minTimer = NULL;
 lv_timer_t * secTimer = NULL;
 lv_timer_t * refreshTimer = NULL;
@@ -572,16 +571,6 @@ void updateWlanConfig(bool _ifup, const char* _ip, unsigned int _mask, const cha
     }
 }
 
-void updateWwanConfig(bool _ifup, const char* _ip, unsigned int _mask, const char* _gw, bool dhcp)
-{
-    LV_LOG_INFO("WWAN ip:%s", _ip);
-    if (strlen(_ip) > 0) wwan_up = true;
-    else wwan_up = false;
-}
-
-//#define UPDATING_COLOR lv_palette_lighten(LV_PALETTE_GREY, 4)
-//#define UPDATING_STRING "---"
-
 void updatePortsStatusUI_def()
 {
     LV_LOG_INFO("Default UI");
@@ -852,8 +841,7 @@ static void timer_sec_cb(lv_timer_t * timer)
 
         if ((menuIndex == UI_GSMCONFIG)||(_ui_updater_init))
         {
-            updateInterfaceStatusCb("wwan", updateWwanConfig);
-             if (_ui_updater_init) ui_gsm_init();
+            if (_ui_updater_init) ui_gsm_init();
             ui_gsm_update();
         }
 

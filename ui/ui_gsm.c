@@ -26,7 +26,7 @@ char _operator[MAX_STRING_LEN_GSM] = "--";
 char _apn[MAX_STRING_LEN_GSM]      = "--";
 char _ip[MAX_STRING_LEN_GSM];
 tSigLevel _level = NO_SIG_LEVEL;
-extern bool wwan_up;
+bool wwanDis = false;
 bool isModemAvail = false;
 
 pid_t popen2(const char * command, int * infp, int * outfp)
@@ -111,21 +111,17 @@ bool isNotLockFile()
         return false;
     }
 
-    LV_LOG_INFO("Trying to get lock...%d %s", fl.l_pid, fileLock);
+    // LV_LOG_INFO("Trying to get lock...%d %s", fl.l_pid, fileLock);
 
     int ret = flock(fd, LOCK_EX | LOCK_NB);
-    LV_LOG_INFO("flock ret:%d", ret);
+    // LV_LOG_INFO("flock ret:%d", ret);
     if (ret == -1)
     {
         LV_LOG_INFO("File locked ret:%d errno:%d go ahead...", ret, errno);
         return false;
     }
 
-    LV_LOG_INFO("got lock");
-
     ret = flock(fd, LOCK_UN);
-
-    LV_LOG_INFO("Unlocked.\n");
 
     close(fd);
     return true;
@@ -378,16 +374,14 @@ int ui_gsm_update_ui()
 {
     lv_label_set_text(ui_MOBILE_operator_value, _operator);
     lv_label_set_text(ui_MOBILE_apn_value, _apn);
-    if(wwan_up) {
+    if(!wwanDis) {
         lv_label_set_text(ui_MOBILE_status_value, "Enabled");
         lv_obj_set_style_bg_color(ui_MOBILE_status_panel, lv_color_hex(BLUE_COLOR), LV_PART_MAIN | LV_STATE_DEFAULT);
-        //lv_obj_set_style_border_color(ui_MOBILE_status_panel, lv_color_hex(0x11F308), LV_PART_MAIN | LV_STATE_DEFAULT);
     } else {
         lv_label_set_text(ui_MOBILE_status_value, "Disabled");
         lv_obj_set_style_bg_color(ui_MOBILE_status_panel, lv_color_hex(GREY_COLOR), LV_PART_MAIN | LV_STATE_DEFAULT);
-        //lv_obj_set_style_border_color(ui_MOBILE_status_panel, lv_color_hex(0xf3e32a), LV_PART_MAIN | LV_STATE_DEFAULT);
     }
-    return wwan_up;
+    return 1;
 }
 
 
@@ -410,14 +404,13 @@ int ui_gsm_update()
         if (!getSignalOperator(_operator, &_signal))
         {
             LV_LOG_INFO("Skip operator, signal update...");
-
             return -1;
         }
         level = mapSigq2SigLevel(_signal);
         setSigLevel(level);
-        uci_config_getAPN(_apn);
+        uci_config_getAPN(_apn, &wwanDis);
     }
-    return ui_gsm_update_ui();
+    ui_gsm_update_ui();
 }
 
 void ui_gsm_init()

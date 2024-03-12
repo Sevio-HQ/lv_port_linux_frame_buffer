@@ -261,7 +261,7 @@ int uci_config_isWifiStaMode(bool* _wifiSta)
 	uci_free_context(uci);
 }
 
-int uci_config_getAPN(char* _apn)
+int uci_config_getAPN(char* _apn, bool* _wwanDis)
 {
     struct uci_context* uci;
 	struct uci_package* p;
@@ -293,7 +293,13 @@ int uci_config_getAPN(char* _apn)
                 strcpy(_apn, str);
 				val = 1;
             }
-
+            str = uci_lookup_option_string(uci, s, "disabled");
+            LV_LOG_INFO("disabled: %s", str);
+            if ((str != NULL) && (_wwanDis != NULL))
+            {
+                if (strcmp(str, "1") == 0) *_wwanDis = true;
+				else *_wwanDis = false;
+            }
         }
     }
 	uci_free_context(uci);

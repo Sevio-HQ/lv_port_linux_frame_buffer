@@ -15,6 +15,6 @@ int uci_config_isWifiStaMode(bool* _wifiSta);
 
 bool uci_config_set_pingcheck(char* ifname);
 
-int uci_config_getAPN(char* _apn);
+int uci_config_getAPN(char* _apn, bool* _wwanDis);
 
 #endif
