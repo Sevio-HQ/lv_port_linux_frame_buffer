@@ -76,6 +76,7 @@ tSigLevel mapSigq2SigLevel(int sigQ)
     #else
     //sigq is percentage
     int _sigQNorm = round(sigQ * (MAX_SIG_LEVEL - 1) / 100.0 + 0.5);
+    if(wwanDis) return _sigQNorm = 0;
     LV_LOG_INFO("Signal Level: %d%% - %d", sigQ, _sigQNorm);
     return (tSigLevel)_sigQNorm;
     #endif
@@ -372,7 +373,6 @@ void setSigLevel(tSigLevel newLevel)
 
 int ui_gsm_update_ui()
 {
-    lv_label_set_text(ui_MOBILE_operator_value, _operator);
     lv_label_set_text(ui_MOBILE_apn_value, _apn);
     if(!wwanDis) {
         lv_label_set_text(ui_MOBILE_status_value, "Enabled");
@@ -380,6 +380,11 @@ int ui_gsm_update_ui()
     } else {
         lv_label_set_text(ui_MOBILE_status_value, "Disabled");
         lv_obj_set_style_bg_color(ui_MOBILE_status_panel, lv_color_hex(GREY_COLOR), LV_PART_MAIN | LV_STATE_DEFAULT);
+    }
+    if((!wwanDis) && (isModemAvail)) {
+        lv_label_set_text(ui_MOBILE_operator_value, _operator);
+    } else {
+        lv_label_set_text(ui_MOBILE_operator_value, "---");
     }
     return 1;
 }
