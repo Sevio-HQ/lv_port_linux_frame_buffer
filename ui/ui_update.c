@@ -760,8 +760,9 @@ void updateWiFiConfig()
             else 
             {
                 lv_label_set_text(ui_WIFI_mode_value,"Client");
-                t_ubus_iwinfo_getSignal_param param = { setWifiSignal, _ssid };
-                updateWiFiSignal(&param);
+                t_ubus_wlaninfo_param param;
+                ubus_wlaninfo_status(&param);
+                setWifiSignal(false, param._signal);
             }
             if (_hidden) lv_label_set_text(ui_WIFI_ssid__value,"********");
             else lv_label_set_text(ui_WIFI_ssid__value, _ssid);

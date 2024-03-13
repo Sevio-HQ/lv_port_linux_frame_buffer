@@ -890,6 +890,64 @@ bool ubus_modeminfo_status(t_ubus_modeminfo_param* _param)
 	return true;
 }
 
+enum {
+	WLANINFO_SIGNAL,
+	WLANINFO_QUALITY,
+	WLANINFO_MAX
+};
+
+static const struct blobmsg_policy wlaninfo_policy[] = {
+	[WLANINFO_SIGNAL] = {.name = "signal", .type = BLOBMSG_TYPE_INT32},
+	[WLANINFO_QUALITY] = {.name = "quality", .type = BLOBMSG_TYPE_INT32},
+};
+
+static void ubus_wlaninfo_cb (__attribute__((unused)) struct ubus_request* req,
+						   __attribute__((unused)) int type,
+						   struct blob_attr* msg)
+{
+	if (!msg) {
+		return;
+	}
+	t_ubus_wlaninfo_param* _param = (t_ubus_wlaninfo_param*)req->priv;
+
+	struct blob_attr* tb[ARRAY_SIZE(wlaninfo_policy)];
+	int ret = blobmsg_parse(wlaninfo_policy, ARRAY_SIZE(wlaninfo_policy), tb,
+				  blob_data(msg), blob_len(msg));
+
+	if (tb[WLANINFO_SIGNAL]) {
+		int _signal = blobmsg_get_u32(tb[WLANINFO_SIGNAL]);
+		if (_param) _param->_signal = _signal;
+	}
+
+	if (tb[WLANINFO_QUALITY]) {
+		int _quality = blobmsg_get_u32(tb[WLANINFO_QUALITY]);
+		if (_param) _param->_quality = _quality;
+	}
+	if (_param) LV_LOG_INFO("Signal:%d Quality:%d", _param->_signal, _param->_quality);
+}
+
+
+/*** modeminfo info ***/
+
+bool ubus_wlaninfo_status(t_ubus_wlaninfo_param* _param)
+{
+	uint32_t id;
+	int ret;
+
+
+	ret = ubus_lookup_id(ctx, "wlaninfo", &id);
+	if (ret) {
+		return false;
+	}
+
+	ret = ubus_invoke(ctx, id, "status", NULL, ubus_wlaninfo_cb, (void*)_param,
+					  UBUS_TIMEOUT);
+	if (ret < 0) {
+		return false;
+	}
+	return true;
+}
+
 /*** init / finish ***/
 
 bool ubus_init(void)

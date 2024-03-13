@@ -36,6 +36,12 @@ typedef struct ubus_modeminfo_param
 	char* _csq;
 }t_ubus_modeminfo_param;
 
+typedef struct ubus_wlaninfo_param
+{
+	int _signal;
+	int _quality;
+}t_ubus_wlaninfo_param;
+
 typedef void (*ubus_gui_update_vpnstatus_handler_t)(tCheckStatus _uplink, tCheckStatus _ipAddr, tCheckStatus _gw, tCheckStatus _internet, tCheckStatus _vpnPorts);
 
 typedef void (*ubus_gui_update_portstatus_handler_t)(bool status, bool carrier, bool autoneg, char* speed);
@@ -57,6 +63,8 @@ bool updateWiFiSignal(t_ubus_iwinfo_getSignal_param* _param );
 int updatePortsStatus(const char* ifname, ubus_gui_update_portstatus_handler_t cb);
 
 bool ubus_modeminfo_status(t_ubus_modeminfo_param* _param);
+
+bool ubus_wlaninfo_status(t_ubus_wlaninfo_param* _param);
 
 bool ubus_init(void);
 
