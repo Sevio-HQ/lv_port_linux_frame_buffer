@@ -180,7 +180,7 @@ void ui_MOBILE_screen_init(void)
     lv_obj_set_height(ui_MOBILE_operator_label, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_x(ui_MOBILE_operator_label, 3);
     lv_obj_set_y(ui_MOBILE_operator_label, 47);
-    lv_label_set_text(ui_MOBILE_operator_label, "Operator:");
+    lv_label_set_text(ui_MOBILE_operator_label, "Provider:");
     lv_obj_set_style_text_color(ui_MOBILE_operator_label, lv_color_hex(0x808080), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_MOBILE_operator_label, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_MOBILE_operator_label, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
