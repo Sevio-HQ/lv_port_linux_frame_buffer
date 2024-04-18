@@ -571,7 +571,7 @@ int updateVpnStatus(ubus_gui_update_vpnstatus_handler_t cb )
 	{
 		ubus_network_device_status("wlan0", (void*)&wlan0_up);
 		if (!wlan0_up)
-			ubus_network_device_status("wwan0", (void*)&wwan0_up);
+			ubus_network_device_status("wwan-wwan", (void*)&wwan0_up);
 	}
 	_uplink = (eth0_up | wlan0_up | wwan0_up) ? CHECK_OK : CHECK_FAIL;
 	cb(_uplink, _ipAddr, _gw, _internet, _vpnPorts);

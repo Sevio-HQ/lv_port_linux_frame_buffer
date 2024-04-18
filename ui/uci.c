@@ -77,11 +77,11 @@ int uci_config_getLanDhcpServer()
 			// 	else val = 0; 
             //     LV_LOG_INFO("%s dhcpv4: %s", e->name, str);
 			// }
-			str = uci_lookup_option_string(uci, s, "disabled");
+			str = uci_lookup_option_string(uci, s, "ignore");
 			if (str != NULL) {
 				if (strcmp(str,"0") == 0) val = 1;
 				else val = 0; 
-                LV_LOG_INFO("%s disabled: %s", e->name, str);
+                LV_LOG_INFO("%s ignore: %s", e->name, str);
 			}
         }
     }

@@ -726,7 +726,7 @@ void setWifiSignal(bool _ap, int signal)
     }else if ((signal > -70 ) && (signal <= -67))
     {
         lv_obj_clear_flag(ui_WIFI_signal3, LV_OBJ_FLAG_HIDDEN);
-    }else if ((signal > -67 ) && (signal <= -30))
+    }else if ((signal > -67 ) && (signal <= -1))
     {
         lv_obj_clear_flag(ui_WIFI_signal4, LV_OBJ_FLAG_HIDDEN);
     }
