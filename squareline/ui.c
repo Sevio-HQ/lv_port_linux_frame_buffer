@@ -113,7 +113,7 @@ void ui_HOME_screen_init(void)
     lv_obj_set_x(ui_HOME_servicetag, 0);
     lv_obj_set_y(ui_HOME_servicetag, 59);
     lv_obj_set_align(ui_HOME_servicetag, LV_ALIGN_TOP_MID);
-    lv_label_set_text(ui_HOME_servicetag, "MRRVWQB");
+    lv_label_set_text(ui_HOME_servicetag, "");
     lv_obj_set_style_text_color(ui_HOME_servicetag, lv_color_hex(0xD1D0D0), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_HOME_servicetag, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_align(ui_HOME_servicetag, LV_TEXT_ALIGN_CENTER, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -125,7 +125,7 @@ void ui_HOME_screen_init(void)
     lv_obj_set_x(ui_HOME_temperature_value, 2);
     lv_obj_set_y(ui_HOME_temperature_value, 37);
     lv_obj_set_align(ui_HOME_temperature_value, LV_ALIGN_TOP_MID);
-    lv_label_set_text(ui_HOME_temperature_value, "23.4 °C");
+    lv_label_set_text(ui_HOME_temperature_value, "");
     lv_obj_set_style_text_color(ui_HOME_temperature_value, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_HOME_temperature_value, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_HOME_temperature_value, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -136,7 +136,7 @@ void ui_HOME_screen_init(void)
     lv_obj_set_x(ui_HOME_uptime_value, 0);
     lv_obj_set_y(ui_HOME_uptime_value, 86);
     lv_obj_set_align(ui_HOME_uptime_value, LV_ALIGN_TOP_MID);
-    lv_label_set_text(ui_HOME_uptime_value, "5d 7h 56' 32''");
+    lv_label_set_text(ui_HOME_uptime_value, "");
     lv_obj_set_style_text_color(ui_HOME_uptime_value, lv_color_hex(0xFFFFFF), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_HOME_uptime_value, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_HOME_uptime_value, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
