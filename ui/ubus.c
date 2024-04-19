@@ -273,7 +273,7 @@ static void ubus_network_device_result_cb (	__attribute__((unused)) struct ubus_
 						   					struct blob_attr* msg)
 {
 	if (!msg) {
-		printf("msg NULL\r\n");
+		LV_LOG_WARN("msg NULL");
 		return;
 	}
 
@@ -296,7 +296,7 @@ static void ubus_network_device_port_result_cb (	__attribute__((unused)) struct 
 						   							struct blob_attr* msg)
 {
 	if (!msg) {
-		printf("msg NULL\r\n");
+		LV_LOG_WARN("msg NULL");
 		return;
 	}
 	const char* ifname = "";
@@ -348,19 +348,19 @@ static bool ubus_network_device_status_generic(const char* name, ubus_data_handl
 		return false;
 	}else{
 		if (!blobmsg_add_json_from_string(&b, idstr))
-			printf("error adding json param\r\n");
+			LV_LOG_ERROR("error adding json param");
 	}
 
 	ret = ubus_lookup_id(ctx, "network.device", &id);
 	if (ret) {
-		printf("%s:%d ret:%d -->\r\n", __FUNCTION__, __LINE__, ret);
+		LV_LOG_INFO("%s ret:%d", idstr, ret);
 		return false;
 	}
 
 	ret = ubus_invoke(ctx, id, "status", b.head, _cb, priv,
 					  UBUS_TIMEOUT);
 	if (ret) {
-		printf("%s:%d %s ret:%d\r\n", __FUNCTION__, __LINE__, idstr, ret);
+		LV_LOG_INFO("%s ret:%d", idstr, ret);
 		return false;
 	}
 
@@ -398,7 +398,7 @@ static void ubus_pingcheck_result_cb (	__attribute__((unused)) struct ubus_reque
 						   				struct blob_attr* msg)
 {
 	if (!msg) {
-		printf("msg NULL\r\n");
+		LV_LOG_WARN("msg NULL");
 		return;
 	}
 
@@ -429,19 +429,19 @@ static bool ubus_pingcheck_status_generic(const char* name, void* priv)
 		return false;
 	}else{
 		if (!blobmsg_add_json_from_string(&b, idstr))
-			printf("error adding json param\r\n");
+			LV_LOG_ERROR("error adding json param");
 	}
 
 	ret = ubus_lookup_id(ctx, "pingcheck", &id);
 	if (ret) {
-		printf("%s:%d ret:%d -->\r\n", __FUNCTION__, __LINE__, ret);
+		LV_LOG_INFO("name:%s ret:%d", name, ret);
 		return false;
 	}
 
 	ret = ubus_invoke(ctx, id, "status", b.head, ubus_pingcheck_result_cb, priv,
 					  UBUS_TIMEOUT);
 	if (ret) {
-		printf("%s:%d %s ret:%d\r\n", __FUNCTION__, __LINE__, idstr, ret);
+		LV_LOG_INFO("%s ret:%d", idstr, ret);
 		return false;
 	}
 
@@ -490,6 +490,25 @@ int updateInterfaceStatusCb(const char* iface, ubus_gui_update_handler_t cb )
 	}
 }
 
+static bool concentrator_reachability(char* hostname)
+{
+	if (hostname == NULL) return false;
+	const char cmdStrFmt[] = "ping -c1 -w1 -W1 %s > /dev/null 2>&1";
+	char cmdStr[255] = "";
+	sprintf(cmdStr, cmdStrFmt, hostname);
+	LV_LOG_INFO("Trying: %s", cmdStr);
+	int ret = system(cmdStr);
+	if (ret == 0) {
+		LV_LOG_INFO("SUCCESS");
+		return true;
+	}
+	else 
+	{
+		LV_LOG_INFO("FAIL");
+	}
+	return false;
+}
+
 static bool concentrator_resolve(char* hostname)
 {
 	struct addrinfo hints;
@@ -530,19 +549,19 @@ static bool ubus_restart_service(const char* name)
 		return false;
 	}else{
 		if (!blobmsg_add_json_from_string(&b, idstr))
-			printf("error adding json param\r\n");
+			LV_LOG_ERROR("error adding json param");
 	}
 
 	ret = ubus_lookup_id(ctx, "service", &id);
 	if (ret) {
-		printf("%s:%d ret:%d -->\r\n", __FUNCTION__, __LINE__, ret);
+		LV_LOG_INFO("ret:%d", ret);
 		return false;
 	}
 
 	ret = ubus_invoke(ctx, id, "signal", b.head, NULL, NULL,
 					  UBUS_TIMEOUT);
 	if (ret) {
-		printf("%s:%d %s ret:%d\r\n", __FUNCTION__, __LINE__, idstr, ret);
+		LV_LOG_INFO("%s ret:%d", idstr, ret);
 		return false;
 	}
 
@@ -618,13 +637,13 @@ int updateVpnStatus(ubus_gui_update_vpnstatus_handler_t cb )
 	if (_gw == CHECK_FAIL) return 0;
 
 	//VPNSTATUS_internet
-	if (concentrator_resolve("concentrators.sevio.it"))
+	if (concentrator_reachability("concentrators.sevio.it"))
 	{
 		_internet = CHECK_OK;
-	}else if (concentrator_resolve("vpn.sevio.dev"))
+	}else if (concentrator_reachability("vpn.sevio.dev"))
 	{
 		_internet = CHECK_OK;
-	}else if (concentrator_resolve("vpn2.sevio.dev"))
+	}else if (concentrator_reachability("vpn2.sevio.dev"))
 	{
 		_internet = CHECK_OK;
 	}else{
@@ -702,8 +721,6 @@ static void ubus_iwinfo_scan_cb(__attribute__((unused)) struct ubus_request* req
 		return;
 	}
 
-	printf("%s:%d\r\n", __FUNCTION__, __LINE__);
-
 	struct blob_attr* tb[ARRAY_SIZE(iwinfoScanWifi_policy)];
 	blobmsg_parse(iwinfoScanWifi_policy, ARRAY_SIZE(iwinfoScanWifi_policy), tb,
 				  blob_data(msg), blob_len(msg));
@@ -744,7 +761,7 @@ static bool ubus_iwinfo_scan(const char* name)
 	blob_buf_init(&b, 0);
 	if (!blobmsg_add_json_from_string(&b, idstr))
 	{
-		printf("error adding json param\r\n");
+		LV_LOG_ERROR("error adding json param");
 	}
 
 	ret = ubus_lookup_id(ctx, "iwinfo", &id);
@@ -814,7 +831,7 @@ bool updateWiFiSignal(t_ubus_iwinfo_getSignal_param* _param)
 
 	blob_buf_init(&b, 0);
 	if (!blobmsg_add_json_from_string(&b, idstr)) {
-		printf("error adding json param\r\n");
+		LV_LOG_ERROR("error adding json param");
 	}
 
 	ret = ubus_lookup_id(ctx, "iwinfo", &id);
