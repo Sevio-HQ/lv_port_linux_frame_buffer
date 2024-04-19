@@ -345,14 +345,17 @@ bool uci_config_set_pingcheck(char* ifname)
 			{
 				found = true;
 				if (getIfStatEntry(name, &up, &gw, &ip, &mask))
-					if ((gw) && (host) &&(strcmp(gw, host) != 0))
+					if ((gw) && (up))
 					{
-						changed = true;
-						//up date uci configuration
-						struct uci_ptr ptr = { .p = p, .s = s, .option = "host", .value = gw };
-						int ret = uci_set(uci, &ptr);
+						if ((!host) || (strcmp(gw, host) != 0))
+						{
+							changed = true;
+							//up date uci configuration
+							struct uci_ptr ptr = { .p = p, .s = s, .option = "host", .value = gw };
+							int ret = uci_set(uci, &ptr);
 
-						LV_LOG_INFO("CHANGED name:%s gw:%s host:%s ret:%d", name, gw, host, ret);
+							LV_LOG_INFO("CHANGED name:%s gw:%s host:%s ret:%d", name, gw, host, ret);
+						}
 					}
 				LV_LOG_INFO("name:%s up:%s ip:%s mask:%lu gw:%s", name, up ? "UP" : "DOWN", ip, mask, gw);
 			}
