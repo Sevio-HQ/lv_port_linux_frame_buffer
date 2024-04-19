@@ -306,6 +306,81 @@ int uci_config_getAPN(char* _apn, bool* _wwanDis)
 	return val;
 }
 
+bool concentrator_reachability(char* hostname)
+{
+	if (hostname == NULL) return false;
+	const char cmdStrFmt[] = "ping -c1 -w1 -W1 %s > /dev/null 2>&1";
+	char cmdStr[255] = "";
+	sprintf(cmdStr, cmdStrFmt, hostname);
+	LV_LOG_INFO("Trying: %s", cmdStr);
+	int ret = system(cmdStr);
+	if (ret == 0) {
+		LV_LOG_INFO("SUCCESS");
+		return true;
+	}
+	else 
+	{
+		LV_LOG_INFO("FAIL");
+	}
+	return false;
+}
+
+
+bool getConcentratorAndCheck()
+{
+    struct uci_context* uci;
+	struct uci_package* p;
+	struct uci_element* e;
+	struct uci_section* s;
+	const char* str;
+	bool result = false;
+
+	uci = uci_alloc_context();
+	if (uci == NULL) {
+		return 0;
+	}
+
+	if (uci_load(uci, "openvpn", &p)) {
+		uci_free_context(uci);
+		return 0;
+	}
+
+	bool found = false; bool changed = false; 
+
+	uci_foreach_element(&p->sections, e)
+	{
+		s = uci_to_section(e);
+		// if ((e) && (e->name)) printf("** name: %s\r\n", e->name);
+        // if ((s) && (s->type)) printf("** type: %s\r\n", s->type);
+
+		if ((s)&&(strcmp(s->type, "openvpn") == 0)) {
+			struct uci_option* o = uci_lookup_option(uci, s, "remote");
+
+			if ((o) && (o->type == UCI_TYPE_LIST))
+			{
+				struct uci_element* _e; int count = 0;
+				uci_foreach_element(&o->v.list, _e) {
+            		if ( (_e) && (_e->name) )
+					{
+					 	char* host = strtok(_e->name," ");
+						// printf("%d %s (%s) --> ", count, host, _e->name);
+						if ((!result) && (concentrator_reachability(host)))
+						{
+							// printf("SUCCESS\r\n");
+							result = true;
+						}else{
+							// printf((result)?"SKIP\r\n":"FAIL\r\n");
+						}
+						count++;
+					}
+        		}
+			}
+		}
+	}
+	uci_free_context(uci);
+	return result;
+}
+
 bool uci_config_set_pingcheck(char* ifname)
 {
     struct uci_context* uci;

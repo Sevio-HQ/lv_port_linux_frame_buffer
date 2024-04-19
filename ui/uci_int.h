@@ -17,4 +17,6 @@ bool uci_config_set_pingcheck(char* ifname);
 
 int uci_config_getAPN(char* _apn, bool* _wwanDis);
 
+bool getConcentratorAndCheck();
+
 #endif

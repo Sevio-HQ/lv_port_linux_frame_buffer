@@ -490,25 +490,6 @@ int updateInterfaceStatusCb(const char* iface, ubus_gui_update_handler_t cb )
 	}
 }
 
-static bool concentrator_reachability(char* hostname)
-{
-	if (hostname == NULL) return false;
-	const char cmdStrFmt[] = "ping -c1 -w1 -W1 %s > /dev/null 2>&1";
-	char cmdStr[255] = "";
-	sprintf(cmdStr, cmdStrFmt, hostname);
-	LV_LOG_INFO("Trying: %s", cmdStr);
-	int ret = system(cmdStr);
-	if (ret == 0) {
-		LV_LOG_INFO("SUCCESS");
-		return true;
-	}
-	else 
-	{
-		LV_LOG_INFO("FAIL");
-	}
-	return false;
-}
-
 static bool concentrator_resolve(char* hostname)
 {
 	struct addrinfo hints;
@@ -637,13 +618,7 @@ int updateVpnStatus(ubus_gui_update_vpnstatus_handler_t cb )
 	if (_gw == CHECK_FAIL) return 0;
 
 	//VPNSTATUS_internet
-	if (concentrator_reachability("concentrators.sevio.it"))
-	{
-		_internet = CHECK_OK;
-	}else if (concentrator_reachability("vpn.sevio.dev"))
-	{
-		_internet = CHECK_OK;
-	}else if (concentrator_reachability("vpn2.sevio.dev"))
+	if (getConcentratorAndCheck())
 	{
 		_internet = CHECK_OK;
 	}else{
