@@ -549,7 +549,6 @@ static bool ubus_restart_service(const char* name)
 	return true;
 }
 
-
 void restartPingCheckService()
 {
 	ubus_restart_service("pingcheck");
@@ -570,6 +569,13 @@ int updateVpnStatus(ubus_gui_update_vpnstatus_handler_t cb )
 	if (!eth0_up)
 	{
 		ubus_network_device_status("wlan0", (void*)&wlan0_up);
+		if (wlan0_up) {
+			bool _wifiStaMode = false;
+			uci_config_isWifiStaMode(&_wifiStaMode);
+			// wlan0 up but also in STA mode
+			wlan0_up = (_wifiStaMode == true);
+		}
+
 		if (!wlan0_up)
 			ubus_network_device_status("wwan-wwan", (void*)&wwan0_up);
 	}
@@ -597,7 +603,7 @@ int updateVpnStatus(ubus_gui_update_vpnstatus_handler_t cb )
 
 	//VPNSTATUS_gateway
 	_gw = CHECK_OK;
-	if (uci_config_set_pingcheck("wan") || uci_config_set_pingcheck("wlan") || uci_config_set_pingcheck("wwan")) restartPingCheckService();
+	if (uci_config_set_pingcheck("wan", false) || uci_config_set_pingcheck("wlan", false) || uci_config_set_pingcheck("wwan", true)) restartPingCheckService();
 	
 	
 	bool wan_pingstatus = false;

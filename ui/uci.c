@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <uci.h>
+#include <uci_int.h>
 #include "ui_update.h"
 
 /** analogous to uci_lookup_option_string from uci.h, returns -1 when not found
@@ -381,7 +382,7 @@ bool getConcentratorAndCheck()
 	return result;
 }
 
-bool uci_config_set_pingcheck(char* ifname)
+bool uci_config_set_pingcheck(char* ifname, bool defGw)
 {
     struct uci_context* uci;
 	struct uci_package* p;
@@ -422,7 +423,8 @@ bool uci_config_set_pingcheck(char* ifname)
 				if (getIfStatEntry(name, &up, &gw, &ip, &mask))
 					if ((gw) && (up))
 					{
-						if ((!host) || (strcmp(gw, host) != 0))
+						if (((!host) || 
+							(strcmp(gw, host) != 0)) && (!defGw))
 						{
 							changed = true;
 							//up date uci configuration
@@ -432,7 +434,7 @@ bool uci_config_set_pingcheck(char* ifname)
 							LV_LOG_INFO("CHANGED name:%s gw:%s host:%s ret:%d", name, gw, host, ret);
 						}
 					}
-				LV_LOG_INFO("name:%s up:%s ip:%s mask:%lu gw:%s", name, up ? "UP" : "DOWN", ip, mask, gw);
+				LV_LOG_INFO("name:%s up:%s ip:%s mask:%lu gw:%s", name, up ? "UP" : "DOWN", ip, mask, (defGw ? DEFAULT_GW : gw));
 			}
         }
     }
