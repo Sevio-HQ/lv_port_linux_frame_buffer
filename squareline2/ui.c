@@ -190,7 +190,7 @@ void ui_MOBILE_screen_init(void)
     lv_obj_set_height(ui_MOBILE_operator_value, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_x(ui_MOBILE_operator_value, 3);
     lv_obj_set_y(ui_MOBILE_operator_value, 62);
-    lv_label_set_text(ui_MOBILE_operator_value, "vodafone IT");
+    lv_label_set_text(ui_MOBILE_operator_value, "---");
     lv_obj_set_style_text_color(ui_MOBILE_operator_value, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_MOBILE_operator_value, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_MOBILE_operator_value, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -210,7 +210,7 @@ void ui_MOBILE_screen_init(void)
     lv_obj_set_height(ui_MOBILE_apn_value, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_x(ui_MOBILE_apn_value, 3);
     lv_obj_set_y(ui_MOBILE_apn_value, 95);
-    lv_label_set_text(ui_MOBILE_apn_value, "web.omnitel.it");
+    lv_label_set_text(ui_MOBILE_apn_value, "---");
     lv_obj_set_style_text_color(ui_MOBILE_apn_value, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_MOBILE_apn_value, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_MOBILE_apn_value, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -393,7 +393,7 @@ void ui_GPS_screen_init(void)
     lv_obj_set_x(ui_GPS_latitude_value, -3);
     lv_obj_set_y(ui_GPS_latitude_value, 42);
     lv_obj_set_align(ui_GPS_latitude_value, LV_ALIGN_TOP_RIGHT);
-    lv_label_set_text(ui_GPS_latitude_value, "47°34.006'N");
+    lv_label_set_text(ui_GPS_latitude_value, "---");
     lv_obj_set_style_text_color(ui_GPS_latitude_value, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_GPS_latitude_value, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_GPS_latitude_value, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -414,7 +414,7 @@ void ui_GPS_screen_init(void)
     lv_obj_set_x(ui_GPS_longitude_value, -3);
     lv_obj_set_y(ui_GPS_longitude_value, 56);
     lv_obj_set_align(ui_GPS_longitude_value, LV_ALIGN_TOP_RIGHT);
-    lv_label_set_text(ui_GPS_longitude_value, "14°3.453'E");
+    lv_label_set_text(ui_GPS_longitude_value, "---");
     lv_obj_set_style_text_color(ui_GPS_longitude_value, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_GPS_longitude_value, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_GPS_longitude_value, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -435,7 +435,7 @@ void ui_GPS_screen_init(void)
     lv_obj_set_x(ui_GPS_lastfix_value, -3);
     lv_obj_set_y(ui_GPS_lastfix_value, 70);
     lv_obj_set_align(ui_GPS_lastfix_value, LV_ALIGN_TOP_RIGHT);
-    lv_label_set_text(ui_GPS_lastfix_value, "15:56:23");
+    lv_label_set_text(ui_GPS_lastfix_value, "---");
     lv_obj_set_style_text_color(ui_GPS_lastfix_value, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_GPS_lastfix_value, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_GPS_lastfix_value, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -456,7 +456,7 @@ void ui_GPS_screen_init(void)
     lv_obj_set_x(ui_GPS_altitude_value, -3);
     lv_obj_set_y(ui_GPS_altitude_value, 84);
     lv_obj_set_align(ui_GPS_altitude_value, LV_ALIGN_TOP_RIGHT);
-    lv_label_set_text(ui_GPS_altitude_value, "123m");
+    lv_label_set_text(ui_GPS_altitude_value, "---");
     lv_obj_set_style_text_color(ui_GPS_altitude_value, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_GPS_altitude_value, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_GPS_altitude_value, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -477,7 +477,7 @@ void ui_GPS_screen_init(void)
     lv_obj_set_x(ui_GPS_satellites_value, -3);
     lv_obj_set_y(ui_GPS_satellites_value, 98);
     lv_obj_set_align(ui_GPS_satellites_value, LV_ALIGN_TOP_RIGHT);
-    lv_label_set_text(ui_GPS_satellites_value, "5/6");
+    lv_label_set_text(ui_GPS_satellites_value, "---");
     lv_obj_set_style_text_color(ui_GPS_satellites_value, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_GPS_satellites_value, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_GPS_satellites_value, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -600,7 +600,7 @@ void ui_WIFI_screen_init(void)
     lv_obj_set_height(ui_WIFI_mode_value, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_x(ui_WIFI_mode_value, 3);
     lv_obj_set_y(ui_WIFI_mode_value, 62);
-    lv_label_set_text(ui_WIFI_mode_value, "Access Point");
+    lv_label_set_text(ui_WIFI_mode_value, "---");
     lv_obj_set_style_text_color(ui_WIFI_mode_value, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_WIFI_mode_value, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_WIFI_mode_value, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
@@ -620,7 +620,7 @@ void ui_WIFI_screen_init(void)
     lv_obj_set_height(ui_WIFI_ssid__value, LV_SIZE_CONTENT);    /// 1
     lv_obj_set_x(ui_WIFI_ssid__value, 3);
     lv_obj_set_y(ui_WIFI_ssid__value, 95);
-    lv_label_set_text(ui_WIFI_ssid__value, "qwerty123456789012");
+    lv_label_set_text(ui_WIFI_ssid__value, "---");
     lv_obj_set_style_text_color(ui_WIFI_ssid__value, lv_color_hex(0x000000), LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_opa(ui_WIFI_ssid__value, 255, LV_PART_MAIN | LV_STATE_DEFAULT);
     lv_obj_set_style_text_font(ui_WIFI_ssid__value, &ui_font_dejavusans, LV_PART_MAIN | LV_STATE_DEFAULT);
